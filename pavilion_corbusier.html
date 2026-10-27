@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>06 专馆 · 柯布西耶建筑多色系 LE CORBUSIER POLYCHROMIE — 色界 CHROMA MUSEUM</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #141413;
+      color: #F2EFE9;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Salubra Wallpaper Matte Mineral Plaster Texture */
+    .salubra-matte {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.14'/%3E%3C/svg%3E");
+    }
+
+    /* Movable Cutout Isolator Frame Transition */
+    .isolator-frame {
+      transition: left 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-white/20">
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================= -->
+  <!-- GLOBAL MUSEUM PAVILION SWITCHER                           -->
+  <!-- ========================================================= -->
+  <div class="relative z-40 border-b border-white/10 bg-[#0A0A09] text-[11px] text-white">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a href="chroma_museum.html" class="rounded-lg border border-white/20 bg-white/10 hover:bg-white/20 px-2.5 py-1 text-white font-medium flex items-center gap-1.5 transition">
+          <span>🏛️</span><span>总览导航大厅</span>
+        </a>
+        <span class="text-neutral-600 px-1">|</span>
+        <a href="pavilion_curation.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">01 综合策展馆</a>
+        <a href="pavilion_nippon.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">02 NIPPON COLORS 日本传统色</a>
+        <a href="pavilion_zhongguo.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">03 中国传统色 · 故宫节气</a>
+        <a href="pavilion_sanzo.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">04 和田三造《配色事典》</a>
+        <a href="pavilion_werner.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">05 1814 沃纳博物学色谱</a>
+        <a href="pavilion_corbusier.html" class="rounded-lg bg-white text-black px-2.5 py-1 font-semibold transition">06 柯布西耶建筑多色系</a>
+      </div>
+      <span class="text-[10px] font-mono-code text-neutral-400 hidden lg:inline shrink-0">PAVILION 06 / LE CORBUSIER · POLYCHROMIE ARCHITECTURALE (1931 & 1959)</span>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SUB-HEADER: SALUBRA ATMOSPHERE KEYBOARDS SWITCHER         -->
+  <!-- ========================================================= -->
+  <header class="border-b border-white/10 bg-[#181816]">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div class="text-[10px] font-mono-code uppercase tracking-[0.26em] text-amber-300/80">SALUBRA CLAVIER DE COULEURS · 1931 (43 SHADES) & 1959 (20 SHADES)</div>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+          Le Corbusier · 柯布西耶建筑多色系「色彩键盘与取景滑窗」
+        </h1>
+      </div>
+
+      <!-- 4 Iconic Salubra Atmosphere Keyboards -->
+      <nav id="keyboardNav" class="flex flex-wrap items-center gap-1.5">
+        <button data-kb="space" class="kb-btn rounded-full px-3.5 py-1.5 text-xs font-semibold bg-white text-black transition">01 SPACE · 天空与无限空间</button>
+        <button data-kb="velvet" class="kb-btn rounded-full px-3.5 py-1.5 text-xs text-neutral-300 hover:text-white border border-white/15 transition">02 VELVET · 天鹅绒光影</button>
+        <button data-kb="masonry" class="kb-btn rounded-full px-3.5 py-1.5 text-xs text-neutral-300 hover:text-white border border-white/15 transition">03 MASONRY · 砖石与赤土墙</button>
+        <button data-kb="landscape" class="kb-btn rounded-full px-3.5 py-1.5 text-xs text-neutral-300 hover:text-white border border-white/15 transition">04 LANDSCAPE · 阳光与松林</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- MAIN LE CORBUSIER STAGE                                   -->
+  <!-- Top/Left: Interactive Salubra Color Keyboard + Cutout     -->
+  <!-- Right: Live 3D Axonometric Modernist Villa Space Preview  -->
+  <!-- ========================================================= -->
+  <main class="flex-1 mx-auto w-full max-w-[1360px] px-4 sm:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+
+    <!-- LEFT 7 COLS: INTERACTIVE 1931 SALUBRA COLOR KEYBOARD (CLAVIER DE COULEURS) -->
+    <section class="lg:col-span-7 rounded-3xl border border-white/15 bg-[#1D1D1B] p-6 sm:p-7 shadow-2xl flex flex-col justify-between space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
+        <div>
+          <span id="kbSubtitle" class="text-[11px] font-mono-code uppercase tracking-wider text-amber-300">KEYBOARD NO. 01 · SPACE & CIEL (1931 SALUBRA)</span>
+          <h2 id="kbTitle" class="text-lg font-bold text-white mt-0.5">拖动或点击下方「色彩键盘列」，用取景滑窗锁定三色建筑空间配伍</h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="prevSlotBtn" class="rounded-lg border border-white/15 bg-white/5 hover:bg-white/15 px-2.5 py-1 text-xs">← 左移滑窗</button>
+          <button id="nextSlotBtn" class="rounded-lg border border-white/15 bg-white/5 hover:bg-white/15 px-2.5 py-1 text-xs">右移滑窗 →</button>
+        </div>
+      </div>
+
+      <!-- THE ICONIC 3-ROW SALUBRA KEYBOARD + MOVABLE ISOLATOR CUTOUT CARD -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-[11px] font-mono-code text-neutral-400">
+          <span>SALUBRA 3-ROW ARCHITECTURAL STRIP (点击任意一列移动黑色取景滑窗)</span>
+          <span id="windowPositionText" class="text-white">WINDOW SLOT: 02 / 06</span>
+        </div>
+
+        <div class="relative rounded-2xl p-4 bg-[#111110] border border-white/15 overflow-hidden select-none">
+          <!-- 6 Columns x 3 Rows (Background Wall / Middle Volume / Structural Accent) -->
+          <div id="salubraGrid" class="grid grid-cols-6 gap-2 relative z-10">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Selected 3-Color Architectural Triad Details (Salubra Codes) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between text-xs text-neutral-400">
+          <span class="font-mono-code uppercase">ISOLATED ARCHITECTURAL TRIAD · 当前取景滑窗锁定的三色空间关系</span>
+          <button id="copyCorbCssBtn" class="text-amber-300 hover:underline text-xs">复制建筑三色 CSS</button>
+        </div>
+        <div id="isolatedTriadCards" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Le Corbusier Architectural Color Theory Quote -->
+      <div class="rounded-2xl border border-white/10 bg-black/35 p-4 text-xs text-neutral-300 leading-relaxed">
+        <span class="font-mono-code text-amber-300 uppercase">LE CORBUSIER (1931): </span>
+        <span id="kbPhilosophy">“颜色在建筑中不是装饰，而是如同平面与剖面一样强大的空间营造工具：蓝色使墙面后退、扩展无限空间；红色将墙面牢牢固定；生褐与赭石则带来大地的重量。”</span>
+      </div>
+    </section>
+
+    <!-- RIGHT 5 COLS: LIVE 3D-AXONOMETRIC MODERNIST VILLA SPACE PREVIEW -->
+    <section class="lg:col-span-5 rounded-3xl border border-white/15 bg-[#1D1D1B] p-6 sm:p-7 shadow-2xl flex flex-col justify-between space-y-5">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3.5">
+        <div>
+          <span class="text-[10px] font-mono-code uppercase tracking-[0.22em] text-neutral-400">ARCHITECTURAL POLYCHROMY SIMULATION</span>
+          <h3 class="text-base font-bold text-white mt-0.5">现代主义建筑空间立面 · 实时赋色预览</h3>
+        </div>
+        <div class="flex gap-1 bg-black/40 p-1 rounded-lg border border-white/10 text-[11px]">
+          <button data-arch="interior" class="arch-btn rounded px-2.5 py-1 bg-white text-black font-medium transition">室内透视</button>
+          <button data-arch="unite" class="arch-btn rounded px-2.5 py-1 text-neutral-400 hover:text-white transition">马赛公寓立面</button>
+        </div>
+      </div>
+
+      <!-- Interactive Axonometric / Perspective Architectural SVG -->
+      <div id="archSvgStage" class="w-full aspect-[4/3] rounded-2xl overflow-hidden border border-white/15 bg-[#0E0E0D] flex items-center justify-center shadow-inner">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Spatial Role Legend -->
+      <div class="space-y-2 text-xs border-t border-white/10 pt-4">
+        <div class="text-[11px] font-mono-code uppercase text-neutral-400">SPATIAL FUNCTION ASSIGNMENT · 柯布西耶墙面光学法则</div>
+        <div class="grid grid-cols-3 gap-2 text-[11px]">
+          <div class="rounded-xl bg-black/30 border border-white/10 p-2.5">
+            <div class="text-neutral-400">上行 · 远景主墙</div>
+            <div id="roleWallName" class="font-semibold text-white mt-0.5 truncate">32021 Outremer</div>
+            <div class="text-[10px] text-neutral-500 mt-0.5">推移景深 / 引入天空</div>
+          </div>
+          <div class="rounded-xl bg-black/30 border border-white/10 p-2.5">
+            <div class="text-neutral-400">中行 · 侧翼体块</div>
+            <div id="roleVolumeName" class="font-semibold text-white mt-0.5 truncate">32010 Blanc ivoire</div>
+            <div class="text-[10px] text-neutral-500 mt-0.5">受光反射 / 界定体量</div>
+          </div>
+          <div class="rounded-xl bg-black/30 border border-white/10 p-2.5">
+            <div class="text-neutral-400">下行 · 结构与地面</div>
+            <div id="roleAccentName" class="font-semibold text-white mt-0.5 truncate">32120 Terre sienne</div>
+            <div class="text-[10px] text-neutral-500 mt-0.5">锚定重心 / 建筑骨幹</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 py-3 px-4 sm:px-8 text-center text-[11px] text-neutral-500">
+    支持键盘 ← / → 移动 Salubra 取景滑窗 · 点击任意色标可复制柯布西耶原版编号与 HEX
+  </footer>
+
+  <script>
+    const CORBUSIER_KEYBOARDS = {
+      space: {
+        subtitle: "KEYBOARD NO. 01 · SPACE & CIEL (拉罗歇尔别墅 / 萨伏伊别墅空间色谱)",
+        title: "01 SPACE · 天空与无限延伸的墙面",
+        philosophy: "“当一间房间显得局促时，把整面远端墙刷成天蓝或浅群青，墙壁便会在视觉上消隐，化作无边无际的天空。” ——勒·柯布西耶《建筑多色系》",
+        columns: [
+          {
+            wall: { code: "32021", name: "Bleu outremer pâle · 浅群青", hex: "#8CAEC4" },
+            volume: { code: "32010", name: "Blanc ivoire · 象牙白", hex: "#F2EFE6" },
+            accent: { code: "32121", name: "Terre sienne brique · 赤褐砖", hex: "#A64B38" }
+          },
+          {
+            wall: { code: "4320N", name: "Bleu céruléen 59 · 蔚蓝天色", hex: "#4D8FAC" },
+            volume: { code: "32011", name: "Gris clair 31 · 浅珍珠灰", hex: "#C8C9C5" },
+            accent: { code: "32090", name: "Rouge vermillon · 朱砂红门", hex: "#B8332A" }
+          },
+          {
+            wall: { code: "32020", name: "Bleu outremer 31 · 柯布群青", hex: "#28588A" },
+            volume: { code: "32062", name: "Ocre jaune clair · 浅黄赭", hex: "#E5C785" },
+            accent: { code: "32013", name: "Gris foncé 31 · 深铸铁灰", hex: "#45474A" }
+          },
+          {
+            wall: { code: "32032", name: "Bleu ciel · 萨伏伊晴空蓝", hex: "#76A8C4" },
+            volume: { code: "32082", name: "Rose pâle · 晨曦粉墙", hex: "#E5C1BC" },
+            accent: { code: "32140", name: "Ombre naturelle · 天然暗赭", hex: "#4E433B" }
+          },
+          {
+            wall: { code: "4320T", name: "Outremer sombre · 深海群青", hex: "#1B365D" },
+            volume: { code: "4320B", name: "Blanc crème · 奶油白", hex: "#F4EFE0" },
+            accent: { code: "4320K", name: "Jaune vif · 现代主义亮黄", hex: "#E5B222" }
+          },
+          {
+            wall: { code: "32034", name: "Gris bleu · 建筑灰蓝", hex: "#687C8C" },
+            volume: { code: "32072", name: "Sable clair · 浅沙色", hex: "#D8C8B0" },
+            accent: { code: "32101", name: "Rouge rubia · 茜草深红", hex: "#7E2625" }
+          }
+        ]
+      },
+      velvet: {
+        subtitle: "KEYBOARD NO. 02 · VELVET & LUMIÈRE (天鹅绒暗部与光影雕塑感)",
+        title: "02 VELVET · 天鹅绒般的静谧光影",
+        philosophy: "“通过将高明度的受光面与如同天鹅绒般深沉的阴影色块并置，建筑内部的楼梯与挑空将呈现出立体主义绘画般的雕塑张力。”",
+        columns: [
+          {
+            wall: { code: "32110", name: "Pourpre foncé · 天鹅绒深紫褐", hex: "#4D2E38" },
+            volume: { code: "32033", name: "Bleu clair · 冰川浅蓝", hex: "#9EBCC9" },
+            accent: { code: "32060", name: "Ocre jaune · 黄金赭石", hex: "#D69A3A" }
+          },
+          {
+            wall: { code: "4320U", name: "Gris basalte · 玄武岩炭灰", hex: "#333538" },
+            volume: { code: "32081", name: "Rose vif · 萨伏伊玫瑰粉", hex: "#D68A84" },
+            accent: { code: "32041", name: "Vert anglais clair · 浅英国绿", hex: "#689B82" }
+          },
+          {
+            wall: { code: "32141", name: "Ombre brûlée · 焦茶暗影", hex: "#3B2D26" },
+            volume: { code: "32010", name: "Blanc ivoire · 象牙白", hex: "#F2EFE6" },
+            accent: { code: "4320P", name: "Cobalt 59 · 59号钴蓝", hex: "#23497D" }
+          },
+          {
+            wall: { code: "32050", name: "Vert foncé · 森林天鹅绒绿", hex: "#284B3C" },
+            volume: { code: "32071", name: "Chamois · 麂皮暖米", hex: "#D9B88F" },
+            accent: { code: "4320M", name: "Rouge véronèse · 维罗纳红", hex: "#B5382A" }
+          },
+          {
+            wall: { code: "4320F", name: "Vert olive · 现代橄榄绿", hex: "#5C6842" },
+            volume: { code: "32012", name: "Gris moyen · 中性混凝土灰", hex: "#949692" },
+            accent: { code: "4320S", name: "Orange vif · 活力亮橙", hex: "#D96226" }
+          },
+          {
+            wall: { code: "32014", name: "Noir d'ivoire · 象牙炭黑", hex: "#222324" },
+            volume: { code: "32022", name: "Outremer gris · 灰群青", hex: "#7A94A6" },
+            accent: { code: "32091", name: "Rose saumon · 鲑鱼暖粉", hex: "#D87A68" }
+          }
+        ]
+      },
+      masonry: {
+        subtitle: "KEYBOARD NO. 03 · MASONRY & TERRE (赤土、砖石与粗野主义混凝土)",
+        title: "03 MASONRY · 砖石、赤陶与大地重力",
+        philosophy: "“生褐、红赭与赤陶色源自人类最古老的造屋材料。当它们与清水混凝土并置时，建筑便在现代工业中找回了大地的温度。”",
+        columns: [
+          {
+            wall: { code: "32120", name: "Terre sienne brûlée · 熟赭赤土", hex: "#8F3D2B" },
+            volume: { code: "32072", name: "Sable · 粗野混凝土沙色", hex: "#D4C6B0" },
+            accent: { code: "32020", name: "Bleu outremer · 群青钢窗", hex: "#28588A" }
+          },
+          {
+            wall: { code: "32100", name: "Rouge ancien · 古罗马砖红", hex: "#96322C" },
+            volume: { code: "32011", name: "Gris perle · 珍珠灰混凝土", hex: "#C5C6C1" },
+            accent: { code: "32040", name: "Vert anglais · 英国深翠绿", hex: "#386B58" }
+          },
+          {
+            wall: { code: "32061", name: "Terre sienne naturelle · 天然黄土", hex: "#C98D42" },
+            volume: { code: "32010", name: "Blanc ivoire · 象牙白墙", hex: "#F2EFE6" },
+            accent: { code: "32140", name: "Ombre naturelle · 暗影褐柱", hex: "#4A3E36" }
+          },
+          {
+            wall: { code: "4320A", name: "Rouge brique 59 · 59号赤砖红", hex: "#A63A2B" },
+            volume: { code: "4320C", name: "Gris béton · 清水混凝土灰", hex: "#9E9D97" },
+            accent: { code: "4320K", name: "Jaune soleil · 遮阳板明黄", hex: "#E5B222" }
+          },
+          {
+            wall: { code: "32130", name: "Terre d'ombre · 大地棕褐", hex: "#6B4E3B" },
+            volume: { code: "32032", name: "Bleu ciel · 天空浅蓝", hex: "#76A8C4" },
+            accent: { code: "32080", name: "Orange brique · 暖砖橙", hex: "#C9653B" }
+          },
+          {
+            wall: { code: "32111", name: "Brun rouge · 紫檀红褐", hex: "#5E2B27" },
+            volume: { code: "32062", name: "Ocre pâle · 浅暖赭", hex: "#E6CBA0" },
+            accent: { code: "32013", name: "Gris fer · 铸铁灰", hex: "#45474A" }
+          }
+        ]
+      },
+      landscape: {
+        subtitle: "KEYBOARD NO. 04 · LANDSCAPE & SOLEIL (森林、草地与地中海阳光)",
+        title: "04 LANDSCAPE · 将室外森林与阳光引入室内",
+        philosophy: "“现代建筑通过水平长窗将自然框入室内，而英国绿、松针绿与阳光黄则让室内墙面成为外部自然景观的延续。”",
+        columns: [
+          {
+            wall: { code: "32040", name: "Vert anglais · 英国古典绿", hex: "#386B58" },
+            volume: { code: "32062", name: "Jaune solaire · 地中海阳光黄", hex: "#E8C675" },
+            accent: { code: "32120", name: "Terre sienne · 树干赤褐", hex: "#8F3D2B" }
+          },
+          {
+            wall: { code: "32051", name: "Vert émeraude · 翡翠森林绿", hex: "#4D8A6E" },
+            volume: { code: "32010", name: "Blanc ivoire · 象牙白", hex: "#F2EFE6" },
+            accent: { code: "4320S", name: "Orange vif · 柑橘亮橙", hex: "#D96226" }
+          },
+          {
+            wall: { code: "4320G", name: "Vert pré 59 · 59号草地鲜绿", hex: "#588C4D" },
+            volume: { code: "32033", name: "Bleu clair · 晴空浅蓝", hex: "#9EBCC9" },
+            accent: { code: "32013", name: "Gris foncé · 岩石深灰", hex: "#45474A" }
+          },
+          {
+            wall: { code: "32042", name: "Vert véronèse pâle · 浅粉绿", hex: "#8CB89E" },
+            volume: { code: "32082", name: "Rose pâle · 桃花浅粉", hex: "#E5C1BC" },
+            accent: { code: "32050", name: "Vert pin · 苍松深绿", hex: "#284B3C" }
+          },
+          {
+            wall: { code: "4320K", name: "Jaune vif 59 · 盛夏向日葵黄", hex: "#E5B222" },
+            volume: { code: "4320N", name: "Bleu céruléen · 蔚蓝海岸", hex: "#4D8FAC" },
+            accent: { code: "32141", name: "Ombre brûlée · 焦褐阴影", hex: "#3B2D26" }
+          },
+          {
+            wall: { code: "32052", name: "Vert gris · 鼠尾草灰绿", hex: "#768C7D" },
+            volume: { code: "32071", name: "Sable chaud · 暖沙滩色", hex: "#D9B88F" },
+            accent: { code: "32090", name: "Rouge vermillon · 朱红点睛", hex: "#B8332A" }
+          }
+        ]
+      }
+    };
+
+    let currentKbKey = "space";
+    let currentColIdx = 0;
+    let currentArchMode = "interior"; // interior | unite
+
+    function showToast(msg) {
+      const container = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "rounded-xl border border-white/20 bg-black/90 px-4 py-2 text-xs text-white shadow-xl";
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.25s ease";
+        setTimeout(() => el.remove(), 250);
+      }, 2100);
+    }
+
+    function renderArchitectureSVG(triad) {
+      const w = triad.wall.hex;
+      const v = triad.volume.hex;
+      const a = triad.accent.hex;
+
+      if (currentArchMode === "interior") {
+        // Villa La Roche / Villa Savoye Axonometric Modernist Interior Space
+        return `
+          <svg viewBox="0 0 400 300" class="w-full h-full">
+            <!-- Ceiling Plane -->
+            <polygon points="0,0 400,0 320,55 80,55" fill="#E8E5DC" opacity="0.9"/>
+            <!-- Left Sloping Ramp / Volume Wall (Volume Color) -->
+            <polygon points="0,0 80,55 80,225 0,300" fill="${v}"/>
+            <!-- Far Receding Main Wall (Wall Color) -->
+            <polygon points="80,55 320,55 320,225 80,225" fill="${w}"/>
+            <!-- Right Structural Volume & Ribbon Window Cutout -->
+            <polygon points="320,55 400,0 400,300 320,225" fill="${v}" filter="brightness(0.88)"/>
+            <!-- Horizontal Ribbon Window (Fenêtre en longueur) -->
+            <polygon points="105,105 295,105 295,150 105,150" fill="#18222B" stroke="#F2EFE6" stroke-width="3"/>
+            <line x1="168" y1="105" x2="168" y2="150" stroke="#F2EFE6" stroke-width="2.5"/>
+            <line x1="232" y1="105" x2="232" y2="150" stroke="#F2EFE6" stroke-width="2.5"/>
+            <!-- Floor Plane (Accent / Structural Anchor) -->
+            <polygon points="80,225 320,225 400,300 0,300" fill="${a}"/>
+            <!-- Iconic Modernist Pilotis Column & Stair Volume -->
+            <rect x="122" y="55" width="12" height="195" fill="#F2EFE6"/>
+            <polygon points="225,225 285,225 305,265 205,265" fill="${v}"/>
+            <rect x="240" y="165" width="42" height="60" fill="${a}" stroke="#141413" stroke-width="1.5"/>
+          </svg>
+        `;
+      } else {
+        // Unité d'Habitation (马赛公寓遮阳板立面 Brise-Soleil)
+        return `
+          <svg viewBox="0 0 400 300" class="w-full h-full">
+            <!-- Brutalist Concrete Grid Frame -->
+            <rect x="0" y="0" width="400" height="300" fill="#B8B5AC"/>
+            ${[0, 1, 2].map(row =>
+              [0, 1, 2, 3].map(col => {
+                const x = 24 + col * 90;
+                const y = 20 + row * 88;
+                const sideColors = [w, a, v];
+                const pick = sideColors[(row + col) % 3];
+                return `
+                  <g>
+                    <!-- Deep Loggia Shadow -->
+                    <rect x="${x}" y="${y}" width="76" height="72" fill="#1C1C1B"/>
+                    <!-- Polychrome Loggia Side Wall -->
+                    <polygon points="${x},${y} ${x+22},${y+12} ${x+22},${y+60} ${x},${y+72}" fill="${pick}"/>
+                    <!-- Back Loggia Wall -->
+                    <rect x="${x+22}" y="${y+12}" width="54" height="48" fill="${v}"/>
+                    <!-- Brise-Soleil Horizontal Concrete Louver -->
+                    <rect x="${x}" y="${y+32}" width="76" height="7" fill="#C8C5BC"/>
+                    <!-- Balcony Parapet -->
+                    <rect x="${x}" y="${y+54}" width="76" height="18" fill="${(row + col) % 2 === 0 ? a : w}" opacity="0.92"/>
+                  </g>
+                `;
+              }).join("")
+            ).join("")}
+          </svg>
+        `;
+      }
+    }
+
+    function renderKeyboard() {
+      const kb = CORBUSIER_KEYBOARDS[currentKbKey];
+      document.getElementById("kbSubtitle").textContent = kb.subtitle;
+      document.getElementById("kbTitle").textContent = kb.title;
+      document.getElementById("kbPhilosophy").textContent = kb.philosophy;
+      document.getElementById("windowPositionText").textContent = `WINDOW SLOT: 0${currentColIdx + 1} / 0${kb.columns.length}`;
+
+      const grid = document.getElementById("salubraGrid");
+      grid.innerHTML = kb.columns.map((col, idx) => {
+        const isSelected = idx === currentColIdx;
+        return `
+          <div data-col="${idx}" class="cursor-pointer rounded-xl p-1.5 transition-all ${
+            isSelected
+              ? "ring-4 ring-white bg-white/15 scale-[1.03] shadow-2xl z-20"
+              : "opacity-65 hover:opacity-95 bg-black/20"
+          } flex flex-col gap-1.5">
+            <div class="text-center font-mono-code text-[10px] ${isSelected ? "text-white font-bold" : "text-neutral-400"}">
+              ${isSelected ? "▼ LOCKED" : `COL 0${idx + 1}`}
+            </div>
+            <!-- Row 1: Main Wall (Large Strip) -->
+            <div class="h-24 rounded-lg salubra-matte flex items-end p-1.5 border border-black/20" style="background:${col.wall.hex}">
+              <span class="font-mono-code text-[9px] px-1 rounded bg-black/50 text-white">${col.wall.code}</span>
+            </div>
+            <!-- Row 2: Volume (Medium Strip) -->
+            <div class="h-14 rounded-lg salubra-matte flex items-end p-1.5 border border-black/20" style="background:${col.volume.hex}">
+              <span class="font-mono-code text-[9px] px-1 rounded bg-black/50 text-white">${col.volume.code}</span>
+            </div>
+            <!-- Row 3: Accent (Small Strip) -->
+            <div class="h-10 rounded-lg salubra-matte flex items-end p-1.5 border border-black/20" style="background:${col.accent.hex}">
+              <span class="font-mono-code text-[9px] px-1 rounded bg-black/50 text-white">${col.accent.code}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const triad = kb.columns[currentColIdx];
+
+      // Render 3 Isolated Cards
+      const roles = [
+        { label: "MAIN WALL · 远景主墙", item: triad.wall },
+        { label: "VOLUME · 侧翼受光体块", item: triad.volume },
+        { label: "ACCENT · 结构与地面锚点", item: triad.accent }
+      ];
+
+      document.getElementById("isolatedTriadCards").innerHTML = roles.map(r => `
+        <button data-copy="${r.item.hex}" data-name="${r.item.code} ${r.item.name}" class="rounded-xl border border-white/15 bg-black/40 hover:border-white/40 p-3 text-left transition flex items-center gap-3">
+          <span class="w-11 h-11 rounded-lg shrink-0 salubra-matte border border-white/20 shadow" style="background:${r.item.hex}"></span>
+          <div class="min-w-0">
+            <div class="text-[10px] font-mono-code text-neutral-400">${r.label}</div>
+            <div class="text-xs font-bold text-white truncate mt-0.5">${r.item.code} · ${r.item.name.split("·")[1] || r.item.name}</div>
+            <div class="font-mono-code text-[11px] text-amber-300">${r.item.hex} 点击复制</div>
+          </div>
+        </button>
+      `).join("");
+
+      document.getElementById("roleWallName").textContent = `${triad.wall.code} ${triad.wall.name.split("·")[1] || ""}`;
+      document.getElementById("roleVolumeName").textContent = `${triad.volume.code} ${triad.volume.name.split("·")[1] || ""}`;
+      document.getElementById("roleAccentName").textContent = `${triad.accent.code} ${triad.accent.name.split("·")[1] || ""}`;
+
+      document.getElementById("archSvgStage").innerHTML = renderArchitectureSVG(triad);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderKeyboard();
+
+      document.getElementById("salubraGrid").addEventListener("click", e => {
+        const col = e.target.closest("[data-col]");
+        if (!col) return;
+        currentColIdx = Number(col.getAttribute("data-col"));
+        renderKeyboard();
+      });
+
+      document.getElementById("prevSlotBtn").addEventListener("click", () => {
+        const len = CORBUSIER_KEYBOARDS[currentKbKey].columns.length;
+        currentColIdx = (currentColIdx - 1 + len) % len;
+        renderKeyboard();
+      });
+
+      document.getElementById("nextSlotBtn").addEventListener("click", () => {
+        const len = CORBUSIER_KEYBOARDS[currentKbKey].columns.length;
+        currentColIdx = (currentColIdx + 1) % len;
+        renderKeyboard();
+      });
+
+      document.getElementById("keyboardNav").addEventListener("click", e => {
+        const btn = e.target.closest("[data-kb]");
+        if (!btn) return;
+        currentKbKey = btn.getAttribute("data-kb");
+        currentColIdx = 0;
+        document.querySelectorAll(".kb-btn").forEach(b => {
+          b.className = "kb-btn rounded-full px-3.5 py-1.5 text-xs text-neutral-300 hover:text-white border border-white/15 transition";
+        });
+        btn.className = "kb-btn rounded-full px-3.5 py-1.5 text-xs font-semibold bg-white text-black transition";
+        renderKeyboard();
+      });
+
+      document.querySelectorAll(".arch-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentArchMode = btn.getAttribute("data-arch");
+          document.querySelectorAll(".arch-btn").forEach(b => {
+            b.className = "arch-btn rounded px-2.5 py-1 text-neutral-400 hover:text-white transition";
+          });
+          btn.className = "arch-btn rounded px-2.5 py-1 bg-white text-black font-medium transition";
+          renderKeyboard();
+        });
+      });
+
+      document.getElementById("isolatedTriadCards").addEventListener("click", e => {
+        const btn = e.target.closest("[data-copy]");
+        if (!btn) return;
+        const hex = btn.getAttribute("data-copy");
+        const name = btn.getAttribute("data-name");
+        navigator.clipboard?.writeText(hex).catch(() => {});
+        showToast(`已复制柯布西耶色标 ${name} · ${hex}`);
+      });
+
+      document.getElementById("copyCorbCssBtn").addEventListener("click", () => {
+        const triad = CORBUSIER_KEYBOARDS[currentKbKey].columns[currentColIdx];
+        const css = `/* Le Corbusier Salubra Triad */ --wall: ${triad.wall.hex}; --volume: ${triad.volume.hex}; --accent: ${triad.accent.hex};`;
+        navigator.clipboard?.writeText(css).catch(() => {});
+        showToast("已复制柯布西耶建筑空间三色 CSS 变量");
+      });
+
+      window.addEventListener("keydown", e => {
+        const len = CORBUSIER_KEYBOARDS[currentKbKey].columns.length;
+        if (e.key === "ArrowRight") {
+          currentColIdx = (currentColIdx + 1) % len;
+          renderKeyboard();
+        } else if (e.key === "ArrowLeft") {
+          currentColIdx = (currentColIdx - 1 + len) % len;
+          renderKeyboard();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

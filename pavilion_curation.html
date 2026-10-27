@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>色界 CHROMA MUSEUM — 一体化聚光灯展签馆 (全20组馆藏)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-obsidian: #08080A;
+      --spot-1: #7397AB;
+      --spot-2: #9BB4BF;
+      --spot-3: #4A5860;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-obsidian);
+      color: #F3F2EE;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-serif-museum {
+      font-family: 'Noto Serif SC', "Songti SC", Georgia, serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Overhead Museum Spotlight Aura */
+    .spotlight-aura {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 34% 48%, var(--spot-1) 0%, transparent 40%),
+        radial-gradient(circle at 68% 42%, var(--spot-2) 0%, transparent 42%),
+        radial-gradient(circle at 50% 80%, var(--spot-3) 0%, transparent 45%);
+      opacity: 0.18;
+      filter: blur(100px);
+      transition: background 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Authentic Micro-Textures */
+    .texture-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      transition: opacity 0.35s ease;
+    }
+
+    /* 1. Mineral Granules (敦煌矿物颗粒) */
+    .tex-mineral {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+      background-size: 150px 150px;
+    }
+
+    /* 2. Xuan Paper Fibers (宣纸草木纤维) */
+    .tex-xuan {
+      background-image:
+        repeating-linear-gradient(18deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1px, transparent 1px, transparent 8px),
+        repeating-linear-gradient(-32deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 12px);
+    }
+
+    /* 3. Silk Sheen (平安双层生丝) */
+    .tex-silk {
+      background:
+        linear-gradient(125deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.28) 48%, rgba(255,255,255,0) 56%, rgba(255,255,255,0.14) 78%, rgba(255,255,255,0) 95%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 3px);
+    }
+
+    /* 4. Impasto Oil Brush (油画刀笔触) */
+    .tex-impasto {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='oil'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.14' numOctaves='3' seed='5'/%3E%3CfeDiffuseLighting lighting-color='%23ffffff' surfaceScale='2.6'%3E%3CfeDistantLight azimuth='45' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23oil)' opacity='0.42'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+    }
+
+    /* 5. Ru Ware Crackle (宋瓷冰裂纹) */
+    .tex-crackle {
+      background-image:
+        linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 50%, rgba(255,255,255,0.1) 100%),
+        url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 25 L35 40 L65 15 L120 35 M35 40 L25 85 L75 95 L120 75 M65 15 L80 55 L75 95 M25 85 L0 105 M75 95 L60 120' stroke='rgba(255,255,255,0.3)' stroke-width='0.8' fill='none'/%3E%3C/svg%3E");
+      background-size: 100% 100%, 110px 110px;
+    }
+
+    /* 6. Digital Fluid (深空数字流体) */
+    .tex-fluid {
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.26) 0%, transparent 52%),
+        conic-gradient(from 180deg at 50% 50%, rgba(255,255,255,0.14), transparent, rgba(255,255,255,0.16), transparent);
+    }
+
+    @keyframes stageSwitch {
+      0% { opacity: 0.35; transform: translateY(4px) scale(0.99); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-stage-switch {
+      animation: stageSwitch 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Minimalist Range Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.14);
+      height: 5px;
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #F3F2EE;
+      border: 2px solid #08080A;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-white/20 selection:text-white">
+  <!-- Dynamic Spotlight Glow -->
+  <div id="spotlightAura" class="spotlight-aura"></div>
+
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================= -->
+  <!-- GLOBAL MUSEUM PAVILION SWITCHER (6 COLLECTIONS + PORTAL)  -->
+  <!-- ========================================================= -->
+  <div class="relative z-40 border-b border-white/[0.06] bg-[#050507]/95 text-[11px]">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-8 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a href="chroma_museum.html" class="rounded-lg border border-white/15 bg-white/[0.05] hover:bg-white/15 px-2.5 py-1 text-white font-medium flex items-center gap-1.5 transition">
+          <span>🏛️</span><span>总览导航大厅</span>
+        </a>
+        <span class="text-neutral-600 px-1">|</span>
+        <a href="pavilion_curation.html" class="rounded-lg bg-white text-black px-2.5 py-1 font-semibold transition">01 综合策展馆</a>
+        <a href="pavilion_nippon.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">02 NIPPON COLORS 日本传统色</a>
+        <a href="pavilion_zhongguo.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">03 中国传统色 · 故宫节气</a>
+        <a href="pavilion_sanzo.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">04 和田三造《配色事典》</a>
+        <a href="pavilion_werner.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">05 1814 沃纳博物学色谱</a>
+        <a href="pavilion_corbusier.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">06 柯布西耶建筑多色系</a>
+      </div>
+      <span class="text-[10px] font-mono-code text-neutral-500 hidden lg:inline shrink-0">PAVILION 01 / CURATED ATLAS (20 PALETTES)</span>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MINIMALIST TOP BAR                                        -->
+  <!-- ========================================================= -->
+  <header class="relative z-30 border-b border-white/[0.07] bg-[#08080A]/80 backdrop-blur-xl">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand -->
+      <div class="flex items-center gap-2.5">
+        <span id="brandDot" class="h-2.5 w-2.5 rounded-full bg-[#7397AB] transition-colors duration-500"></span>
+        <span class="font-serif-museum text-base font-semibold tracking-wider text-white">色界</span>
+        <span class="text-[10px] font-mono-code uppercase tracking-[0.26em] text-neutral-500 hidden sm:inline">CHROMA MUSEUM</span>
+      </div>
+
+      <!-- Single-Row Chapter Filter Pills -->
+      <nav id="chapterNav" class="flex items-center gap-1 overflow-x-auto py-0.5 max-w-full">
+        <button data-chap="all" class="chap-pill rounded-full px-3 py-1 text-xs font-medium bg-white text-black transition shrink-0">
+          全部 (<span id="totalCountNum">20</span>)
+        </button>
+        <button data-chap="《敦煌遗梦》" class="chap-pill rounded-full px-3 py-1 text-xs text-neutral-400 hover:text-white transition shrink-0">
+          敦煌遗梦
+        </button>
+        <button data-chap="《印象派的光》" class="chap-pill rounded-full px-3 py-1 text-xs text-neutral-400 hover:text-white transition shrink-0">
+          印象派的光
+        </button>
+        <button data-chap="《消失的古颜料》" class="chap-pill rounded-full px-3 py-1 text-xs text-neutral-400 hover:text-white transition shrink-0">
+          消失的古颜料
+        </button>
+        <button data-chap="《文学的底色》" class="chap-pill rounded-full px-3 py-1 text-xs text-neutral-400 hover:text-white transition shrink-0">
+          文学的底色
+        </button>
+        <button data-chap="《宇宙深空》" class="chap-pill rounded-full px-3 py-1 text-xs text-neutral-400 hover:text-white transition shrink-0">
+          宇宙深空
+        </button>
+        <button data-chap="vault" class="chap-pill rounded-full px-3 py-1 text-xs text-amber-300/90 hover:text-amber-200 transition shrink-0">
+          ★ 收藏 (<span id="vaultCountNum">3</span>)
+        </button>
+      </nav>
+
+      <!-- Right Minimal Action -->
+      <div class="flex items-center gap-2">
+        <button id="openMatcherBtn" class="rounded-full border border-amber-300/30 bg-amber-300/10 hover:bg-amber-300/20 px-3.5 py-1 text-xs text-amber-200 transition">
+          + 影像寻色
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- UNIFIED SINGLE-EXHIBIT SPOTLIGHT STAGE (ALL 20 PALETTES)  -->
+  <!-- ========================================================= -->
+  <main class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-6">
+
+    <div class="w-full max-w-[1140px] flex items-center justify-center gap-3 sm:gap-6">
+      <!-- Previous Exhibit Arrow -->
+      <button id="prevCardBtn" aria-label="上一展品" class="group h-11 w-11 sm:h-12 sm:w-12 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/25 flex items-center justify-center text-neutral-400 hover:text-white transition shrink-0">
+        <span class="text-lg group-hover:-translate-x-0.5 transition-transform">←</span>
+      </button>
+
+      <!-- THE UNIFIED MUSEUM EXHIBIT CARD (Left 3:4 Texture Canvas + Right Story, Ratio & Export) -->
+      <article id="unifiedStage" class="w-full max-w-[960px] rounded-3xl border border-white/15 bg-[#0D0D13]/95 backdrop-blur-xl p-5 sm:p-8 shadow-[0_30px_100px_rgba(0,0,0,0.85)] grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+        <!-- Populated dynamically via JS -->
+      </article>
+
+      <!-- Next Exhibit Arrow -->
+      <button id="nextCardBtn" aria-label="下一展品" class="group h-11 w-11 sm:h-12 sm:w-12 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.1] hover:border-white/25 flex items-center justify-center text-neutral-400 hover:text-white transition shrink-0">
+        <span class="text-lg group-hover:translate-x-0.5 transition-transform">→</span>
+      </button>
+    </div>
+
+    <!-- Bottom Spectrum Pagination Dots (20 Palettes) & Keyboard Hint -->
+    <div class="mt-6 flex flex-col items-center gap-2.5 max-w-full px-4">
+      <div id="paginationDots" class="flex flex-wrap items-center justify-center gap-1.5 py-1"></div>
+      <div class="text-[11px] text-neutral-500 flex items-center gap-3">
+        <span id="cardIndexReadout" class="font-mono-code text-neutral-400">01 / 20</span>
+        <span>·</span>
+        <span>支持键盘 ← / → 或左右滑动切换全馆 20 组传世色谱</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- LIGHTWEIGHT MODAL 1: 影像寻色与古颜料展签生成              -->
+  <!-- ========================================================= -->
+  <div id="matcherModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+    <div class="relative w-full max-w-2xl rounded-2xl border border-white/15 bg-[#0D0D12] p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3.5">
+        <div>
+          <span class="text-[10px] font-mono-code uppercase tracking-[0.22em] text-amber-300/80">PHOTO PIGMENT MATCHER</span>
+          <h3 class="font-serif-museum text-lg font-semibold text-white mt-0.5">影像寻色 · 匹配艺术史古颜料并切入聚光灯</h3>
+        </div>
+        <button id="closeMatcherBtn" class="text-xs text-neutral-400 hover:text-white px-2.5 py-1 rounded-lg border border-white/10">关闭 ✕</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+        <div class="md:col-span-7 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex gap-1.5">
+              <button data-scene="jiangnan" class="scene-btn rounded-lg border border-white/20 bg-white/10 px-2.5 py-1 text-xs text-white">江南梅雨</button>
+              <button data-scene="dunhuang" class="scene-btn rounded-lg border border-white/10 bg-transparent px-2.5 py-1 text-xs text-neutral-400 hover:text-white">敦煌残垣</button>
+              <button data-scene="songru" class="scene-btn rounded-lg border border-white/10 bg-transparent px-2.5 py-1 text-xs text-neutral-400 hover:text-white">徽宗天青</button>
+              <button data-scene="kyoto" class="scene-btn rounded-lg border border-white/10 bg-transparent px-2.5 py-1 text-xs text-neutral-400 hover:text-white">古寺霜枫</button>
+            </div>
+            <label class="cursor-pointer rounded-lg bg-white text-black hover:bg-neutral-200 px-3 py-1 text-xs font-medium transition">
+              ↑ 上传照片
+              <input id="uploadInput" type="file" accept="image/*" class="hidden" />
+            </label>
+          </div>
+
+          <div class="relative rounded-xl overflow-hidden border border-white/15 bg-black">
+            <canvas id="samplerCanvas" width="560" height="360" class="w-full h-auto cursor-crosshair block"></canvas>
+            <div class="pointer-events-none absolute bottom-2 left-2.5 right-2.5 flex justify-between rounded-lg bg-black/70 backdrop-blur-md px-2.5 py-1 text-[11px] text-neutral-300">
+              <span id="slotHint">点击画面任意处吸取色彩 (当前槽位 #1)</span>
+              <span class="text-amber-200">ΔE 历史色名匹配</span>
+            </div>
+          </div>
+
+          <div id="matchReportList" class="grid grid-cols-2 gap-2"></div>
+        </div>
+
+        <div class="md:col-span-5 space-y-3.5 bg-[#121218] p-4 rounded-xl border border-white/10">
+          <div>
+            <label class="block text-[11px] text-neutral-400 mb-1">展签标题</label>
+            <input id="newCardTitle" type="text" value="江南梅雨季的屋檐青" class="w-full rounded-lg border border-white/15 bg-[#0A0A0E] px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-300" />
+          </div>
+          <div>
+            <label class="block text-[11px] text-neutral-400 mb-1">私人记忆注脚</label>
+            <textarea id="newCardQuote" rows="3" class="w-full rounded-lg border border-white/15 bg-[#0A0A0E] px-3 py-1.5 text-xs text-white focus:outline-none focus:border-amber-300">屋檐滴水落在青石板上的冷青，混着老墙苔痕与远处纸伞的一抹朱红。</textarea>
+          </div>
+          <div>
+            <label class="block text-[11px] text-neutral-400 mb-1">物性微纹理</label>
+            <select id="newCardTexture" class="w-full rounded-lg border border-white/15 bg-[#0A0A0E] px-2.5 py-1.5 text-xs text-white focus:outline-none">
+              <option value="crackle">宋瓷开片冰裂纹</option>
+              <option value="xuan">宣纸草木纤维</option>
+              <option value="mineral">敦煌天然矿物颗粒</option>
+              <option value="silk">平安双层生丝光泽</option>
+              <option value="impasto">古典油画刀笔触</option>
+            </select>
+          </div>
+
+          <div id="newCardStripPreview" class="h-14 w-full rounded-lg overflow-hidden flex border border-white/15"></div>
+
+          <button id="createCardToSpotlightBtn" class="w-full rounded-xl bg-amber-300 text-black hover:bg-amber-200 py-2 text-xs font-semibold transition">
+            ✦ 生成展签并切入聚光灯舞台
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- LIGHTWEIGHT MODAL 2: 3:4 极简黑底灵感海报预览与保存          -->
+  <!-- ========================================================= -->
+  <div id="posterModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-4">
+    <div class="relative w-full max-w-md rounded-2xl border border-white/15 bg-[#0D0D11] p-5 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+        <span id="posterTitleText" class="font-serif-museum text-sm font-semibold text-white">3:4 展签灵感海报</span>
+        <button id="closePosterBtn" class="text-xs text-neutral-400 hover:text-white">关闭 ✕</button>
+      </div>
+      <div class="flex justify-center bg-[#050507] p-2.5 rounded-xl border border-white/5">
+        <canvas id="posterCanvas" width="750" height="1000" class="w-full max-w-[300px] h-auto rounded-lg shadow-2xl border border-white/10"></canvas>
+      </div>
+      <div class="mt-4 flex items-center justify-between">
+        <span class="text-[11px] text-neutral-400">已融合当前自定义色块比例与文化展签</span>
+        <button id="downloadPosterBtn" class="rounded-lg bg-white text-black px-4 py-1.5 text-xs font-medium hover:bg-neutral-200 transition">
+          ↓ 保存 PNG 海报
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. COMPLETE 20 CURATED WORLD COLOR ATLAS PALETTES (全量 20 组传世馆藏)
+    // =========================================================================
+    const PALETTES = [
+      {
+        id: "ru-ware-sky-cyan",
+        catalogNo: "CN-SONG-001",
+        title: "宋代汝窑 · 雨过天青",
+        subtitle: "北宋崇宁年间 · 玛瑙入釉的雨后微光",
+        dimensionLabel: "文明与地域 · 中国传统色",
+        chapter: "《消失的古颜料》",
+        texture: "crackle",
+        textureName: "宋瓷开片冰裂纹",
+        pigmentFormula: "玛瑙末 SiO₂ + 还原焰二价铁离子 Fe²⁺",
+        composition: "golden",
+        eraYear: "1107 AD",
+        inVault: true,
+        quote: "雨过天青云破处，这般颜色做将来。",
+        quoteAuthor: "传北宋 · 宋徽宗赵佶",
+        story: "汝窑天青并非单一颜料，而是以珍贵玛瑙末入釉，在还原焰的微妙火候中，让铁离子呈现出介于蓝、绿、灰之间的冷暖平衡。釉面开片如蝉翼蟹爪，光线穿透半乳浊釉层时，仿佛江南雨歇时云层裂开的一线天光。",
+        masterpiece: "北宋汝窑天青釉弦纹水仙盆（台北故宫博物院藏）",
+        colors: [
+          { name: "天水碧 / 雨过天青", hex: "#7397AB", ratio: 55 },
+          { name: "汝釉粉青", hex: "#9BB4BF", ratio: 25 },
+          { name: "蟹爪冰裂灰", hex: "#4A5860", ratio: 12 },
+          { name: "香灰胎骨", hex: "#C8BFA8", ratio: 8 }
+        ],
+        aiPrompt: "Minimalist Song Dynasty Ru ware celadon glaze aesthetic, sky blue after rain #7397AB, delicate ice crackle glaze micro-texture, soft diffused museum lighting, poetic Eastern zen atmosphere --ar 3:4"
+      },
+      {
+        id: "dunhuang-nine-deer",
+        catalogNo: "CN-WEI-257",
+        title: "敦煌莫高窟 · 九色鹿本生",
+        subtitle: "北魏第257窟 · 千年矿物颜料的剥落与氧化",
+        dimensionLabel: "文明与地域 · 中国传统色",
+        chapter: "《敦煌遗梦》",
+        texture: "mineral",
+        textureName: "敦煌天然矿物颗粒",
+        pigmentFormula: "赤铁矿 Fe₂O₃ · 孔雀石 Cu₂(OH)₂CO₃ · 青金石",
+        composition: "rothko",
+        eraYear: "485 AD",
+        inVault: true,
+        quote: "恒河之畔，鹿王毛色如九种宝光，踏过赭石与青金研磨的千年时光。",
+        quoteAuthor: "莫高窟第257窟 · 北魏壁画志",
+        story: "敦煌壁画的色彩生命来自大地深处的矿石：阿富汗输入的青金石研成石青，孔雀石碎为石绿，配以朱砂与赤铁矿土红。历经一千五百年洞窟幽暗与铅白氧化，底层的土红与剥落的矿物晶体交织出苍茫而神圣的物性张力。",
+        masterpiece: "敦煌莫高窟第257窟西壁《鹿王本生图》",
+        colors: [
+          { name: "西域赤铁土红", hex: "#8C3F2F", ratio: 45 },
+          { name: "孔雀石绿", hex: "#3E7B67", ratio: 24 },
+          { name: "青金石青", hex: "#2B5B84", ratio: 18 },
+          { name: "氧化铅白褐", hex: "#3B2E2A", ratio: 13 }
+        ],
+        aiPrompt: "Ancient Dunhuang Mogao Grottoes mural texture, weathered mineral pigments, terracotta red #8C3F2F, malachite green #3E7B67, lapis lazuli blue #2B5B84, rough earthen plaster grain --ar 3:4"
+      },
+      {
+        id: "heian-kasane-sakura",
+        catalogNo: "JP-HEIAN-014",
+        title: "日本袭色目 · 樱重与红梅",
+        subtitle: "平安时代十二单 · 四季物候的织物透叠",
+        dimensionLabel: "文明与地域 · 日本袭色目",
+        chapter: "《消失的古颜料》",
+        texture: "silk",
+        textureName: "平安双层生丝光泽",
+        pigmentFormula: "表白生丝 + 里苏芳植物染 (Caesalpinia sappan)",
+        composition: "kasane",
+        eraYear: "1008 AD",
+        inVault: false,
+        quote: "表白里赤花，隔着一层极薄的生丝，春樱的魂魄从衣袂深处透出来。",
+        quoteAuthor: "紫式部《源氏物语》衣配考",
+        story: "日本平安时代的“袭色目（Kasane no Irome）”不靠混合颜料调色，而是利用外层（表）与内衬（里）两层薄绢的物理透光叠加来呈现物候。“樱重”以纯白生丝覆于赤花染绢之上，行走间衣褶起伏，浮现出初春樱花将开未开的微妙晕染。",
+        masterpiece: "《源氏物语绘卷》竹河之卷 · 平安宫廷唐衣",
+        colors: [
+          { name: "表 · 白练生丝", hex: "#F5ECEE", ratio: 42 },
+          { name: "里 · 苏芳赤花", hex: "#9E3E52", ratio: 30 },
+          { name: "红梅袭透色", hex: "#E3738B", ratio: 18 },
+          { name: "早蕨嫩芽绿", hex: "#8A9A68", ratio: 10 }
+        ],
+        aiPrompt: "Japanese Heian period Kasane no Irome layered silk kimono aesthetic, translucent white silk over deep crimson plum #9E3E52 and soft sakura pink #E3738B, delicate woven silk sheen --ar 3:4"
+      },
+      {
+        id: "renaissance-ultramarine",
+        catalogNo: "EU-REN-1505",
+        title: "文艺复兴 · 圣母长袍之群青",
+        subtitle: "超越海洋之蓝 · 比黄金更昂贵的青金石研磨",
+        dimensionLabel: "文明与地域 · 欧洲古典与宗教色",
+        chapter: "《消失的古颜料》",
+        texture: "mineral",
+        textureName: "青金石晶体颗粒",
+        pigmentFormula: "天然青金石 Na₈₋₁₀Al₆Si₆O₂₄S₂₋₄ + 纯金箔",
+        composition: "golden",
+        eraYear: "1505 AD",
+        inVault: false,
+        quote: "在威尼斯画派的契约里，唯有最纯粹的阿富汗群青，才配得上圣母垂落的衣褶与神圣的恩典。",
+        quoteAuthor: "切尼诺·切尼尼《艺匠手册》",
+        story: "“群青（Ultramarine）”源于拉丁语“超越海洋（Ultra Mare）”。文艺复兴时期，青金石只能从阿富汗巴达赫尚矿脉万里跋涉运抵威尼斯。画师以松香、蜂蜡与碱液反复淘洗出最耀眼的深蓝结晶，其价格超越等重黄金，专门用于绘制圣母长袍。",
+        masterpiece: "乔凡尼·贝利尼《草地上的圣母》(1505, 伦敦国家美术馆)",
+        colors: [
+          { name: "真群青 (Ultramarine)", hex: "#122A68", ratio: 52 },
+          { name: "拜占庭金箔", hex: "#D4AF37", ratio: 22 },
+          { name: "威尼斯朱红", hex: "#8A2424", ratio: 16 },
+          { name: "铅锡高光黄", hex: "#E8C565", ratio: 10 }
+        ],
+        aiPrompt: "Italian Renaissance sacred oil painting palette, deep natural lapis lazuli ultramarine blue #122A68, antique gold leaf #D4AF37, Venetian red #8A2424, rich mineral pigment granules --ar 3:4"
+      },
+      {
+        id: "pompeii-fresco-red",
+        catalogNo: "EU-ROM-0079",
+        title: "庞贝古城 · 神秘别墅朱砂壁画",
+        subtitle: "公元79年火山灰封存的古罗马辰砂与埃及蓝",
+        dimensionLabel: "文明与地域 · 欧洲古典与宗教色",
+        chapter: "《消失的古颜料》",
+        texture: "mineral",
+        textureName: "古罗马湿壁画灰泥",
+        pigmentFormula: "西班牙天然辰砂 HgS + 人类最早合成颜料埃及蓝",
+        composition: "golden",
+        eraYear: "79 AD",
+        inVault: false,
+        quote: "维苏威火山的灰烬凝固了酒神的庆典，让两千年前的庞贝朱砂在黑暗地底依然炽热如初。",
+        quoteAuthor: "维特鲁威《建筑十书 · 颜料篇》",
+        story: "“庞贝红”是古罗马贵族别墅最昂贵的湿壁画底色，原料取自西班牙阿尔马登矿山的天然辰砂（硫化汞），画师在多层大理石粉灰泥尚未干透时将其压入墙体并涂蜡抛光，与人类最早的人工合成颜料“埃及蓝”交相辉映。",
+        masterpiece: "庞贝古城《神秘别墅壁画》(Villa dei Misteri, 79 AD)",
+        colors: [
+          { name: "庞贝辰砂红", hex: "#9E2A22", ratio: 50 },
+          { name: "古罗马埃及蓝", hex: "#1E4D78", ratio: 22 },
+          { name: "维苏威浮石米黄", hex: "#D8C29D", ratio: 18 },
+          { name: "炭化壁画黑褐", hex: "#231C1A", ratio: 10 }
+        ],
+        aiPrompt: "Ancient Pompeii Villa of the Mysteries Roman fresco color palette, rich cinnabar Pompeii red #9E2A22, antique Egyptian blue #1E4D78, warm travertine ochre #D8C29D, weathered lime fresco texture --ar 3:4"
+      },
+      {
+        id: "chefchaouen-morocco-blue",
+        catalogNo: "GEO-MAR-1471",
+        title: "摩洛哥舍夫沙万 · 迷城之蓝",
+        subtitle: "里夫山脉下的宗教清凉与石灰矿物粉刷",
+        dimensionLabel: "文明与地域 · 地域风物",
+        chapter: "《消失的古颜料》",
+        texture: "mineral",
+        textureName: "北非石灰矿物粉墙",
+        pigmentFormula: "天然群青粉 + 熟石灰 Ca(OH)₂ 手工涂刷",
+        composition: "space",
+        eraYear: "1471 AD",
+        inVault: false,
+        quote: "每一级台阶都浸透了天空与大海的倒影，行走在巷弄里，如同潜入安静的祈祷深海。",
+        quoteAuthor: "北非建筑色彩田野志",
+        story: "摩洛哥西北部里夫山脉中的舍夫沙万，世代居民用天然群青粉混合消石灰反复涂刷阶梯与拱门。粗粝的石灰墙面吸收正午烈日，折射出从钴蓝、天青到粉白的多层次冷调光谱，成为对抗撒哈拉热浪的视觉绿洲。",
+        masterpiece: "摩洛哥舍夫沙万麦地那老城阶梯建筑群",
+        colors: [
+          { name: "舍夫沙万钴蓝", hex: "#1D569E", ratio: 48 },
+          { name: "地中海天青", hex: "#6BA3D6", ratio: 26 },
+          { name: "石灰刷墙白", hex: "#ECEEF2", ratio: 16 },
+          { name: "撒哈拉陶罐褐", hex: "#C46D46", ratio: 10 }
+        ],
+        aiPrompt: "Chefchaouen Morocco blue medina architectural color slice, cobalt lime wash walls #1D569E, sky blue steps #6BA3D6, warm terracotta pot accent #C46D46, chalky mineral plaster texture --ar 3:4"
+      },
+      {
+        id: "jaipur-terracotta-pink",
+        catalogNo: "GEO-IND-1876",
+        title: "印度斋浦尔 · 风之宫殿砂岩粉",
+        subtitle: "拉贾斯坦邦的玫瑰色迎宾礼赞与赤铁砂岩",
+        dimensionLabel: "文明与地域 · 地域风物",
+        chapter: "《消失的古颜料》",
+        texture: "mineral",
+        textureName: "拉贾斯坦赤铁砂岩",
+        pigmentFormula: "拉贾斯坦氧化铁红砂岩 + 石灰胶结物",
+        composition: "space",
+        eraYear: "1876 AD",
+        inVault: false,
+        quote: "当夕阳掠过九百五十三扇蜂巢石窗，整座城市都在温暖的赤陶粉色中呼吸。",
+        quoteAuthor: "拉贾斯坦建筑美学档案",
+        story: "1876年，斋浦尔大公拉姆·辛格为迎接威尔士亲王，下令用当地富含氧化铁的红砂岩涂料将全城粉刷为象征热情好客的浅陶粉红，并立法永久保留这一城市色标。蜂巢状的风之宫殿在黄昏光线中呈现出温润而神圣的暖粉光谱。",
+        masterpiece: "斋浦尔风之宫殿 (Hawa Mahal, 1799 / 1876)",
+        colors: [
+          { name: "斋浦尔砂岩粉", hex: "#D98276", ratio: 54 },
+          { name: "琥珀堡金黄", hex: "#E0A952", ratio: 22 },
+          { name: "拉贾斯坦孔雀蓝", hex: "#15607A", ratio: 14 },
+          { name: "细密画象牙白", hex: "#F4EFEA", ratio: 10 }
+        ],
+        aiPrompt: "Jaipur Hawa Mahal terracotta sandstone pink #D98276, warm amber gold #E0A952, peacock blue inlay #15607A, fine sandstone mineral texture --ar 3:4"
+      },
+      {
+        id: "vermeer-pearl-light",
+        catalogNo: "ART-BAR-1665",
+        title: "维米尔 · 珍珠与北窗之光",
+        subtitle: "代尔夫特暗箱中的青金石蓝与铅锡柠檬黄",
+        dimensionLabel: "时代与艺术流派 · 大师调色盘",
+        chapter: "《印象派的光》",
+        texture: "impasto",
+        textureName: "古典油画厚涂微粒",
+        pigmentFormula: "青金石群青 + 铅锡黄 Pb₂SnO₄ + 铅白高光",
+        composition: "golden",
+        eraYear: "1665 AD",
+        inVault: true,
+        quote: "他并非画出了珍珠的轮廓，而是用一滴悬浮的铅白高光，锁住了北方清晨整间暗室的寂静。",
+        quoteAuthor: "荷兰黄金时代光影研究",
+        story: "约翰内斯·维米尔终生偏爱昂贵的天然群青与明快的铅锡黄。在深邃如天鹅绒的暗褐背景衬托下，少女头巾的群青与衣领的柠檬黄形成极致的互补冷暖张力，而耳畔那颗珍珠仅靠两笔高光与倒影，便在视网膜上产生了恒久的发光感。",
+        masterpiece: "维米尔《戴珍珠耳环的少女》(1665, 海牙莫瑞泰斯皇家美术馆)",
+        colors: [
+          { name: "代尔夫特群青", hex: "#1F3C6D", ratio: 40 },
+          { name: "铅锡柠檬黄", hex: "#D9A738", ratio: 30 },
+          { name: "暗箱天鹅绒褐", hex: "#1E1A17", ratio: 20 },
+          { name: "珍珠微光灰白", hex: "#E6E4DD", ratio: 10 }
+        ],
+        aiPrompt: "Johannes Vermeer master color study, deep ultramarine blue #1F3C6D, luminous lead-tin yellow #D9A738, dark chiaroscuro umber #1E1A17, glowing pearl highlight --ar 3:4"
+      },
+      {
+        id: "monet-water-lilies",
+        catalogNo: "ART-IMP-1916",
+        title: "莫奈 · 吉维尼睡莲池暮光",
+        subtitle: "消解物体边界的印象派颤动光谱",
+        dimensionLabel: "时代与艺术流派 · 大师调色盘",
+        chapter: "《印象派的光》",
+        texture: "impasto",
+        textureName: "印象派油画刀笔触",
+        pigmentFormula: "钴紫 Co₃(PO₄)₂ · 祖母绿 · 镉黄光学并置",
+        composition: "rothko",
+        eraYear: "1916 AD",
+        inVault: false,
+        quote: "物体的固有色并不存在，存在的只有空气、水波与光线在每一秒钟的共振。",
+        quoteAuthor: "克劳德·莫奈 · 吉维尼手记",
+        story: "晚年的莫奈在吉维尼花园的池塘边彻底抛弃了传统的黑色与土色底稿。他用紫罗兰、钴蓝、翠绿与珊瑚粉的短促并置笔触，在画布上重构了黄昏天光在水面上的漫反射，让观者的眼睛在退后三步时自行完成光学混合。",
+        masterpiece: "克劳德·莫奈《睡莲》巨幅联画（巴黎橘园美术馆藏）",
+        colors: [
+          { name: "暮光睡莲紫", hex: "#6E5A7F", ratio: 38 },
+          { name: "吉维尼池翠", hex: "#46736A", ratio: 32 },
+          { name: "睡莲花瓣粉", hex: "#E8C5C8", ratio: 18 },
+          { name: "水面落日暖金", hex: "#D49B54", ratio: 12 }
+        ],
+        aiPrompt: "Claude Monet Water Lilies impressionist color spectrum, shimmering violet #6E5A7F, pond emerald #46736A, soft lotus pink #E8C5C8, expressive impasto oil knife texture --ar 3:4"
+      },
+      {
+        id: "rothko-color-field",
+        catalogNo: "ART-MOD-1960",
+        title: "罗斯科 · 色域绘画的悲剧崇高",
+        subtitle: "悬浮在深渊之上的呼吸边缘与宗教式冥想",
+        dimensionLabel: "时代与艺术流派 · 大师调色盘",
+        chapter: "《印象派的光》",
+        texture: "impasto",
+        textureName: "薄涂晕染色域纹理",
+        pigmentFormula: "镉红 + 兔皮胶蛋彩 + 松节油二十层薄涂",
+        composition: "rothko",
+        eraYear: "1960 AD",
+        inVault: false,
+        quote: "我对色彩之间的关系不感兴趣，我只关心基本的人类情绪——悲剧、狂喜、宿命。在我的画前流泪的人，正经历着我作画时的宗教体验。",
+        quoteAuthor: "马克·罗斯科 (Mark Rothko)",
+        story: "罗斯科将稀释的油彩与蛋彩层层薄涂多达二十余层，让巨大的矩形色块边缘呈现出羽化般的呼吸感。他要求展厅灯光调至极暗，当观者站在距离画布45厘米处时，炽烈的朱红与深沉的紫褐仿佛从内部发光，直接将人包裹进静谧的宇宙剧场。",
+        masterpiece: "马克·罗斯科《No. 14, 1960》（旧金山现代艺术博物馆藏）",
+        colors: [
+          { name: "炽烈悲剧朱红", hex: "#A8281D", ratio: 45 },
+          { name: "悬浮余烬橘", hex: "#D15B26", ratio: 25 },
+          { name: "冥想深渊紫褐", hex: "#28151E", ratio: 20 },
+          { name: "静默画布炭黑", hex: "#120C0F", ratio: 10 }
+        ],
+        aiPrompt: "Mark Rothko abstract expressionist color field painting, glowing feathered rectangles of deep crimson #A8281D, burnt orange #D15B26, and abyssal plum #28151E, soft breathing edges --ar 3:4"
+      },
+      {
+        id: "wes-anderson-budapest",
+        catalogNo: "ART-CIN-2014",
+        title: "韦斯·安德森 · 布达佩斯大饭店",
+        subtitle: "绝对对称构图中的欧洲旧帝国糖果挽歌",
+        dimensionLabel: "时代与艺术流派 · 大师调色盘",
+        chapter: "《印象派的光》",
+        texture: "xuan",
+        textureName: "复古绒面与纸盒肌理",
+        pigmentFormula: "高明度粉彩 (Pastel Tint) + 皇家紫罗兰对比",
+        composition: "space",
+        eraYear: "2014 AD",
+        inVault: false,
+        quote: "在野蛮与战火降临之前，他用一盒门德尔甜点般的粉红与紫罗兰，守护着旧世界最后的体面与天真。",
+        quoteAuthor: "电影视觉美学志 · 茨威格致敬篇",
+        story: "韦斯·安德森以近乎偏执的居中对称构图和高明度复古粉彩闻名。在《布达佩斯大饭店》中，千禧玫瑰粉外墙、门童的深紫罗兰制服与大堂地毯的勃艮第红构成了一座微缩八音盒世界，用极致的甜美反衬消逝时代的感伤。",
+        masterpiece: "韦斯·安德森电影《布达佩斯大饭店》(The Grand Budapest Hotel, 2014)",
+        colors: [
+          { name: "门德尔甜点玫瑰粉", hex: "#E8A7B0", ratio: 46 },
+          { name: "门童制服紫罗兰", hex: "#592E64", ratio: 26 },
+          { name: "大堂天鹅绒红", hex: "#A61C28", ratio: 16 },
+          { name: "奶油糖霜黄", hex: "#F3D79B", ratio: 12 }
+        ],
+        aiPrompt: "Wes Anderson The Grand Budapest Hotel symmetrical aesthetic, pastel millenial pink #E8A7B0, lobby boy deep purple #592E64, velvet crimson #A61C28 --ar 3:4"
+      },
+      {
+        id: "synthetic-klein-mauveine",
+        catalogNo: "CHEM-MOD-1960",
+        title: "人造色彩史 · 克莱因蓝与苯胺紫",
+        subtitle: "从1856年化学意外到绝对精神性的观念之蓝",
+        dimensionLabel: "时代与艺术流派 · 人造色彩史",
+        chapter: "《消失的古颜料》",
+        texture: "mineral",
+        textureName: "合成树脂天鹅绒颗粒",
+        pigmentFormula: "IKB (群青干粉 + Rhodopas M60A) · 苯胺紫 C₂₆H₂₃N₄⁺",
+        composition: "rothko",
+        eraYear: "1856–1960",
+        inVault: false,
+        quote: "蓝色没有维度，它超越了一切维度。所有的颜色都会带来联想，唯有纯净的蓝直指无限的虚空。",
+        quoteAuthor: "伊夫·克莱因 (Yves Klein, 1957)",
+        story: "人类挣脱自然矿物束缚始于1856年18岁的帕金在合成奎宁时偶然发明的煤焦油染料“苯胺紫（Mauveine）”。一个世纪后，伊夫·克莱因使用合成树脂 Rhodopas M60A 固定群青干粉，创造出永不暗淡的哑光天鹅绒质感——国际克莱因蓝（IKB），与当代吸收99.965%光线的 Vantablack 共同改写了人造视觉边界。",
+        masterpiece: "伊夫·克莱因《IKB 191》(1962) & 帕金 1856 苯胺紫丝绸样本",
+        colors: [
+          { name: "国际克莱因蓝 (IKB)", hex: "#002FA7", ratio: 52 },
+          { name: "1856 帕金苯胺紫", hex: "#8D4E85", ratio: 22 },
+          { name: "蒂芙尼知更鸟蓝", hex: "#81D8D0", ratio: 16 },
+          { name: "Vantablack 极黑", hex: "#050507", ratio: 10 }
+        ],
+        aiPrompt: "International Klein Blue #002FA7 pure matte dry pigment texture, paired with 1856 Perkin Mauveine purple #8D4E85 and Vantablack void #050507 --ar 3:4"
+      },
+      {
+        id: "marquez-macondo-yellow",
+        catalogNo: "LIT-LAT-1967",
+        title: "马尔克斯 · 《百年孤独》马孔多之黄",
+        subtitle: "黄蝴蝶、炼金术黄金与宿命轮回的魔幻现实",
+        dimensionLabel: "情绪与通感 · 文学中的色彩",
+        chapter: "《文学的底色》",
+        texture: "xuan",
+        textureName: "梅尔基亚德斯羊皮卷",
+        pigmentFormula: "炼金术纯金意象 Au + 羊皮卷鞣酸铁褐",
+        composition: "golden",
+        eraYear: "1967 AD",
+        inVault: false,
+        quote: "无论马乌里肖·巴比伦走到哪里，成群的黄蝴蝶总是萦绕在他头顶，直到那场下了四年十一个月零两天的暴雨将马孔多冲刷殆尽。",
+        quoteAuthor: "加西亚·马尔克斯《百年孤独》",
+        story: "在马尔克斯的文学宇宙中，黄色是幸运与毁灭的一体两面：它是奥雷里亚诺上校反复熔炼又重铸的小金鱼，是马乌里肖·巴比伦随身的黄蝴蝶，也是乌尔苏拉失明前看到的太阳与教皇乘坐的黄色火车。炽热的金黄与古老羊皮卷的焦褐，构成了拉美魔幻现实主义的视觉底色。",
+        masterpiece: "加西亚·马尔克斯《百年孤独》(Cien años de soledad, 1967)",
+        colors: [
+          { name: "马孔多黄蝴蝶", hex: "#E5B822", ratio: 48 },
+          { name: "预言羊皮卷褐", hex: "#6E4B26", ratio: 24 },
+          { name: "失眠症铁锈红", hex: "#9E3B24", ratio: 16 },
+          { name: "热带暴雨深青", hex: "#2A3E3B", ratio: 12 }
+        ],
+        aiPrompt: "Magical realism literary color palette inspired by One Hundred Years of Solitude, luminous yellow butterflies #E5B822, ancient parchment brown #6E4B26, tropical storm teal #2A3E3B --ar 3:4"
+      },
+      {
+        id: "eileen-chang-desolation",
+        catalogNo: "LIT-CHN-1943",
+        title: "张爱玲 · 苍凉参差的葱绿配桃红",
+        subtitle: "“参差对照”美学下的旧上海旗袍与乱世余温",
+        dimensionLabel: "情绪与通感 · 文学中的色彩",
+        chapter: "《文学的底色》",
+        texture: "silk",
+        textureName: "旧上海织锦缎光泽",
+        pigmentFormula: "海派织锦缎葱绿 + 胭脂虫红洋红染",
+        composition: "kasane",
+        eraYear: "1943 AD",
+        inVault: false,
+        quote: "喜欢葱绿配桃红，那是一种参差的对照，像乱世里叮当作响的碎玉，热闹到了极处便是苍凉。",
+        quoteAuthor: "张爱玲《流言 · 对照记》",
+        story: "张爱玲在《自己的文章》中提出著名的“参差对照”色彩美学：她拒绝大红大绿的直白冲突，偏爱葱绿与桃红、柳绿与杏黄这种略带浑浊与微妙偏移的对比。在老上海昏黄的弄堂灯光下，织锦缎旗袍上的葱绿与胭脂桃红交错出繁华落尽的苍凉感。",
+        masterpiece: "张爱玲《传奇》《流言》初版装帧与色彩手记 (1943–1944)",
+        colors: [
+          { name: "旧旗袍葱绿", hex: "#5A8F76", ratio: 42 },
+          { name: "胭脂桃红", hex: "#D95B72", ratio: 30 },
+          { name: "第一炉沉香金", hex: "#785E3A", ratio: 16 },
+          { name: "白流苏月白", hex: "#D6DCE0", ratio: 12 }
+        ],
+        aiPrompt: "Eileen Chang 1940s Shanghai literary palette, scallion jade green #5A8F76 paired with peach rouge pink #D95B72 and antique gold #785E3A, vintage brocade silk texture --ar 3:4"
+      },
+      {
+        id: "kawabata-snow-country",
+        catalogNo: "LIT-JPN-1935",
+        title: "川端康成 · 《雪国》夜底之白",
+        subtitle: "穿过县界长长的隧道，车窗镜面里的银河与唇红",
+        dimensionLabel: "情绪与通感 · 文学中的色彩",
+        chapter: "《文学的底色》",
+        texture: "xuan",
+        textureName: "越后和纸与初雪结晶",
+        pigmentFormula: "越后缩雪晒白麻 + 蓝靛夜色 + 红花唇脂",
+        composition: "golden",
+        eraYear: "1935 AD",
+        inVault: false,
+        quote: "穿过县界长长的隧道，便是雪国。夜空下一片白茫茫，火车在信号所前停了下来。",
+        quoteAuthor: "川端康成《雪国》开篇",
+        story: "川端康成笔下的“雪国白”并非刺眼的纯白，而是被深邃夜色衬托出的冷冽微光。在起雾的火车玻璃窗上，驹子微红的脸颊倒影与窗外流逝的暮雪、寒星重叠在一起，形成日本物哀美学中纯粹而易碎的极简冷暖切片。",
+        masterpiece: "川端康成《雪国》(Snow Country, 1935–1947)",
+        colors: [
+          { name: "越后暮雪白", hex: "#F2F5F8", ratio: 50 },
+          { name: "夜底隧道深蓝", hex: "#1E2B42", ratio: 26 },
+          { name: "银河寒星银灰", hex: "#9AA6B8", ratio: 14 },
+          { name: "驹子映窗朱唇", hex: "#B8333A", ratio: 10 }
+        ],
+        aiPrompt: "Yasunari Kawabata Snow Country minimalist palette, pure snow white #F2F5F8 against deep night indigo #1E2B42, frosty silver #9AA6B8, warm vermilion #B8333A --ar 3:4"
+      },
+      {
+        id: "sakamoto-petrichor-piano",
+        catalogNo: "SYN-SND-1983",
+        title: "坂本龙一 · 雨后泥土与静默琴键",
+        subtitle: "听觉与嗅觉的通感转译 · 泛音列与潮湿苔痕",
+        dimensionLabel: "情绪与通感 · 声音与气味的通感",
+        chapter: "《文学的底色》",
+        texture: "xuan",
+        textureName: "雨雾和纸与青苔微粒",
+        pigmentFormula: "土臭素 (Geosmin) 嗅觉通感 × 泛音衰减光谱",
+        composition: "rothko",
+        eraYear: "1983–2023",
+        inVault: false,
+        quote: "当最后一个泛音在湿润的空气里消散，雨后泥土的气息（Petrichor）便替钢琴继续弹奏。",
+        quoteAuthor: "声音与气味通感实验室 · 致敬 Ryuichi Sakamoto",
+        story: "如果将坂本龙一晚年钢琴曲中的留白与雨后泥土散发的土臭素（Geosmin）转化为视觉光谱，它必然是一组具有缓慢呼吸感的低饱和度渐变：京都庭院被雨水打湿的青苔、泛黄的旧象牙琴键，以及冰冷钢弦折射出的一缕银灰。",
+        masterpiece: "坂本龙一《async》&《Merry Christmas Mr. Lawrence》通感色谱",
+        colors: [
+          { name: "雨后泥土 (Petrichor)", hex: "#3B443F", ratio: 44 },
+          { name: "雨打青苔绿", hex: "#6C7A65", ratio: 26 },
+          { name: "岁月象牙琴键", hex: "#DFD9C8", ratio: 18 },
+          { name: "延音踏板钢灰", hex: "#7A848E", ratio: 12 }
+        ],
+        aiPrompt: "Synesthetic color translation of Ryuichi Sakamoto piano music and petrichor scent after rain, muted moss green #6C7A65, wet slate earth #3B443F, aged ivory piano key #DFD9C8 --ar 3:4"
+      },
+      {
+        id: "jwst-pillars-of-creation",
+        catalogNo: "COS-JWST-2022",
+        title: "宇宙深空 · 韦伯望远镜创生之柱",
+        subtitle: "跨越6500光年的红外光谱伪彩与星际尘埃",
+        dimensionLabel: "自然与物候 · 宇宙与深空造化",
+        chapter: "《宇宙深空》",
+        texture: "fluid",
+        textureName: "星际分子云数字流体",
+        pigmentFormula: "NIRCam 近红外波段 0.9–4.7μm 色序映射",
+        composition: "golden",
+        eraYear: "2022 AD",
+        inVault: false,
+        quote: "我们身体里的每一个重原子，都曾穿行于这片琥珀金与深空青交织的恒星育婴室。",
+        quoteAuthor: "NASA / ESA / CSA 韦伯望远镜科学视觉组",
+        story: "人眼无法直接看见红外线，因此太空望远镜的“伪彩色（Chromatic Ordering）”是一门严谨的科学与艺术：最短波长的近红外光被赋予深海青蓝，中等波长的星际尘埃映射为琥珀古铜金，而正在诞生的新恒星喷流则绽放出炽烈的暗红，在深邃宇宙黑底上凝结成壮丽的现代神话。",
+        masterpiece: "詹姆斯·韦伯太空望远镜《创生之柱》(Pillars of Creation NIRCam, 2022)",
+        colors: [
+          { name: "深空背景极黑", hex: "#090A14", ratio: 42 },
+          { name: "电离星云青蓝", hex: "#1B6B93", ratio: 26 },
+          { name: "星际尘埃琥珀金", hex: "#B87333", ratio: 20 },
+          { name: "恒星喷流暗红", hex: "#7A1F3D", ratio: 12 }
+        ],
+        aiPrompt: "James Webb Space Telescope Pillars of Creation cosmic color palette, deep space obsidian #090A14, ionized nebula cyan #1B6B93, stardust copper gold #B87333, protostar crimson #7A1F3D --ar 3:4"
+      },
+      {
+        id: "wang-ximeng-thousand-li",
+        catalogNo: "NAT-SONG-1113",
+        title: "千里江山 · 宋代大青绿矿物谱",
+        subtitle: "十八岁王希孟笔下的蓝铜矿石青与孔雀石绿",
+        dimensionLabel: "自然与物候 · 山河矿物造化",
+        chapter: "《敦煌遗梦》",
+        texture: "mineral",
+        textureName: "蓝铜矿与孔雀石结晶",
+        pigmentFormula: "蓝铜矿 Cu₃(CO₃)₂(OH)₂ + 孔雀石 + 赭石山脚",
+        composition: "kasane",
+        eraYear: "1113 AD",
+        inVault: false,
+        quote: "咫尺千里，石青与石绿在熟绢正反两面层层罩染，让北宋的群峰在千年后依然翠色欲流。",
+        quoteAuthor: "蔡京题跋《千里江山图》考",
+        story: "《千里江山图》代表了中国青绿山水与自然矿物美学的巅峰：画师先以赭石铺陈山体阴阳，再将上等蓝铜矿（石青）与孔雀石（石绿）按颗粒粗细分为头青、二青、头绿、三绿，甚至在绢本背面托染石绿，使苍翠山岚呈现出宝石般的深邃厚度。",
+        masterpiece: "北宋 · 王希孟《千里江山图》卷（北京故宫博物院藏）",
+        colors: [
+          { name: "头青 · 蓝铜矿", hex: "#1B4F72", ratio: 42 },
+          { name: "二绿 · 孔雀石", hex: "#2E8B6E", ratio: 30 },
+          { name: "山脚代赭石", hex: "#9C6442", ratio: 16 },
+          { name: "熟绢古水色", hex: "#D6C8AC", ratio: 12 }
+        ],
+        aiPrompt: "Song Dynasty Wang Ximeng A Thousand Li of Rivers and Mountains blue-green landscape mineral palette, azurite blue #1B4F72, malachite emerald #2E8B6E, warm ochre #9C6442 --ar 3:4"
+      },
+      {
+        id: "iceland-aurora-basalt",
+        catalogNo: "NAT-ICE-64N",
+        title: "冰岛维克 · 玄武岩黑沙滩与极光",
+        subtitle: "北纬64°火山灰、北大西洋冷浪与电离氧绿光",
+        dimensionLabel: "自然与物候 · 极地自然奇观",
+        chapter: "《宇宙深空》",
+        texture: "fluid",
+        textureName: "极光磁流体与玄武砂",
+        pigmentFormula: "高空100km氧原子跃迁 557.7nm 绿光 + 玄武岩玻璃",
+        composition: "rothko",
+        eraYear: "极地物候",
+        inVault: false,
+        quote: "当太阳风撞击地球磁层，翠绿的光幕垂落在千万年冷却的黑色火山玄武岩柱之上。",
+        quoteAuthor: "北极圈自然光谱档案",
+        story: "冰岛南岸维克镇的雷尼斯黑沙滩由火山喷发熔岩遇海水急速冷却碎裂而成，纯粹的玄武岩黑吸收了一切杂光，使海浪白沫与夜空中波长 557.7 纳米的氧原子极光绿呈现出超现实的高对比发光张力。",
+        masterpiece: "冰岛维克雷尼斯黑沙滩 (Reynisfjara) 极光物候切片",
+        colors: [
+          { name: "火山玄武岩黑", hex: "#141619", ratio: 46 },
+          { name: "电离氧极光绿", hex: "#38C682", ratio: 26 },
+          { name: "北大西洋冰川蓝", hex: "#4A789C", ratio: 16 },
+          { name: "冷浪泡沫霜白", hex: "#DCE4E8", ratio: 12 }
+        ],
+        aiPrompt: "Iceland Reynisfjara black basalt sand beach and aurora borealis palette, volcanic black #141619, luminous aurora green #38C682, glacial ocean blue #4A789C --ar 3:4"
+      },
+      {
+        id: "kyoto-frost-maple-bamboo",
+        catalogNo: "NAT-JPN-SOL18",
+        title: "岚山霜降 · 幽竹青苔与古枫丹红",
+        subtitle: "二十四节气之霜降 · 花青素与叶绿素的季节交响",
+        dimensionLabel: "自然与物候 · 东方四时节气",
+        chapter: "《文学的底色》",
+        texture: "xuan",
+        textureName: "霜降草木与和纸纤维",
+        pigmentFormula: "叶片花青素 (Anthocyanin) 激增 × 叶绿素消退",
+        composition: "kasane",
+        eraYear: "节气 · 霜降",
+        inVault: false,
+        quote: "霜叶红于二月花，在京都岚山幽暗的孟宗竹林深处，第一缕寒霜点燃了鸡爪槭的末梢。",
+        quoteAuthor: "二十四节气物候色谱 · 霜降候",
+        story: "霜降时节昼夜温差骤增，槭树叶片中的叶绿素加速分解，糖分转化为绚烂的花青素。未褪尽的孟宗竹青、潮湿庭院里的杉苔暗绿，与枝头如火焰般燃起的霜红交织，构成了东亚秋季最具生命力的自然过渡色。",
+        masterpiece: "京都岚山祐斋亭 · 霜降时节圆窗倒影色谱",
+        colors: [
+          { name: "古寺鸡爪槭红", hex: "#B03028", ratio: 40 },
+          { name: "岚山孟宗竹青", hex: "#3F6253", ratio: 28 },
+          { name: "秋日银杏霜黄", hex: "#D99B38", ratio: 18 },
+          { name: "幽庭湿润黑土", hex: "#1E221F", ratio: 14 }
+        ],
+        aiPrompt: "Kyoto Arashiyama autumn frost season phenology palette, deep Japanese maple crimson #B03028, bamboo grove green #3F6253, ginkgo gold #D99B38, wet moss shadow #1E221F --ar 3:4"
+      },
+      {
+        id: "mariana-bioluminescence",
+        catalogNo: "NAT-SEA-4000M",
+        title: "深海四千米 · 荧光水母与热泉幽蓝",
+        subtitle: "阳光永不可及之境 · 荧光素酶的生命自发光",
+        dimensionLabel: "自然与物候 · 深海生命造化",
+        chapter: "《宇宙深空》",
+        texture: "fluid",
+        textureName: "深海生物荧光流体",
+        pigmentFormula: "腔肠素 (Coelenterazine) + 绿色荧光蛋白 GFP",
+        composition: "rothko",
+        eraYear: "深海生态",
+        inVault: false,
+        quote: "在没有太阳的四千米深渊，生命把自己炼成了星辰，每一次脉动都是幽蓝与霓虹的诗行。",
+        quoteAuthor: "深海生物光学考察手记",
+        story: "海水在 200 米以下便吞噬了几乎所有红黄波段的光，只余下 475 纳米左右的蓝绿光能穿透最远。深海管水母与栉水母进化出荧光素与绿色荧光蛋白（GFP），在绝对漆黑的海底释放出纯粹的电光青与珊瑚生物霓虹。",
+        masterpiece: "蒙特雷湾深海研究所 (MBARI) 4000米生物发光光谱记录",
+        colors: [
+          { name: "深渊海沟极夜蓝", hex: "#06101E", ratio: 48 },
+          { name: "水母荧光电青", hex: "#00C8E8", ratio: 24 },
+          { name: "GFP 生物荧光绿", hex: "#4CE8A0", ratio: 16 },
+          { name: "管水母微光珊瑚", hex: "#E05268", ratio: 12 }
+        ],
+        aiPrompt: "Deep ocean 4000m bioluminescence color palette, abyssal midnight blue #06101E, glowing jellyfish electric cyan #00C8E8, GFP bioluminescent green #4CE8A0, coral siphonophore glow #E05268 --ar 3:4"
+      }
+    ];
+
+    const HISTORICAL_PIGMENT_DB = [
+      { name: "阿富汗青金石群青 (Ultramarine)", hex: "#1F3C6D", era: "17世纪 · 维米尔 / 文艺复兴" },
+      { name: "宋代汝窑天水碧 (Celadon Sky)", hex: "#7397AB", era: "12世纪 · 北宋汝窑官造" },
+      { name: "千里江山头青 (Azurite Blue)", hex: "#1B4F72", era: "1113年 · 王希孟《千里江山图》" },
+      { name: "敦煌孔雀石绿 (Malachite)", hex: "#3E7B67", era: "5世纪 · 莫高窟北魏壁画" },
+      { name: "敦煌赤铁土红 (Ochre Terracotta)", hex: "#8C3F2F", era: "5世纪 · 丝绸之路壁画底色" },
+      { name: "庞贝辰砂红 (Pompeii Cinnabar)", hex: "#9E2A22", era: "公元79年 · 古罗马湿壁画" },
+      { name: "代尔夫特铅锡黄 (Lead-Tin Yellow)", hex: "#D9A738", era: "17世纪 · 荷兰黄金时代" },
+      { name: "平安红梅袭 (Heian Plum Silk)", hex: "#9E3E52", era: "11世纪 · 日本《源氏物语》" },
+      { name: "吉维尼睡莲暮紫 (Giverny Violet)", hex: "#6E5A7F", era: "20世纪初 · 莫奈印象派光谱" },
+      { name: "张爱玲老上海葱绿 (Scallion Jade)", hex: "#5A8F76", era: "1940年代 · 海派文学装帧" },
+      { name: "雨后泥土青苔 (Sakamoto Moss)", hex: "#6C7A65", era: "当代 · 听觉与嗅觉通感光谱" },
+      { name: "斋浦尔砂岩玫瑰粉 (Jaipur Pink)", hex: "#D98276", era: "19世纪 · 印度风之宫殿" },
+      { name: "越后雪国月白 (Snow Moon White)", hex: "#E6E4DD", era: "川端康成《雪国》 / 宋代月白" }
+    ];
+
+    // =========================================================================
+    // 2. STATE & HELPERS
+    // =========================================================================
+    const state = {
+      chapter: "all",
+      currentIndex: 0,
+      activeSampleSlot: 0,
+      extractedColors: [
+        { hex: "#7397AB", ratio: 42, x: 180, y: 110 },
+        { hex: "#3B4B52", ratio: 28, x: 340, y: 160 },
+        { hex: "#5A8F76", ratio: 18, x: 420, y: 210 },
+        { hex: "#9E3E52", ratio: 12, x: 220, y: 260 }
+      ]
+    };
+
+    function getFilteredList() {
+      const list = PALETTES.filter(p => {
+        if (state.chapter === "all") return true;
+        if (state.chapter === "vault") return p.inVault;
+        return p.chapter === state.chapter;
+      });
+      return list.length > 0 ? list : PALETTES;
+    }
+
+    function getCurrentPalette() {
+      const list = getFilteredList();
+      if (state.currentIndex >= list.length) state.currentIndex = 0;
+      if (state.currentIndex < 0) state.currentIndex = list.length - 1;
+      return list[state.currentIndex];
+    }
+
+    function hexToRgb(hex) {
+      const clean = (hex || "#000000").replace("#", "");
+      const num = parseInt(clean, 16) || 0;
+      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+    }
+
+    function colorDistance(hex1, hex2) {
+      const c1 = hexToRgb(hex1), c2 = hexToRgb(hex2);
+      const rmean = (c1.r + c2.r) / 2;
+      const dr = c1.r - c2.r, dg = c1.g - c2.g, db = c1.b - c2.b;
+      return Math.sqrt((((512 + rmean) * dr * dr) >> 8) + 4 * dg * dg + (((767 - rmean) * db * db) >> 8));
+    }
+
+    function matchHistoricalPigment(hex) {
+      let best = HISTORICAL_PIGMENT_DB[0], minDist = Infinity;
+      for (const item of HISTORICAL_PIGMENT_DB) {
+        const d = colorDistance(hex, item.hex);
+        if (d < minDist) { minDist = d; best = item; }
+      }
+      const similarity = Math.max(76, Math.min(99.2, 100 - minDist / 7.2)).toFixed(1);
+      return { ...best, similarity };
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "rounded-full border border-white/15 bg-[#14141C]/95 backdrop-blur-md px-4 py-2 text-xs text-white shadow-2xl flex items-center gap-2 transition-all duration-300";
+      el.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-amber-300"></span><span>${msg}</span>`;
+      box.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        setTimeout(() => el.remove(), 300);
+      }, 2200);
+    }
+
+    function copyText(text, label) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(`已复制 ${label}`));
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast(`已复制 ${label}`);
+      }
+    }
+
+    function updateHeaderBadges() {
+      document.getElementById("totalCountNum").textContent = PALETTES.length;
+      document.getElementById("vaultCountNum").textContent = PALETTES.filter(p => p.inVault).length;
+    }
+
+    function updateSpotlightAmbient(p) {
+      document.documentElement.style.setProperty("--spot-1", p.colors[0]?.hex || "#7397AB");
+      document.documentElement.style.setProperty("--spot-2", p.colors[1]?.hex || "#9BB4BF");
+      document.documentElement.style.setProperty("--spot-3", p.colors[2]?.hex || "#4A5860");
+      const dot = document.getElementById("brandDot");
+      if (dot) dot.style.backgroundColor = p.colors[0]?.hex || "#7397AB";
+    }
+
+    // =========================================================================
+    // 3. UNIFIED SINGLE-CARD STAGE RENDERING (ALL 20 PALETTES)
+    // =========================================================================
+    function getTexClass(tex) {
+      const map = { mineral: "tex-mineral", xuan: "tex-xuan", silk: "tex-silk", impasto: "tex-impasto", crackle: "tex-crackle", fluid: "tex-fluid" };
+      return map[tex] || "tex-mineral";
+    }
+
+    function renderArtworkComposition(p) {
+      const c = p.colors;
+      const texClass = getTexClass(p.texture);
+      const total = c.reduce((s, item) => s + item.ratio, 0) || 100;
+      const r = c.map(item => Math.round((item.ratio / total) * 100));
+
+      if (p.composition === "rothko") {
+        return `
+          <div class="relative w-full h-full flex flex-col p-4 gap-2.5" style="background:${c[3]?.hex || '#0D0D11'}">
+            <div class="w-full rounded-xl transition-all duration-200" style="height:${r[0]}%; background:${c[0].hex}; box-shadow: 0 0 32px ${c[0].hex}66;"></div>
+            <div class="w-full rounded-xl transition-all duration-200" style="height:${r[1]}%; background:${c[1].hex};"></div>
+            <div class="w-full flex-1 rounded-xl transition-all duration-200" style="background:${c[2].hex};"></div>
+            <div class="texture-layer ${texClass}" style="opacity:0.52"></div>
+          </div>
+        `;
+      } else if (p.composition === "kasane") {
+        return `
+          <div class="relative w-full h-full overflow-hidden" style="background:${c[1].hex}">
+            <div class="absolute inset-0 transition-all duration-200" style="background: linear-gradient(135deg, ${c[0].hex} 0%, ${c[0].hex} ${r[0]}%, transparent ${r[0] + 0.5}%);"></div>
+            <div class="absolute inset-0 transition-all duration-200" style="background: linear-gradient(155deg, transparent ${100 - r[2] - r[3]}%, ${c[2].hex} ${100 - r[2] - r[3] + 0.5}%, ${c[2].hex} ${100 - r[3]}%, ${c[3]?.hex || c[0].hex} ${100 - r[3] + 0.5}%);"></div>
+            <div class="texture-layer ${texClass}" style="opacity:0.54"></div>
+          </div>
+        `;
+      } else if (p.composition === "space") {
+        return `
+          <div class="relative w-full h-full overflow-hidden" style="background:${c[0].hex}">
+            <div class="absolute top-6 left-6 right-6 bottom-12 border border-white/25 rounded-t-full flex items-end justify-center overflow-hidden transition-all duration-200" style="background: linear-gradient(180deg, ${c[1].hex} 0%, ${c[2].hex} 100%);">
+              <div class="rounded-t-full shadow-2xl transition-all duration-200" style="width:${Math.max(38, r[0])}%; height:${Math.max(40, 100 - r[3] * 1.5)}%; background:${c[3]?.hex || c[0].hex}"></div>
+            </div>
+            <div class="texture-layer ${texClass}" style="opacity:0.48"></div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="relative w-full h-full flex flex-col overflow-hidden bg-black/40">
+            <div class="w-full transition-all duration-200" style="height:${r[0]}%; background:${c[0].hex}"></div>
+            <div class="w-full flex flex-1">
+              <div class="h-full transition-all duration-200" style="width:${Math.round((r[1] / (r[1] + r[2] + r[3] || 1)) * 100)}%; background:${c[1].hex}"></div>
+              <div class="h-full flex-1 flex flex-col">
+                <div class="w-full transition-all duration-200" style="height:${Math.round((r[2] / (r[2] + r[3] || 1)) * 100)}%; background:${c[2].hex}"></div>
+                <div class="w-full flex-1 transition-all duration-200" style="background:${c[3]?.hex || c[0].hex}"></div>
+              </div>
+            </div>
+            <div class="texture-layer ${texClass}" style="opacity:0.5"></div>
+          </div>
+        `;
+      }
+    }
+
+    function renderUnifiedStage(animate = false) {
+      const list = getFilteredList();
+      const p = getCurrentPalette();
+      const stageEl = document.getElementById("unifiedStage");
+
+      updateSpotlightAmbient(p);
+
+      if (animate) {
+        stageEl.classList.remove("animate-stage-switch");
+        void stageEl.offsetWidth;
+        stageEl.classList.add("animate-stage-switch");
+      }
+
+      const total = p.colors.reduce((s, item) => s + item.ratio, 0) || 100;
+      const ratios = p.colors.map(item => Math.round((item.ratio / total) * 100));
+
+      stageEl.innerHTML = `
+        <!-- ======================================================= -->
+        <!-- LEFT 5 COLS: PURE 3:4 GOLDEN-RATIO TEXTURED ARTWORK     -->
+        <!-- ======================================================= -->
+        <div class="md:col-span-5 flex flex-col justify-between">
+          <div id="artworkCanvasBox" class="aspect-[3/4] w-full rounded-2xl overflow-hidden border border-white/15 shadow-2xl relative bg-[#08080A]">
+            ${renderArtworkComposition(p)}
+            <!-- Subtle Micro-Texture Pill in Top Corner -->
+            <div class="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+              <span class="rounded-full bg-black/65 backdrop-blur-md border border-white/15 px-3 py-1 text-[10px] font-mono-code text-white/90">
+                物性微纹理 · ${p.textureName}
+              </span>
+              <span class="rounded-full bg-black/65 backdrop-blur-md border border-white/10 px-2.5 py-1 text-[10px] font-mono-code text-amber-200/90">
+                3:4
+              </span>
+            </div>
+          </div>
+
+          <!-- Composition Style Switcher directly below 3:4 canvas -->
+          <div class="mt-3 flex items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.02] px-3 py-1.5 text-[11px]">
+            <span class="text-neutral-500">构图</span>
+            <div class="flex items-center gap-1">
+              <button data-comp="golden" class="px-2 py-0.5 rounded ${p.composition === 'golden' ? 'bg-white/15 text-white font-medium' : 'text-neutral-400 hover:text-white'} transition">黄金几何</button>
+              <button data-comp="rothko" class="px-2 py-0.5 rounded ${p.composition === 'rothko' ? 'bg-white/15 text-white font-medium' : 'text-neutral-400 hover:text-white'} transition">色域呼吸</button>
+              <button data-comp="kasane" class="px-2 py-0.5 rounded ${p.composition === 'kasane' ? 'bg-white/15 text-white font-medium' : 'text-neutral-400 hover:text-white'} transition">袭色透叠</button>
+              <button data-comp="space" class="px-2 py-0.5 rounded ${p.composition === 'space' ? 'bg-white/15 text-white font-medium' : 'text-neutral-400 hover:text-white'} transition">空间拱门</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================= -->
+        <!-- RIGHT 7 COLS: STORY + LIVE RATIO SLIDER + EXPORT        -->
+        <!-- ======================================================= -->
+        <div class="md:col-span-7 flex flex-col justify-between space-y-4">
+
+          <!-- 1. Top Curatorial Header & Story -->
+          <div class="space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+              <div class="flex flex-wrap items-center gap-2 font-mono-code text-xs text-neutral-400">
+                <span class="text-amber-300/90">${p.catalogNo}</span>
+                <span>·</span>
+                <span>${p.eraYear}</span>
+                <span>·</span>
+                <span class="text-neutral-300">${p.chapter}</span>
+                <span class="hidden sm:inline text-neutral-500">(${p.dimensionLabel})</span>
+              </div>
+              <button data-action="vault" class="rounded-full border ${p.inVault ? 'border-amber-300/50 bg-amber-300/15 text-amber-200' : 'border-white/10 bg-white/[0.03] text-neutral-400 hover:text-white'} px-3 py-1 text-xs transition">
+                ${p.inVault ? '★ 已收藏' : '☆ 收藏'}
+              </button>
+            </div>
+
+            <div>
+              <h1 class="font-serif-museum text-2xl sm:text-3xl font-semibold text-white tracking-wide">${p.title}</h1>
+              <p class="text-xs sm:text-sm text-neutral-400 mt-1">${p.subtitle} · 关联名作：<span class="text-neutral-200">${p.masterpiece}</span></p>
+              ${p.pigmentFormula ? `<div class="mt-1.5 inline-block rounded-md bg-white/[0.04] border border-white/10 px-2.5 py-0.5 font-mono-code text-[11px] text-amber-200/85">化学/光谱构成：${p.pigmentFormula}</div>` : ''}
+            </div>
+
+            <blockquote class="border-l-2 border-amber-300/75 pl-4 py-1.5 font-serif-museum text-sm sm:text-base text-neutral-100 italic leading-relaxed bg-white/[0.02] rounded-r-xl">
+              “${p.quote}”
+              <footer class="text-xs text-neutral-400 not-italic mt-1">—— ${p.quoteAuthor}</footer>
+            </blockquote>
+
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              ${p.story}
+            </p>
+          </div>
+
+          <!-- 2. Live Ratio Slider & Click-to-Copy Swatches -->
+          <div class="space-y-3 rounded-2xl bg-black/45 border border-white/10 p-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span class="text-neutral-300 font-medium">实时色块比例调节 (<span id="ratioTextLabel" class="font-mono-code text-amber-200">${ratios.join(" : ")}%</span>)</span>
+              <div class="flex items-center gap-2 text-[11px]">
+                <button data-action="preset631" class="rounded-md border border-white/10 bg-white/5 hover:bg-white/15 px-2 py-0.5 text-neutral-300 transition">6:3:1 黄金律</button>
+                <button data-action="presetEqual" class="rounded-md border border-white/10 bg-white/5 hover:bg-white/15 px-2 py-0.5 text-neutral-300 transition">均等光谱</button>
+              </div>
+            </div>
+
+            <!-- Live Proportional Strip -->
+            <div id="liveStripBar" class="h-7 w-full rounded-xl overflow-hidden flex border border-white/15">
+              ${p.colors.map((c, idx) => `
+                <button
+                  data-copy-hex="${c.hex}"
+                  data-copy-name="${c.name}"
+                  style="width:${ratios[idx]}%; background:${c.hex}"
+                  class="h-full transition-all duration-150 hover:opacity-90"
+                  title="点击复制 ${c.name} (${c.hex})"
+                ></button>
+              `).join("")}
+            </div>
+
+            <!-- Smooth Lead Weight Slider (Updates Left 3:4 Artwork in Real Time) -->
+            <input
+              id="leadRatioSlider"
+              type="range"
+              min="20"
+              max="72"
+              value="${ratios[0]}"
+              class="w-full"
+              title="左右拖动滑块，实时改变左侧 3:4 画幅的色块比例"
+            />
+
+            <!-- 4 Clickable Swatch Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+              ${p.colors.map((c) => `
+                <button data-copy-hex="${c.hex}" data-copy-name="${c.name}" class="group text-left rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] hover:border-white/25 p-2 transition flex items-center gap-2">
+                  <span class="h-6 w-6 rounded-lg border border-white/20 shrink-0 shadow" style="background:${c.hex}"></span>
+                  <div class="min-w-0">
+                    <div class="text-[11px] font-medium text-neutral-200 truncate">${c.name}</div>
+                    <div class="font-mono-code text-[10px] text-neutral-400 group-hover:text-amber-200">${c.hex}</div>
+                  </div>
+                </button>
+              `).join("")}
+            </div>
+          </div>
+
+          <!-- 3. Bottom Creator Export Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <div class="flex items-center gap-2">
+              <button data-action="copy-css" class="rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 px-4 py-2.5 text-xs text-neutral-200 transition">
+                复制 CSS 渐变
+              </button>
+              <button data-action="copy-prompt" class="rounded-xl border border-white/15 bg-white/[0.04] hover:bg-white/10 px-4 py-2.5 text-xs text-neutral-200 transition">
+                复制 AI 绘画 Prompt
+              </button>
+            </div>
+            <button data-action="poster" class="rounded-xl bg-white text-black hover:bg-neutral-200 px-5 py-2.5 text-xs font-semibold transition shadow-lg">
+              ↓ 保存 3:4 极简黑底海报
+            </button>
+          </div>
+
+        </div>
+      `;
+
+      // Update Bottom Index Readout & Pagination Dots
+      document.getElementById("cardIndexReadout").textContent =
+        `${String(state.currentIndex + 1).padStart(2, "0")} / ${String(list.length).padStart(2, "0")} · ${p.title}`;
+
+      const dotsEl = document.getElementById("paginationDots");
+      dotsEl.innerHTML = list.map((item, idx) => {
+        const active = idx === state.currentIndex;
+        return `
+          <button
+            data-jump="${idx}"
+            class="h-2.5 rounded-full transition-all duration-300 ${active ? 'w-8 ring-1 ring-white/70' : 'w-2.5 opacity-45 hover:opacity-100'}"
+            style="background:${item.colors[0].hex}"
+            title="${idx + 1}. ${item.title}"
+          ></button>
+        `;
+      }).join("");
+    }
+
+    function stepCard(delta) {
+      const list = getFilteredList();
+      state.currentIndex = (state.currentIndex + delta + list.length) % list.length;
+      renderUnifiedStage(true);
+    }
+
+    // =========================================================================
+    // 4. 3:4 POSTER GENERATOR
+    // =========================================================================
+    function openPoster(palette) {
+      const modal = document.getElementById("posterModal");
+      const canvas = document.getElementById("posterCanvas");
+      document.getElementById("posterTitleText").textContent = `${palette.title} · 3:4 展签海报`;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+      ctx.fillStyle = "#08080A";
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.strokeStyle = "rgba(255,255,255,0.14)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(32, 32, w - 64, h - 64);
+
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      ctx.font = "500 15px 'JetBrains Mono', monospace";
+      ctx.fillText(`CHROMA MUSEUM · ${palette.catalogNo}`, 60, 74);
+      ctx.textAlign = "right";
+      ctx.fillText(palette.eraYear, w - 60, 74);
+      ctx.textAlign = "left";
+
+      const artX = 60, artY = 100, artW = w - 120, artH = 510;
+      const total = palette.colors.reduce((s, c) => s + c.ratio, 0) || 100;
+      let curX = artX;
+      palette.colors.forEach((c, idx) => {
+        const sw = idx === palette.colors.length - 1 ? (artX + artW - curX) : Math.round(artW * (c.ratio / total));
+        ctx.fillStyle = c.hex;
+        ctx.fillRect(curX, artY, sw, artH);
+        curX += sw;
+      });
+
+      ctx.strokeStyle = "rgba(255,255,255,0.2)";
+      ctx.strokeRect(artX, artY, artW, artH);
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "600 32px 'Noto Serif SC', serif";
+      ctx.fillText(palette.title, 60, 665);
+
+      ctx.fillStyle = "rgba(217,167,56,0.9)";
+      ctx.font = "400 17px 'Inter', sans-serif";
+      ctx.fillText(`${palette.subtitle} · ${palette.textureName}`, 60, 698);
+
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
+      ctx.font = "italic 18px 'Noto Serif SC', serif";
+      ctx.fillText(`“${palette.quote.slice(0, 32)}”`, 60, 748);
+
+      const chipY = 865;
+      const chipW = (w - 120) / palette.colors.length;
+      palette.colors.forEach((c, i) => {
+        const cx = 60 + i * chipW;
+        ctx.fillStyle = c.hex;
+        ctx.fillRect(cx, chipY, 22, 22);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "500 13px 'JetBrains Mono', monospace";
+        ctx.fillText(c.hex, cx + 30, chipY + 16);
+      });
+
+      ctx.fillStyle = "rgba(255,255,255,0.32)";
+      ctx.font = "400 13px 'JetBrains Mono', monospace";
+      ctx.fillText("色界 CHROMA MUSEUM — 世界色彩与审美切片馆", 60, 945);
+    }
+
+    // =========================================================================
+    // 5. LIGHTWEIGHT PHOTO PIGMENT MATCHER MODAL
+    // =========================================================================
+    let drawCurrentScene = null;
+
+    function loadPresetScene(scene) {
+      const canvas = document.getElementById("samplerCanvas");
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+
+      drawCurrentScene = () => {
+        if (scene === "jiangnan") {
+          const g = ctx.createLinearGradient(0, 0, 0, h);
+          g.addColorStop(0, "#9BB4BF");
+          g.addColorStop(0.55, "#7397AB");
+          g.addColorStop(1, "#3B4B52");
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = "#5A8F76";
+          ctx.beginPath(); ctx.arc(410, 190, 85, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#9E3E52";
+          ctx.beginPath(); ctx.arc(210, 260, 45, 0, Math.PI * 2); ctx.fill();
+        } else if (scene === "dunhuang") {
+          const g = ctx.createLinearGradient(0, 0, w, h);
+          g.addColorStop(0, "#2B5B84");
+          g.addColorStop(0.5, "#D9A738");
+          g.addColorStop(1, "#8C3F2F");
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = "#3E7B67";
+          ctx.beginPath(); ctx.arc(200, 190, 75, 0, Math.PI * 2); ctx.fill();
+        } else if (scene === "songru") {
+          ctx.fillStyle = "#7397AB";
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = "#E6E4DD";
+          ctx.beginPath(); ctx.arc(220, 140, 50, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#4A5860";
+          ctx.fillRect(0, h * 0.65, w, h * 0.35);
+        } else {
+          ctx.fillStyle = "#242E28";
+          ctx.fillRect(0, 0, w, h);
+          ctx.fillStyle = "#6C7A65";
+          ctx.beginPath(); ctx.arc(360, 220, 95, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = "#A8281D";
+          ctx.beginPath(); ctx.arc(190, 140, 70, 0, Math.PI * 2); ctx.fill();
+        }
+      };
+
+      drawCurrentScene();
+      sampleAllPoints();
+    }
+
+    function sampleAllPoints() {
+      const canvas = document.getElementById("samplerCanvas");
+      const ctx = canvas.getContext("2d");
+      if (drawCurrentScene) drawCurrentScene();
+
+      state.extractedColors.forEach((pt, idx) => {
+        const d = ctx.getImageData(pt.x, pt.y, 1, 1).data;
+        pt.hex = "#" + [d[0], d[1], d[2]].map(v => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+      });
+
+      state.extractedColors.forEach((pt, idx) => {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, idx === state.activeSampleSlot ? 11 : 8, 0, Math.PI * 2);
+        ctx.fillStyle = pt.hex;
+        ctx.fill();
+        ctx.lineWidth = idx === state.activeSampleSlot ? 2.5 : 1.5;
+        ctx.strokeStyle = idx === state.activeSampleSlot ? "#FCD34D" : "#FFFFFF";
+        ctx.stroke();
+      });
+
+      renderMatchReport();
+    }
+
+    function renderMatchReport() {
+      const box = document.getElementById("matchReportList");
+      const strip = document.getElementById("newCardStripPreview");
+
+      box.innerHTML = state.extractedColors.map((c, idx) => {
+        const m = matchHistoricalPigment(c.hex);
+        const active = idx === state.activeSampleSlot;
+        return `
+          <div data-slot="${idx}" class="cursor-pointer rounded-lg border ${active ? 'border-amber-300 bg-amber-300/10' : 'border-white/10 bg-[#121218]'} p-2 flex items-center gap-2.5">
+            <span class="h-7 w-7 rounded-md border border-white/25 shrink-0" style="background:${c.hex}"></span>
+            <div class="min-w-0">
+              <div class="text-[11px] font-medium text-white truncate">接近「${m.name}」</div>
+              <div class="text-[10px] font-mono-code text-neutral-400">${c.hex} · ${m.similarity}%</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      strip.innerHTML = state.extractedColors.map(c => `<div style="width:${c.ratio}%; background:${c.hex}" class="h-full"></div>`).join("");
+      document.getElementById("slotHint").textContent = `点击画面任意处吸色 (当前槽位 #${state.activeSampleSlot + 1})`;
+    }
+
+    // =========================================================================
+    // 6. EVENTS, SWIPE & KEYBOARD NAVIGATION
+    // =========================================================================
+    window.addEventListener("DOMContentLoaded", () => {
+      updateHeaderBadges();
+      renderUnifiedStage(false);
+      loadPresetScene("jiangnan");
+
+      // Prev / Next Buttons
+      document.getElementById("prevCardBtn").addEventListener("click", () => stepCard(-1));
+      document.getElementById("nextCardBtn").addEventListener("click", () => stepCard(1));
+
+      // Keyboard Navigation (Left / Right to switch)
+      window.addEventListener("keydown", e => {
+        if (e.target.matches("input, textarea, select")) return;
+        if (e.key === "ArrowLeft") { e.preventDefault(); stepCard(-1); }
+        if (e.key === "ArrowRight") { e.preventDefault(); stepCard(1); }
+      });
+
+      // Touch Swipe Support on Unified Stage
+      let touchStartX = null;
+      const unifiedStage = document.getElementById("unifiedStage");
+      unifiedStage.addEventListener("touchstart", e => {
+        if (e.target.closest("input[type='range']")) return;
+        touchStartX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      unifiedStage.addEventListener("touchend", e => {
+        if (touchStartX === null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        touchStartX = null;
+        if (Math.abs(dx) > 48) {
+          stepCard(dx < 0 ? 1 : -1);
+        }
+      }, { passive: true });
+
+      // Pagination Dots Click
+      document.getElementById("paginationDots").addEventListener("click", e => {
+        const dot = e.target.closest("[data-jump]");
+        if (!dot) return;
+        state.currentIndex = Number(dot.getAttribute("data-jump"));
+        renderUnifiedStage(true);
+      });
+
+      // Chapter Filter
+      document.getElementById("chapterNav").addEventListener("click", e => {
+        const btn = e.target.closest(".chap-pill");
+        if (!btn) return;
+        state.chapter = btn.getAttribute("data-chap");
+        state.currentIndex = 0;
+        document.querySelectorAll(".chap-pill").forEach(b => {
+          const active = b.getAttribute("data-chap") === state.chapter;
+          b.className = active
+            ? "chap-pill rounded-full px-3 py-1 text-xs font-medium bg-white text-black transition shrink-0"
+            : "chap-pill rounded-full px-3 py-1 text-xs text-neutral-400 hover:text-white transition shrink-0";
+        });
+        renderUnifiedStage(true);
+      });
+
+      // Unified Stage Click Actions
+      unifiedStage.addEventListener("click", e => {
+        const copyBtn = e.target.closest("[data-copy-hex]");
+        if (copyBtn) {
+          copyText(copyBtn.getAttribute("data-copy-hex"), `${copyBtn.getAttribute("data-copy-name")} (${copyBtn.getAttribute("data-copy-hex")})`);
+          return;
+        }
+
+        const compBtn = e.target.closest("[data-comp]");
+        if (compBtn) {
+          const p = getCurrentPalette();
+          p.composition = compBtn.getAttribute("data-comp");
+          renderUnifiedStage(false);
+          return;
+        }
+
+        const actEl = e.target.closest("[data-action]");
+        if (!actEl) return;
+        const action = actEl.getAttribute("data-action");
+        const p = getCurrentPalette();
+
+        if (action === "vault") {
+          p.inVault = !p.inVault;
+          updateHeaderBadges();
+          renderUnifiedStage(false);
+          showToast(p.inVault ? `★ 已收藏「${p.title}」` : `已移出收藏「${p.title}」`);
+        } else if (action === "preset631") {
+          const weights = [60, 24, 10, 6];
+          p.colors.forEach((c, i) => { c.ratio = weights[i] || 10; });
+          renderUnifiedStage(false);
+          showToast("已切换为 6:3:1 黄金配比");
+        } else if (action === "presetEqual") {
+          p.colors.forEach(c => { c.ratio = 25; });
+          renderUnifiedStage(false);
+          showToast("已切换为均等光谱配比");
+        } else if (action === "copy-css") {
+          const snippet = `:root {\n  ${p.colors.map((c, i) => `--color-${i + 1}: ${c.hex}; /* ${c.name} (${c.ratio}%) */`).join("\n  ")}\n}\nbackground: linear-gradient(135deg, ${p.colors.map(c => c.hex).join(", ")});`;
+          copyText(snippet, `「${p.title}」CSS 渐变与变量`);
+        } else if (action === "copy-prompt") {
+          const prompt = p.aiPrompt || `${p.title}, ${p.subtitle}, color palette ${p.colors.map(c => `${c.name} (${c.hex})`).join(", ")}, ${p.textureName} micro-texture, museum lighting --ar 3:4`;
+          copyText(prompt, `「${p.title}」AI 绘画 Prompt`);
+        } else if (action === "poster") {
+          openPoster(p);
+        }
+      });
+
+      // Live Ratio Slider Input (Updates Left 3:4 Canvas & Right Strip Simultaneously)
+      unifiedStage.addEventListener("input", e => {
+        if (e.target.id !== "leadRatioSlider") return;
+        const p = getCurrentPalette();
+        const lead = Number(e.target.value);
+        const rem = 100 - lead;
+
+        p.colors[0].ratio = lead;
+        p.colors[1].ratio = Math.round(rem * 0.52);
+        p.colors[2].ratio = Math.round(rem * 0.30);
+        if (p.colors[3]) p.colors[3].ratio = Math.max(4, 100 - p.colors[0].ratio - p.colors[1].ratio - p.colors[2].ratio);
+
+        const ratios = p.colors.map(c => c.ratio);
+
+        const labelEl = document.getElementById("ratioTextLabel");
+        if (labelEl) labelEl.textContent = ratios.join(" : ") + "%";
+
+        const stripEl = document.getElementById("liveStripBar");
+        if (stripEl) {
+          Array.from(stripEl.children).forEach((child, idx) => {
+            child.style.width = `${ratios[idx]}%`;
+          });
+        }
+
+        const artBox = document.getElementById("artworkCanvasBox");
+        if (artBox) {
+          artBox.innerHTML = renderArtworkComposition(p) + `
+            <div class="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+              <span class="rounded-full bg-black/65 backdrop-blur-md border border-white/15 px-3 py-1 text-[10px] font-mono-code text-white/90">
+                物性微纹理 · ${p.textureName}
+              </span>
+              <span class="rounded-full bg-black/65 backdrop-blur-md border border-white/10 px-2.5 py-1 text-[10px] font-mono-code text-amber-200/90">
+                3:4
+              </span>
+            </div>
+          `;
+        }
+      });
+
+      // Photo Matcher Modal Controls
+      document.getElementById("openMatcherBtn").addEventListener("click", () => {
+        const m = document.getElementById("matcherModal");
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+        sampleAllPoints();
+      });
+      document.getElementById("closeMatcherBtn").addEventListener("click", () => {
+        const m = document.getElementById("matcherModal");
+        m.classList.add("hidden");
+        m.classList.remove("flex");
+      });
+
+      document.querySelectorAll(".scene-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".scene-btn").forEach(b => {
+            b.className = "scene-btn rounded-lg border border-white/10 bg-transparent px-2.5 py-1 text-xs text-neutral-400 hover:text-white";
+          });
+          btn.className = "scene-btn rounded-lg border border-white/20 bg-white/10 px-2.5 py-1 text-xs text-white";
+          loadPresetScene(btn.getAttribute("data-scene"));
+        });
+      });
+
+      document.getElementById("samplerCanvas").addEventListener("click", e => {
+        const canvas = e.currentTarget;
+        const rect = canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+        const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+        state.extractedColors[state.activeSampleSlot].x = x;
+        state.extractedColors[state.activeSampleSlot].y = y;
+        state.activeSampleSlot = (state.activeSampleSlot + 1) % state.extractedColors.length;
+        sampleAllPoints();
+      });
+
+      document.getElementById("matchReportList").addEventListener("click", e => {
+        const slot = e.target.closest("[data-slot]");
+        if (!slot) return;
+        state.activeSampleSlot = Number(slot.getAttribute("data-slot"));
+        sampleAllPoints();
+      });
+
+      document.getElementById("uploadInput").addEventListener("change", e => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.getElementById("samplerCanvas");
+            const ctx = canvas.getContext("2d");
+            drawCurrentScene = () => {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            drawCurrentScene();
+            sampleAllPoints();
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      document.getElementById("createCardToSpotlightBtn").addEventListener("click", () => {
+        const title = document.getElementById("newCardTitle").value || "私人寻色展签";
+        const quote = document.getElementById("newCardQuote").value || "";
+        const tex = document.getElementById("newCardTexture").value;
+        const texNames = { crackle: "宋瓷开片冰裂纹", xuan: "宣纸草木纤维", mineral: "敦煌天然矿物颗粒", silk: "平安双层生丝光泽", impasto: "古典油画刀笔触" };
+        const topMatch = matchHistoricalPigment(state.extractedColors[0].hex);
+
+        const newPalette = {
+          id: "user-" + Date.now(),
+          catalogNo: "USER-SLICE",
+          title,
+          subtitle: `接近 ${topMatch.era.split("·")[0]}「${topMatch.name}」`,
+          dimensionLabel: "影像寻色 · 私人审美切片",
+          chapter: "《文学的底色》",
+          texture: tex,
+          textureName: texNames[tex] || "宣纸草木纤维",
+          pigmentFormula: `感知色差 ΔE 匹配 · ${topMatch.name}`,
+          composition: "golden",
+          eraYear: "2026 AD",
+          inVault: true,
+          quote,
+          quoteAuthor: "私人影像寻色档案",
+          story: `经由感知色差 ΔE 鉴定，该影像主调与「${topMatch.name}」（${topMatch.era}）相似度达 ${topMatch.similarity}%。`,
+          masterpiece: `影像寻色展签 · 匹配 ${topMatch.name}`,
+          colors: state.extractedColors.map(c => ({
+            name: matchHistoricalPigment(c.hex).name.split(" ")[0],
+            hex: c.hex,
+            ratio: c.ratio
+          }))
+        };
+
+        PALETTES.unshift(newPalette);
+        updateHeaderBadges();
+        state.chapter = "all";
+        state.currentIndex = 0;
+        renderUnifiedStage(true);
+
+        const m = document.getElementById("matcherModal");
+        m.classList.add("hidden");
+        m.classList.remove("flex");
+        showToast(`✦ 已生成「${title}」并切入聚光灯舞台`);
+      });
+
+      // Poster Modal Close & Download
+      document.getElementById("closePosterBtn").addEventListener("click", () => {
+        const m = document.getElementById("posterModal");
+        m.classList.add("hidden");
+        m.classList.remove("flex");
+      });
+      document.getElementById("downloadPosterBtn").addEventListener("click", () => {
+        const canvas = document.getElementById("posterCanvas");
+        const link = document.createElement("a");
+        link.download = "chroma-museum-poster.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        showToast("已保存 3:4 极简黑底灵感海报");
+      });
+    });
+  </script>
+</body>
+</html>

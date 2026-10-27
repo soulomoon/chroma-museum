@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>05 专馆 · 1814 沃纳色彩命名法 WERNER'S NOMENCLATURE — 色界 CHROMA MUSEUM</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #EAE1D0;
+      color: #262018;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-copperplate {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    }
+
+    .font-serif-cn {
+      font-family: 'Noto Serif SC', Georgia, serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* 1814 Edinburgh Rag-Paper Ledger Surface */
+    .rag-ledger {
+      background-color: #EFE7D6;
+      background-image:
+        radial-gradient(circle at 20% 25%, rgba(255,252,242,0.6) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(160,130,90,0.12) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.06'/%3E%3C/svg%3E");
+    }
+
+    .ledger-border {
+      border: 1px solid #B5A48B;
+      box-shadow: inset 0 0 0 3px #EFE7D6, inset 0 0 0 4px #C8B9A0, 0 18px 45px rgba(45, 35, 20, 0.12);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between rag-ledger selection:bg-amber-900 selection:text-amber-50">
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================= -->
+  <!-- GLOBAL MUSEUM PAVILION SWITCHER                           -->
+  <!-- ========================================================= -->
+  <div class="relative z-40 border-b border-stone-700 bg-[#1B1712] text-[11px] text-amber-50">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a href="chroma_museum.html" class="rounded-lg border border-amber-200/25 bg-white/10 hover:bg-white/20 px-2.5 py-1 text-white font-medium flex items-center gap-1.5 transition">
+          <span>🏛️</span><span>总览导航大厅</span>
+        </a>
+        <span class="text-stone-600 px-1">|</span>
+        <a href="pavilion_curation.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">01 综合策展馆</a>
+        <a href="pavilion_nippon.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">02 NIPPON COLORS 日本传统色</a>
+        <a href="pavilion_zhongguo.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">03 中国传统色 · 故宫节气</a>
+        <a href="pavilion_sanzo.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">04 和田三造《配色事典》</a>
+        <a href="pavilion_werner.html" class="rounded-lg bg-[#EFE7D6] text-stone-950 px-2.5 py-1 font-semibold transition">05 1814 沃纳博物学色谱</a>
+        <a href="pavilion_corbusier.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">06 柯布西耶建筑多色系</a>
+      </div>
+      <span class="text-[10px] font-mono-code text-amber-200/70 hidden lg:inline shrink-0">PAVILION 05 / WERNER'S NOMENCLATURE OF COLOURS (1814 EDINBURGH)</span>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SUB-HEADER: 1814 DARWIN NATURAL HISTORY TAXONOMY HEADER   -->
+  <!-- ========================================================= -->
+  <header class="border-b border-[#C5B69E] bg-[#EAE1D0]/90 backdrop-blur-md">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div class="text-[11px] font-mono-code uppercase tracking-[0.22em] text-stone-600">PATRICK SYME · EDINBURGH 1814 · HMS BEAGLE EXPEDITION GUIDE</div>
+        <h1 class="font-copperplate text-2xl sm:text-3xl font-bold tracking-wide text-stone-900">
+          Werner’s Nomenclature of Colours · 沃纳博物学三界色谱
+        </h1>
+      </div>
+
+      <!-- Suite Filters -->
+      <nav id="suiteFilterNav" class="flex flex-wrap items-center gap-1.5">
+        <button data-suite="all" class="suite-btn rounded-full px-3.5 py-1 text-xs font-semibold bg-[#2B231A] text-amber-50 transition">全谱索引 (14)</button>
+        <button data-suite="Blues & Purples" class="suite-btn rounded-full px-3 py-1 text-xs text-stone-700 hover:text-black border border-[#B8A88E] transition">Blues & Purples</button>
+        <button data-suite="Greens" class="suite-btn rounded-full px-3 py-1 text-xs text-stone-700 hover:text-black border border-[#B8A88E] transition">Greens</button>
+        <button data-suite="Yellows & Oranges" class="suite-btn rounded-full px-3 py-1 text-xs text-stone-700 hover:text-black border border-[#B8A88E] transition">Yellows & Oranges</button>
+        <button data-suite="Reds & Browns" class="suite-btn rounded-full px-3 py-1 text-xs text-stone-700 hover:text-black border border-[#B8A88E] transition">Reds & Browns</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- MAIN 1814 NATURAL HISTORY SPECIMEN LEDGER                 -->
+  <!-- Left 7 Cols: The 1814 Tripartite Specimen Sheet           -->
+  <!-- Right 5 Cols: Tabular Index of Colours                    -->
+  <!-- ========================================================= -->
+  <main class="flex-1 mx-auto w-full max-w-[1360px] px-4 sm:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- LEFT 7 COLS: 1814 TRIPARTITE SPECIMEN SHEET (ANIMAL / VEGETABLE / MINERAL) -->
+    <section class="lg:col-span-7 rounded-2xl bg-[#F6F0E4] p-6 sm:p-8 ledger-border space-y-6">
+
+      <!-- Top Copperplate Title & Pasted Swatch Specimen -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#C8B9A0] pb-5">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2.5">
+            <span id="wnNo" class="font-mono-code text-xs font-bold px-2 py-0.5 rounded bg-[#2B231A] text-amber-100">SPECIMEN NO. 39</span>
+            <span id="wnSuite" class="font-copperplate italic text-base text-stone-600">Suite IV · Blues</span>
+          </div>
+          <h2 id="wnNameEn" class="font-copperplate text-3xl sm:text-4xl font-bold text-stone-900">Ultramarine Blue</h2>
+          <p id="wnNameCn" class="font-serif-cn text-base font-semibold text-stone-700">真群青 · 沃纳标准第39号色标</p>
+        </div>
+
+        <!-- Authentic Hand-Pasted 1814 Watercolor Swatch Tile -->
+        <div class="flex items-center gap-4 self-start sm:self-center">
+          <div class="p-2 bg-[#EAE1D0] border border-[#B5A48B] shadow-inner rounded-lg flex flex-col items-center">
+            <div id="wnMainSwatch" class="w-24 h-20 rounded shadow-md border border-black/15 transition-colors duration-500" style="background:#2B4C8C"></div>
+            <button id="wnCopyHexBtn" class="mt-1.5 font-mono-code text-[11px] font-semibold text-stone-800 hover:underline">#2B4C8C 复制</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE SIGNATURE 1814 TRIPARTITE TAXONOMY (ANIMAL / VEGETABLE / MINERAL) -->
+      <div>
+        <div class="text-[11px] font-mono-code uppercase tracking-[0.2em] text-stone-500 mb-3">
+          NATURAL HISTORY EXEMPLARS · 1814 博物学三界自然参照物（动物界 · 植物界 · 矿物界）
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <!-- Animalia -->
+          <div class="rounded-xl border border-[#C8B9A0] bg-[#EFE7D6]/75 p-4 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-[#D5C7B0] pb-2">
+              <span class="font-copperplate text-sm font-bold uppercase tracking-wider text-stone-800">I. Animal · 动物界</span>
+              <span class="text-base">🦋</span>
+            </div>
+            <div>
+              <div id="wnAnimalEn" class="font-copperplate italic text-base font-semibold text-stone-900 leading-snug">Upper Side of the Wings of Small Blue Heath Butterfly</div>
+              <div id="wnAnimalCn" class="font-serif-cn text-xs text-stone-700 mt-1">石原小灰蝶双翅背面之亮蓝</div>
+            </div>
+            <div class="text-[10px] font-mono-code text-stone-500 pt-1 border-t border-[#D5C7B0]/60">ZOOLOGICAL SPECIMEN</div>
+          </div>
+
+          <!-- Vegetabilia -->
+          <div class="rounded-xl border border-[#C8B9A0] bg-[#EFE7D6]/75 p-4 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-[#D5C7B0] pb-2">
+              <span class="font-copperplate text-sm font-bold uppercase tracking-wider text-stone-800">II. Vegetable · 植物界</span>
+              <span class="text-base">🌿</span>
+            </div>
+            <div>
+              <div id="wnVegEn" class="font-copperplate italic text-base font-semibold text-stone-900 leading-snug">Borage (Borago officinalis) Corolla Petals</div>
+              <div id="wnVegCn" class="font-serif-cn text-xs text-stone-700 mt-1">琉璃苣盛开时的星形花冠瓣</div>
+            </div>
+            <div class="text-[10px] font-mono-code text-stone-500 pt-1 border-t border-[#D5C7B0]/60">BOTANICAL SPECIMEN</div>
+          </div>
+
+          <!-- Mineralia -->
+          <div class="rounded-xl border border-[#C8B9A0] bg-[#EFE7D6]/75 p-4 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between border-b border-[#D5C7B0] pb-2">
+              <span class="font-copperplate text-sm font-bold uppercase tracking-wider text-stone-800">III. Mineral · 矿物界</span>
+              <span class="text-base">💎</span>
+            </div>
+            <div>
+              <div id="wnMinEn" class="font-copperplate italic text-base font-semibold text-stone-900 leading-snug">Lapis Lazuli / Lazurite from Badakhshan</div>
+              <div id="wnMinCn" class="font-serif-cn text-xs text-stone-700 mt-1">巴达赫尚天然青金石晶体原矿</div>
+            </div>
+            <div class="text-[10px] font-mono-code text-stone-500 pt-1 border-t border-[#D5C7B0]/60">MINERALOGICAL SPECIMEN</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Syme's 1814 Mixing Recipe & Charles Darwin's HMS Beagle Field Note -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 pt-2">
+        <div class="md:col-span-5 rounded-xl border border-[#C8B9A0] bg-[#EAE1D0]/80 p-4 space-y-1.5">
+          <div class="text-[10px] font-mono-code uppercase tracking-wider text-stone-500">1814 SYME PIGMENT RECIPE · 调色配方</div>
+          <p id="wnRecipe" class="font-serif-cn text-xs text-stone-800 leading-relaxed">
+            由高纯度柏林蓝（Berlin Blue）混入极少量洋红（Carmine）与雪花石膏白调配而成。
+          </p>
+        </div>
+
+        <div class="md:col-span-7 rounded-xl border border-[#C8B9A0] bg-[#2B231A] text-amber-50 p-4 space-y-1.5">
+          <div class="flex items-center justify-between text-[10px] font-mono-code uppercase tracking-wider text-amber-200/80">
+            <span>HMS BEAGLE FIELD LOG · 达尔文航海手记引用</span>
+            <span>1831–1836</span>
+          </div>
+          <p id="wnDarwinNote" class="font-serif-cn text-xs text-amber-100/90 leading-relaxed">
+            1832年达尔文在《小猎犬号航海记》中在尚未拥有彩色摄影的年代，正是翻开这本1814年口袋书，用“Ultramarine Blue (No.39)”精确记录了热带大西洋僧帽水母与珊瑚礁鱼类的鲜艳体色。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT 5 COLS: 1814 TABULAR SPECIMEN INDEX -->
+    <section class="lg:col-span-5 space-y-3">
+      <div class="flex items-center justify-between text-xs text-stone-700 border-b border-[#B8A88E] pb-2">
+        <span class="font-copperplate text-base font-bold">Tabular Index of Colours · 1814 标本检视表</span>
+        <span id="wnCountText" class="font-mono-code">14 SPECIMENS</span>
+      </div>
+
+      <div id="wnList" class="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-[#C5B69E] py-3 px-4 sm:px-8 text-center text-[11px] text-stone-600">
+    支持键盘 ← / → 翻阅 1814 博物学色标账本 · 每枚色标均附带动物界、植物界、矿物界三界自然实体标本参照
+  </footer>
+
+  <script>
+    const WERNER_SPECIMENS = [
+      {
+        no: "03", suite: "Blues & Purples", nameEn: "Skimmed Milk White", nameCn: "脱脂乳白（微泛青白）", hex: "#E6EAE8",
+        animalEn: "White of the Human Eyeball", animalCn: "人类眼白（巩膜）之微青白",
+        vegEn: "Back of Petals of Hepatica", vegCn: "獐耳细辛花瓣背面",
+        minEn: "Common Opal from Saxony", minCn: "萨克森普通蛋白石",
+        recipe: "雪白（Snow White）中加入极微量的柏林蓝与灰黑，呈现出温润半透明的冷调蛋白色。",
+        darwin: "达尔文在加拉帕戈斯群岛考察海鸟卵壳与石英脉时，多次以 No.3 Skimmed Milk White 区分半透明冷白与纯白。"
+      },
+      {
+        no: "35", suite: "Blues & Purples", nameEn: "Scotch Blue", nameCn: "苏格兰深靛蓝", hex: "#23304A",
+        animalEn: "Throat of Blue Titmouse", animalCn: "青山雀喉部之深暗蓝羽",
+        vegEn: "Stamina of Single Purple Anemone", vegCn: "单瓣紫银莲花雄蕊",
+        minEn: "Blue Iron Earth", minCn: "天然蓝铁矿土",
+        recipe: "柏林蓝（Berlin Blue）混入天鹅绒黑与微量洋红，低明度且极具深海厚重感。",
+        darwin: "用于记录火地岛冰川裂缝深处的暗蓝折射光，以及南大洋暴风雨来临前的海面色彩。"
+      },
+      {
+        no: "37", suite: "Blues & Purples", nameEn: "Berlin Blue", nameCn: "柏林蓝（普鲁士正蓝）", hex: "#2B5B84",
+        animalEn: "Wing Feathers of Jay", animalCn: "松鸦翼羽上的横斑亮蓝",
+        vegEn: "Hepatica nobilis Flower", vegCn: "欧洲獐耳细辛盛开花朵",
+        minEn: "Blue Sapphire", minCn: "斯里兰卡浅蓝宝石",
+        recipe: "沃纳蓝色系的核心基准色（Standard Pure Blue），即铁蓝（亚铁氰化铁）颜料本色。",
+        darwin: "达尔文在《小猎犬号日记》中记录安第斯山脉高空苍穹浓度时，将 Berlin Blue 作为天顶蓝度标尺。"
+      },
+      {
+        no: "39", suite: "Blues & Purples", nameEn: "Ultramarine Blue", nameCn: "真群青", hex: "#2B4C8C",
+        animalEn: "Upper Side of Wings of Small Blue Heath Butterfly", animalCn: "石原小灰蝶双翅背面之亮蓝",
+        vegEn: "Borage (Borago officinalis) Corolla", vegCn: "琉璃苣盛开时的星形花冠瓣",
+        minEn: "Lapis Lazuli from Badakhshan", minCn: "巴达赫尚天然青金石晶体原矿",
+        recipe: "高纯度柏林蓝混入极少量洋红（Carmine），带有神圣而清澈的微紫光泽。",
+        darwin: "1832年达尔文翻开这本口袋书，用“Ultramarine Blue (No.39)”精确记录了热带大西洋僧帽水母与珊瑚礁鱼类的体色。"
+      },
+      {
+        no: "42", suite: "Blues & Purples", nameEn: "China Blue", nameCn: "中国青花瓷蓝", hex: "#4D6E8A",
+        animalEn: "Back Parts of Gentoo Penguin", animalCn: "巴布亚企鹅背部带灰的青蓝羽",
+        vegEn: "Hyacinthus orientalis Blue Bell", vegCn: "东方风信子花钟",
+        minEn: "Blue Quartz / Cobalt Ore", minCn: "含钴蓝石英矿脉",
+        recipe: "柏林蓝调入氧化钴与少许珍珠灰，重现了18世纪欧洲贵族痴迷的中国景德镇外销青花瓷色泽。",
+        darwin: "用于描述南美洲海岸甲壳类动物背甲与风化板岩断面的温润灰蓝。"
+      },
+      {
+        no: "76", suite: "Blues & Purples", nameEn: "Imperial Purple", nameCn: "帝国深紫", hex: "#4A2E56",
+        animalEn: "Deepest Purple Spot on Wing of Peacock Butterfly", animalCn: "孔雀蛱蝶翅眼最深处的紫斑",
+        vegEn: "Claw of Petals of Sweet-Scented Violet", vegCn: "香紫罗兰花瓣基部",
+        minEn: "fluorite / Deep Amethyst", minCn: "深色紫水晶与紫萤石",
+        recipe: "群青（Ultramarine）与深洋红（Carmine）各半调和，庄重深邃。",
+        darwin: "达尔文在记录乌拉圭紫水晶晶洞与热带海蛞蝓（海兔）分泌的紫色墨汁时引用了此编号。"
+      },
+      {
+        no: "49", suite: "Greens", nameEn: "Verdigris Green", nameCn: "铜绿（碱式碳酸铜）", hex: "#468C7A",
+        animalEn: "Tail of Small Long-Tailed Green Parrot", animalCn: "长尾小绿鹦鹉尾羽",
+        vegEn: "Lichens on Aged Oak Bark", vegCn: "古橡树皮上的灰绿地衣",
+        minEn: "Copper Green / Chrysocolla", minCn: "硅孔雀石与天然铜绿矿",
+        recipe: "祖母绿（Emerald Green）加入大量柏林蓝与少许白铅，呈现冷静的蓝绿铜锈色。",
+        darwin: "智利铜矿带考察笔记的核心色标，精准对应含铜矿脉在地表氧化的翠绿露头。"
+      },
+      {
+        no: "54", suite: "Greens", nameEn: "Emerald Green", nameCn: "祖母绿（沃纳标准正绿）", hex: "#4E8A57",
+        animalEn: "Beauty Spot on Wing of Teal Drake", animalCn: "雄性绿翅鸭翼镜的金属翠绿",
+        vegEn: "Fresh Moss in Spring", vegCn: "早春溪畔初生鲜苔",
+        minEn: "Peruvian Emerald Crystal", minCn: "秘鲁天然祖母绿晶体",
+        recipe: "沃纳绿色系的核心基准色：由藤黄（Gamboge）与柏林蓝按严格等比调和。",
+        darwin: "达尔文在巴西热带雨林笔记中感叹，唯有 No.54 Emerald Green 能接近阳光穿透雨林冠层时的鲜亮翠绿。"
+      },
+      {
+        no: "58", suite: "Greens", nameEn: "Olive Green", nameCn: "橄榄沉绿", hex: "#6B6E3E",
+        animalEn: "Neck Plumage of Greenfinch", animalCn: "欧金翅雀颈部羽色",
+        vegEn: "Foliage of Olives (Olea europaea)", vegCn: "地中海油橄榄成熟叶片",
+        minEn: "Olivine / Peridot", minCn: "玄武岩中的橄榄石晶体",
+        recipe: "草绿（Grass Green）中调入大量赫石褐（Umber），是博物学中最常见的保护色基准。",
+        darwin: "达尔文研究加拉帕戈斯地雀（达尔文雀）羽毛与火山岩环境伪装色演化的关键色号。"
+      },
+      {
+        no: "66", suite: "Yellows & Oranges", nameEn: "Gamboge Yellow", nameCn: "藤黄（沃纳标准正黄）", hex: "#E5B528",
+        animalEn: "Wings of Goldfinch", animalCn: "红额金翅雀翼斑之明黄",
+        vegEn: "Yellow Jasmine Flower", vegCn: "迎春花（黄素馨）盛放花瓣",
+        minEn: "Highgate Resin / Native Sulphur", minCn: "天然硫磺晶体与琥珀树脂",
+        recipe: "沃纳黄色系的绝对基准色，取自东南亚海藤树分泌的天然藤黄树脂。",
+        darwin: "用于标记加拉帕戈斯陆鬣蜥背部的亮黄鳞片与火山口硫磺喷气孔沉积物。"
+      },
+      {
+        no: "72", suite: "Yellows & Oranges", nameEn: "Orpiment Orange", nameCn: "雌黄橘", hex: "#DE7C2A",
+        animalEn: "Neck Ruff of Golden Pheasant", animalCn: "红腹锦鸡颈部金橙披肩羽",
+        vegEn: "Indian Cress (Nasturtium)", vegCn: "旱金莲盛开的花朵",
+        minEn: "Realgar & Orpiment Ore", minCn: "天然雄黄与雌黄伴生矿",
+        recipe: "藤黄（Gamboge）与动脉血红（Arterial Blood Red）调和，炽热夺目。",
+        darwin: "达尔文用来描绘太平洋珊瑚环礁落日与火地岛真菌（Cyttaria darwinii）的鲜艳球体。"
+      },
+      {
+        no: "89", suite: "Reds & Browns", nameEn: "Aurora Red", nameCn: "曙光朱红", hex: "#C94A38",
+        animalEn: "Red Vent Feathers of Woodpecker", animalCn: "大斑啄木鸟尾下覆羽之亮红",
+        vegEn: "Scarlet Pimpernel Corolla", vegCn: "琉璃繁缕火红小花",
+        minEn: "Red Orpiment / Crocoite", minCn: "天然铬铅矿（红铅矿）",
+        recipe: "瓦红（Tile Red）中加入藤黄与微量洋红，如破晓时分第一道刺破海面的曙光。",
+        darwin: "用于记录加拉帕戈斯军舰鸟求偶时鼓起的鲜红喉囊。"
+      },
+      {
+        no: "93", suite: "Reds & Browns", nameEn: "Carmine Red", nameCn: "胭脂虫洋红（标准正红）", hex: "#A8243B",
+        animalEn: "Crimson Crest of Ruby-Crowned Wren", animalCn: "红冠戴菊鸟头顶之深红羽冠",
+        vegEn: "Carnation / Damask Rose", vegCn: "大马士革玫瑰花心",
+        minEn: " Oriental Ruby / Spinel", minCn: "东方红宝石与尖晶石",
+        recipe: "沃纳红色系的绝对基准色，由墨西哥仙人掌胭脂虫（Cochineal）提纯制成。",
+        darwin: "达尔文在加那利群岛与南美考察胭脂虫仙人掌种植园时详细记载了这一颜料的经济与博物学价值。"
+      },
+      {
+        no: "108", suite: "Reds & Browns", nameEn: "Umber Brown", nameCn: "暗赭褐", hex: "#5C402C",
+        animalEn: "Mantle Feathers of Woodcock", animalCn: "丘鹬背部枯叶保护色羽",
+        vegEn: "Seed Cone of Alderman Alnus", vegCn: "赤杨成熟干果球",
+        minEn: "Brown Hematite / Cyprus Umber", minCn: "塞浦路斯天然土状褐铁矿",
+        recipe: "栗褐（Chestnut Brown）中加入炭黑与少许黄赭石，是地质底层与土壤绘图的标准色。",
+        darwin: "达尔文绘制南美洲巴塔哥尼亚阶地地质剖面图时的基础岩层着色标尺。"
+      }
+    ];
+
+    let activeSuite = "all";
+    let activeSpecimen = WERNER_SPECIMENS[3]; // No. 39 Ultramarine Blue
+
+    function showToast(msg) {
+      const container = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "rounded-xl border border-amber-200/30 bg-[#2B231A] px-4 py-2 text-xs text-amber-50 shadow-xl";
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.25s ease";
+        setTimeout(() => el.remove(), 250);
+      }, 2100);
+    }
+
+    function renderAll() {
+      const s = activeSpecimen;
+      document.getElementById("wnNo").textContent = `SPECIMEN NO. ${s.no}`;
+      document.getElementById("wnSuite").textContent = s.suite;
+      document.getElementById("wnNameEn").textContent = s.nameEn;
+      document.getElementById("wnNameCn").textContent = `${s.nameCn} · 沃纳标准第 ${s.no} 号色标`;
+      document.getElementById("wnMainSwatch").style.backgroundColor = s.hex;
+      document.getElementById("wnCopyHexBtn").textContent = `${s.hex} 复制`;
+
+      document.getElementById("wnAnimalEn").textContent = s.animalEn;
+      document.getElementById("wnAnimalCn").textContent = s.animalCn;
+      document.getElementById("wnVegEn").textContent = s.vegEn;
+      document.getElementById("wnVegCn").textContent = s.vegCn;
+      document.getElementById("wnMinEn").textContent = s.minEn;
+      document.getElementById("wnMinCn").textContent = s.minCn;
+
+      document.getElementById("wnRecipe").textContent = s.recipe;
+      document.getElementById("wnDarwinNote").textContent = s.darwin;
+
+      const list = activeSuite === "all"
+        ? WERNER_SPECIMENS
+        : WERNER_SPECIMENS.filter(x => x.suite === activeSuite);
+
+      document.getElementById("wnCountText").textContent = `${list.length} SPECIMENS`;
+      document.getElementById("wnList").innerHTML = list.map(item => {
+        const isCurrent = item.no === s.no;
+        return `
+          <button data-no="${item.no}" class="w-full rounded-xl border p-3 text-left transition flex items-center justify-between gap-3 ${
+            isCurrent
+              ? "border-[#2B231A] bg-[#FBF8F1] shadow-md ring-1 ring-[#2B231A]"
+              : "border-[#C8B9A0] bg-[#F4EDE0]/75 hover:bg-[#FBF8F1]"
+          }">
+            <div class="flex items-center gap-3 min-w-0">
+              <span class="w-10 h-10 rounded-lg shrink-0 border border-black/20 shadow-inner" style="background:${item.hex}"></span>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono-code text-[11px] font-bold text-stone-600">No.${item.no}</span>
+                  <span class="font-copperplate text-lg font-bold text-stone-900 truncate">${item.nameEn}</span>
+                </div>
+                <div class="font-serif-cn text-xs text-stone-600 truncate">${item.nameCn} · 🦋 ${item.animalCn.slice(0, 10)}…</div>
+              </div>
+            </div>
+            <span class="font-mono-code text-[11px] text-stone-500 shrink-0">${item.hex}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderAll();
+
+      document.getElementById("wnList").addEventListener("click", e => {
+        const btn = e.target.closest("[data-no]");
+        if (!btn) return;
+        const found = WERNER_SPECIMENS.find(x => x.no === btn.getAttribute("data-no"));
+        if (found) {
+          activeSpecimen = found;
+          renderAll();
+        }
+      });
+
+      document.getElementById("suiteFilterNav").addEventListener("click", e => {
+        const btn = e.target.closest("[data-suite]");
+        if (!btn) return;
+        activeSuite = btn.getAttribute("data-suite");
+        document.querySelectorAll(".suite-btn").forEach(b => {
+          b.className = "suite-btn rounded-full px-3 py-1 text-xs text-stone-700 hover:text-black border border-[#B8A88E] transition";
+        });
+        btn.className = "suite-btn rounded-full px-3.5 py-1 text-xs font-semibold bg-[#2B231A] text-amber-50 transition";
+        renderAll();
+      });
+
+      document.getElementById("wnCopyHexBtn").addEventListener("click", () => {
+        navigator.clipboard?.writeText(activeSpecimen.hex).catch(() => {});
+        showToast(`已复制 Werner No.${activeSpecimen.no} (${activeSpecimen.nameEn}) · ${activeSpecimen.hex}`);
+      });
+
+      window.addEventListener("keydown", e => {
+        const list = activeSuite === "all" ? WERNER_SPECIMENS : WERNER_SPECIMENS.filter(x => x.suite === activeSuite);
+        const idx = list.findIndex(x => x.no === activeSpecimen.no);
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          activeSpecimen = list[(idx + 1) % list.length];
+          renderAll();
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          activeSpecimen = list[(idx - 1 + list.length) % list.length];
+          renderAll();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

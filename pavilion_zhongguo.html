@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03 专馆 · 中国传统色：故宫与二十四节气东方色谱 — 色界 CHROMA MUSEUM</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-color: #7397AB;
+      --sub-color-1: #9BB4BF;
+      --sub-color-2: #4A5860;
+      --sub-color-3: #C8BFA8;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #121110;
+      color: #EFECE6;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-song {
+      font-family: 'Noto Serif SC', "Songti SC", Georgia, serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Xuan Paper Scroll Surface */
+    .xuan-scroll-surface {
+      background-color: #191816;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,248,231,0.04) 0%, transparent 55%),
+        repeating-linear-gradient(25deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 10px),
+        repeating-linear-gradient(-35deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 14px);
+    }
+
+    /* Vertical Classical Chinese Typography */
+    .shupai {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+    }
+
+    /* Cinnabar Red Seal Stamp (朱文篆刻印章) */
+    .cinnabar-seal {
+      border: 2px solid #B8352B;
+      color: #D84339;
+      background: rgba(184, 53, 43, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(216, 67, 57, 0.35);
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    /* Ambient Glow from Active Chinese Color */
+    .eastern-aura {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 28% 40%, var(--main-color) 0%, transparent 45%),
+        radial-gradient(circle at 75% 65%, var(--sub-color-1) 0%, transparent 45%);
+      opacity: 0.22;
+      filter: blur(110px);
+      transition: background 0.9s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200/20">
+  <div class="eastern-aura"></div>
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================= -->
+  <!-- GLOBAL MUSEUM PAVILION SWITCHER                           -->
+  <!-- ========================================================= -->
+  <div class="relative z-40 border-b border-white/10 bg-[#0A0908]/90 backdrop-blur-xl text-[11px]">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a href="chroma_museum.html" class="rounded-lg border border-white/15 bg-white/[0.05] hover:bg-white/15 px-2.5 py-1 text-white font-medium flex items-center gap-1.5 transition">
+          <span>🏛️</span><span>总览导航大厅</span>
+        </a>
+        <span class="text-neutral-600 px-1">|</span>
+        <a href="pavilion_curation.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">01 综合策展馆</a>
+        <a href="pavilion_nippon.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">02 NIPPON COLORS 日本传统色</a>
+        <a href="pavilion_zhongguo.html" class="rounded-lg bg-amber-100 text-stone-950 px-2.5 py-1 font-semibold transition">03 中国传统色 · 故宫节气</a>
+        <a href="pavilion_sanzo.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">04 和田三造《配色事典》</a>
+        <a href="pavilion_werner.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">05 1814 沃纳博物学色谱</a>
+        <a href="pavilion_corbusier.html" class="rounded-lg text-neutral-400 hover:text-white hover:bg-white/[0.06] px-2.5 py-1 transition">06 柯布西耶建筑多色系</a>
+      </div>
+      <span class="text-[10px] font-mono-code text-stone-400 hidden lg:inline shrink-0">PAVILION 03 / 故宫与二十四节气七十二候色谱</span>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SUB-HEADER: FOUR SEASONS SOLAR TERMS FILTER               -->
+  <!-- ========================================================= -->
+  <header class="relative z-30 border-b border-stone-800/80 bg-[#121110]/85 backdrop-blur-md">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="cinnabar-seal px-2 py-0.5 text-xs font-bold rounded">东方正色</span>
+        <h1 class="font-song text-lg font-bold tracking-[0.2em] text-stone-100">中国传统色 · 故宫节气卷轴</h1>
+      </div>
+
+      <!-- Four Seasons Tabs -->
+      <nav id="seasonNav" class="flex items-center gap-1.5 overflow-x-auto">
+        <button data-season="all" class="season-btn rounded-full px-3.5 py-1 text-xs font-medium bg-amber-100 text-stone-950 transition">四时全卷 (20)</button>
+        <button data-season="春" class="season-btn rounded-full px-3.5 py-1 text-xs text-stone-400 hover:text-white border border-stone-800 transition">春生 · 木德青始</button>
+        <button data-season="夏" class="season-btn rounded-full px-3.5 py-1 text-xs text-stone-400 hover:text-white border border-stone-800 transition">夏长 · 火德朱明</button>
+        <button data-season="秋" class="season-btn rounded-full px-3.5 py-1 text-xs text-stone-400 hover:text-white border border-stone-800 transition">秋收 · 金德素商</button>
+        <button data-season="冬" class="season-btn rounded-full px-3.5 py-1 text-xs text-stone-400 hover:text-white border border-stone-800 transition">冬藏 · 水德玄英</button>
+      </nav>
+
+      <!-- Vessel / Carrier Mode Switcher -->
+      <div class="flex items-center gap-1.5 bg-stone-900/90 p-1 rounded-full border border-stone-800 text-xs">
+        <button data-vessel="porcelain" class="vessel-btn rounded-full px-3 py-1 bg-stone-700 text-white font-medium transition">御窑玉壶春瓶</button>
+        <button data-vessel="fan" class="vessel-btn rounded-full px-3 py-1 text-stone-400 hover:text-white transition">宣纸宫扇晕染</button>
+        <button data-vessel="palace" class="vessel-btn rounded-full px-3 py-1 text-stone-400 hover:text-white transition">紫禁琉璃飞檐</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- MAIN EASTERN SCROLL & VESSEL STAGE                        -->
+  <!-- ========================================================= -->
+  <main class="relative z-20 flex-1 mx-auto w-full max-w-[1360px] px-4 sm:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
+
+    <!-- LEFT 7 COLS: EASTERN SCROLL PLAQUE + ARTIFACT SILHOUETTE + IMPERIAL 4-COLOR HARMONY -->
+    <section class="lg:col-span-7 xuan-scroll-surface rounded-3xl border border-stone-800/90 p-6 sm:p-8 shadow-2xl flex flex-col justify-between gap-6">
+
+      <!-- Top Row: Solar Term Badge, Five-Element Stamp & Copy Button -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-800/80 pb-4">
+        <div class="flex items-center gap-2.5">
+          <span id="zgTermBadge" class="rounded-md bg-stone-800/90 border border-stone-700 px-2.5 py-1 text-xs font-song text-amber-200">春分 · 初候玄鸟至</span>
+          <span id="zgWuxingBadge" class="text-xs text-stone-400 font-song">五方正色：东方青色系 · 宋徽宗御题釉色</span>
+        </div>
+        <button id="zgCopyMainBtn" class="rounded-lg border border-stone-700 bg-stone-900/80 hover:bg-stone-800 px-3 py-1 text-xs font-mono-code text-amber-200 transition">
+          #7397AB 复制主色
+        </button>
+      </div>
+
+      <!-- Center Stage: Interactive Artifact Carrier (Porcelain / Silk Fan / Palace Roof) + Vertical Scroll Plaque -->
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center my-auto py-2">
+
+        <!-- Left 6 Cols: Dynamic Artifact Visual (SVG Porcelain Vase / Silk Round Fan / Palace Eaves) -->
+        <div class="sm:col-span-6 flex flex-col items-center justify-center relative min-h-[290px] rounded-2xl border border-stone-800/80 bg-[#121110]/90 p-5 overflow-hidden">
+          <div id="artifactCanvasStage" class="w-full h-full flex items-center justify-center">
+            <!-- Populated by JS based on vessel mode -->
+          </div>
+          <div class="mt-3 text-[11px] text-stone-400 font-song flex items-center justify-between w-full px-1">
+            <span id="zgArtifactName">传世器物：北宋汝窑天青釉弦纹瓶</span>
+            <span id="zgHexLabel" class="font-mono-code text-stone-300">#7397AB</span>
+          </div>
+        </div>
+
+        <!-- Right 6 Cols: Vertical Chinese Calligraphy Plaque + Cinnabar Seal + Classical Literature -->
+        <div class="sm:col-span-6 flex flex-col justify-between h-full space-y-5">
+          <div class="flex items-start justify-between gap-4">
+            <div class="space-y-2">
+              <div class="text-xs font-mono-code text-stone-500" id="zgPinyin">TIAN SHUI BI</div>
+              <h2 id="zgTitle" class="font-song text-3xl sm:text-4xl font-bold text-stone-100 tracking-wider">天水碧</h2>
+              <p id="zgAlias" class="text-xs text-amber-200/90 font-song">别名：雨过天青 · 缥色</p>
+              <div class="pt-1 text-xs text-stone-400 leading-relaxed" id="zgSourceBook">
+                典出：北宋陆游《老学庵笔记》· 南唐后主李煜宫染旧事
+              </div>
+            </div>
+
+            <!-- Vertical Scroll & Cinnabar Seal -->
+            <div class="flex flex-col items-center gap-2 shrink-0">
+              <div class="shupai font-song text-3xl font-bold tracking-[0.22em] text-stone-100 py-3 px-2.5 rounded-xl border border-stone-700/80 bg-stone-900/60">
+                <span id="zgVerticalName">天水碧</span>
+              </div>
+              <span id="zgSealText" class="cinnabar-seal px-2 py-0.5 text-[11px] font-bold rounded">故宫色谱</span>
+            </div>
+          </div>
+
+          <!-- Classical Poetry & Lore -->
+          <div class="space-y-2.5 border-t border-stone-800/80 pt-3.5">
+            <blockquote id="zgPoem" class="font-song text-sm text-amber-100/95 border-l-2 border-amber-400/60 pl-3 leading-relaxed">
+              “雨过天青云破处，这般颜色做将来。”
+            </blockquote>
+            <p id="zgStory" class="text-xs text-stone-300 leading-relaxed">
+              五代南唐后主李煜宫人夜宿露下，白丝碧纱为夜间清露所染，次日呈现出清澈如雨后天光的绝妙青碧，遂名“天水碧”。至北宋徽宗时，工匠以玛瑙入釉烧造汝窑，将这一诗意之色凝固于传世瓷釉之中。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Forbidden City 4-Color Imperial Harmony (故宫四色配伍条带) -->
+      <div class="border-t border-stone-800/80 pt-4 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-song text-stone-400">故宫器物与织绣四色配伍（点击单色块复制 HEX）</span>
+          <button id="zgCopyHarmonyCssBtn" class="text-xs text-amber-200/90 hover:text-amber-100 underline">复制东方渐变 CSS</button>
+        </div>
+        <div id="zgHarmonyGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT 5 COLS: 20 SOLAR TERMS & PALACE COLOR MATRIX -->
+    <section class="lg:col-span-5 flex flex-col justify-between space-y-3">
+      <div class="flex items-center justify-between text-xs text-stone-400 border-b border-stone-800 pb-2">
+        <span class="font-song">四时六气 · 二十组东方传统色标本</span>
+        <span id="zgMatrixCount" class="font-mono-code">20 SPECIMENS</span>
+      </div>
+
+      <div id="zgGrid" class="grid grid-cols-2 gap-2.5 max-h-[620px] overflow-y-auto pr-1">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-20 border-t border-stone-800/80 py-3 px-4 sm:px-8 text-center text-[11px] text-stone-500">
+    支持键盘 ← / → 键翻阅二十四节气色谱 · 可切换「御窑玉壶春瓶 / 宣纸宫扇晕染 / 紫禁琉璃飞檐」三种东方器物赋色切面
+  </footer>
+
+  <script>
+    const ZHONGGUO_COLORS = [
+      {
+        id: "huangbaiyou", season: "春", term: "立春 · 初候东风解冻", name: "黄白游", pinyin: "HUANG BAI YOU", hex: "#F2E6CE",
+        alias: "松花淡黄 · 春膏色", wuxing: "土德中央 · 初春萌动之气", seal: "立春初候",
+        artifact: "清乾隆米黄釉暗刻云龙纹梅瓶",
+        book: "《礼记·月令》及《淮南子》春气色考",
+        poem: "“立春之日，东风解冻，黄白之气游于郊野。”",
+        story: "立春之时大地寒冰初融，枯草之下泛起极淡的乳黄与暖白微光，古人称之为“黄白游”，是天地间第一缕可见的春意。",
+        harmony: [
+          { name: "黄白游", hex: "#F2E6CE" },
+          { name: "苍筤竹青", hex: "#6A8D73" },
+          { name: "珊瑚赫", hex: "#C85A48" },
+          { name: "松烟墨", hex: "#2C2A29" }
+        ]
+      },
+      {
+        id: "taoyao", season: "春", term: "惊蛰 · 初候桃始华", name: "桃夭", pinyin: "TAO YAO", hex: "#F4989C",
+        alias: "桃花粉 · 灼华色", wuxing: "东方春木 · 生发之绯", seal: "桃之夭夭",
+        artifact: "清康熙豇豆红釉太白尊（故宫博物院藏）",
+        book: "《诗经·周南·桃夭》",
+        poem: "“桃之夭夭，灼灼其华。之子于归，宜其室家。”",
+        story: "惊蛰雷动，山野桃花初绽。中国传统色中的“桃夭”并非艳俗浓粉，而是带着晨雾水汽的温润胭脂粉，清康熙御窑名品“豇豆红”中的“桃花片”即取此意境。",
+        harmony: [
+          { name: "桃夭粉", hex: "#F4989C" },
+          { name: "柳黄绿", hex: "#9AB464" },
+          { name: "宣纸白", hex: "#F7F3EA" },
+          { name: "苏木紫", hex: "#6E3544" }
+        ]
+      },
+      {
+        id: "tianshuibi", season: "春", term: "春分 · 二候雷乃发声", name: "天水碧", pinyin: "TIAN SHUI BI", hex: "#7397AB",
+        alias: "雨过天青 · 缥色", wuxing: "东方青色系 · 宋徽宗御题釉色", seal: "汝窑天青",
+        artifact: "北宋汝窑天青釉弦纹水仙盆",
+        book: "北宋陆游《老学庵笔记》· 汝窑魁首考",
+        poem: "“雨过天青云破处，这般颜色做将来。”",
+        story: "五代南唐后主李煜宫人夜宿露下，白丝碧纱为夜间清露所染，次日呈现出清澈如雨后天光的绝妙青碧。至北宋徽宗时，工匠以玛瑙入釉烧造汝窑，将这一诗意之色凝固于传世瓷釉之中。",
+        harmony: [
+          { name: "天水碧", hex: "#7397AB" },
+          { name: "汝釉粉青", hex: "#9BB4BF" },
+          { name: "香灰胎骨", hex: "#C8BFA8" },
+          { name: "蟹爪冰裂", hex: "#4A5860" }
+        ]
+      },
+      {
+        id: "cuiwei", season: "春", term: "清明 · 三候虹始见", name: "翠微", pinyin: "CUI WEI", hex: "#4E7F6B",
+        alias: "远山青绿 · 螺子黛", wuxing: "木德繁茂 · 千里江山青绿", seal: "千里江山",
+        artifact: "北宋王希孟《千里江山图》石绿染山腰",
+        book: "《尔雅·释山》：“山未及上曰翠微”",
+        poem: "“山色有无中，水光潋滟晴方好，翠微深处人家。”",
+        story: "古人登高望远，见山腰竹木笼罩在薄雾水汽之中，青翠欲滴而又迷蒙幽远，故称山腰为“翠微”。王希孟在《千里江山图》中以二绿、三绿层层罩染，尽得翠微之神髓。",
+        harmony: [
+          { name: "翠微绿", hex: "#4E7F6B" },
+          { name: "石青", hex: "#1F4E78" },
+          { name: "泥金", hex: "#C8A45D" },
+          { name: "赭石", hex: "#8A4B38" }
+        ]
+      },
+      {
+        id: "yunmen", season: "春", term: "谷雨 · 初候萍始生", name: "云门", pinyin: "YUN MEN", hex: "#A8C6C0",
+        alias: "秘色瓷青 · 千峰翠色", wuxing: "春末雨润 · 越窑秘色", seal: "千峰翠色",
+        artifact: "唐代法门寺地宫八棱净水秘色瓷瓶",
+        book: "唐·陆龟蒙《秘色越器》",
+        poem: "“九秋风露越窑开，夺得千峰翠色来。”",
+        story: "谷雨时节江南烟雨如织，水汽氤氲。唐代越窑秘色瓷在还原焰中烧出似玉类冰、如湖水映云的温润青绿，直到1987年法门寺地宫开启才重现人间。",
+        harmony: [
+          { name: "云门青", hex: "#A8C6C0" },
+          { name: "湖水绿", hex: "#5F8D86" },
+          { name: "茶汤黄", hex: "#D4B87A" },
+          { name: "乌木黑", hex: "#242625" }
+        ]
+      },
+      {
+        id: "qingmei", season: "夏", term: "立夏 · 二候蚯蚓出", name: "青梅", pinyin: "QING MEI", hex: "#829E56",
+        alias: "梅子青 · 豆青", wuxing: "初夏木火相生 · 龙泉青釉", seal: "龙泉梅青",
+        artifact: "南宋龙泉窑梅子青釉摩羯耳盘口瓶",
+        book: "宋代张邦基《墨庄漫录》",
+        poem: "“和羞走，倚门回首，却把青梅嗅。” ——李清照",
+        story: "南宋龙泉窑巧匠创烧出厚如凝脂的石灰碱釉，色泽酷似初夏枝头饱满欲滴的青梅，比粉青更浓翠，比哥窑更澄澈，被誉为青瓷釉色之极轨。",
+        harmony: [
+          { name: "青梅绿", hex: "#829E56" },
+          { name: "象牙白", hex: "#F2EDE1" },
+          { name: "朱砂点", hex: "#B83B2E" },
+          { name: "紫檀褐", hex: "#3D2622" }
+        ]
+      },
+      {
+        id: "tongguan", season: "夏", term: "小满 · 三候麦秋至", name: "彤管", pinyin: "TONG GUAN", hex: "#C8433B",
+        alias: "宫墙朱红 · 银朱", wuxing: "南方火德 · 紫禁城礼制正色", seal: "紫禁丹宸",
+        artifact: "明永乐剔红牡丹纹漆盒 & 故宫红墙",
+        book: "《诗经·邶风·静女》：“贻我彤管”",
+        poem: "“静女其娈，贻我彤管。彤管有炜，说怿女美。”",
+        story: "古代女史记载宫闱政事所用之赤管笔曰“彤管”。其色庄重炽烈而不刺目，后成为紫禁城宫墙与雕漆剔红器的标准丹朱色，与琉璃黄瓦共同构成皇城天际线。",
+        harmony: [
+          { name: "彤管朱", hex: "#C8433B" },
+          { name: "琉璃明黄", hex: "#E5A93B" },
+          { name: "汉白玉", hex: "#EFECE6" },
+          { name: "孔雀蓝", hex: "#1B6B7D" }
+        ]
+      },
+      {
+        id: "qielan", season: "夏", term: "芒种 · 初候螳螂生", name: "窃蓝", pinyin: "QIE LAN", hex: "#8AA8B8",
+        alias: "浅蓝月白 · 晴山蓝", wuxing: "夏空澄明 · 景德镇月白釉", seal: "朗吟月白",
+        artifact: "清雍正仿钧天蓝釉紫红斑弦纹瓶",
+        book: "《尔雅·释鸟》：“秋扈窃蓝”",
+        poem: "“目既周于原野，心亦畅于窃蓝。”",
+        story: "古汉语中“窃”意为“浅”。窃蓝即极浅而清透的淡天蓝，仿佛盛夏阵雨初晴、月华刚升起时的天空底色，在雍正单色釉瓷器中最见清逸品格。",
+        harmony: [
+          { name: "窃蓝", hex: "#8AA8B8" },
+          { name: "钧红紫斑", hex: "#7E354B" },
+          { name: "月白", hex: "#DCE5EA" },
+          { name: "深黛", hex: "#2A3642" }
+        ]
+      },
+      {
+        id: "hehuabai", season: "夏", term: "夏至 · 二候蝉始鸣", name: "荷花白", pinyin: "HE HUA BAI", hex: "#F7EFF0",
+        alias: "藕荷微白 · 甜白釉", wuxing: "夏水清净 · 永乐甜白暗刻", seal: "永乐甜白",
+        artifact: "明永乐景德镇窑甜白釉暗花缠枝莲纹碗",
+        book: "明代曹昭《格古要论》",
+        poem: "“水面清圆，一一风荷举。” ——周邦彦",
+        story: "夏至荷塘盛放的白莲，白色花瓣尖端隐隐透出一丝极淡的藕粉暖意。明永乐甜白釉瓷器胎薄如纸，迎光映照时便呈现出这种温润如玉、白中泛粉的荷花白。",
+        harmony: [
+          { name: "荷花白", hex: "#F7EFF0" },
+          { name: "藕荷粉", hex: "#C998A6" },
+          { name: "荷叶碧", hex: "#48735C" },
+          { name: "莲房褐", hex: "#6B5243" }
+        ]
+      },
+      {
+        id: "xilan", season: "夏", term: "大暑 · 三候大雨时行", name: "夕岚", pinyin: "XI LAN", hex: "#9E6B7B",
+        alias: "暮山紫 · 霞蔚色", wuxing: "夏夜雷雨前之晚霞紫", seal: "光照暮山",
+        artifact: "宋代钧窑玫瑰紫釉葵花式花盆（故宫藏）",
+        book: "王勃《滕王阁序》：“潦水尽而寒潭清，烟光凝而暮山紫”",
+        poem: "“潦水尽而寒潭清，烟光凝而暮山紫。” ——王勃",
+        story: "大暑傍晚雷雨将至，夕阳余晖穿过浓重的山间水汽，将远山染成瑰丽的玫瑰暮紫。宋代钧窑以铜红与钴蓝在窑变中交融，重现了“夕岚暮山紫”的壮丽气象。",
+        harmony: [
+          { name: "夕岚紫", hex: "#9E6B7B" },
+          { name: "天蓝釉", hex: "#6E98B3" },
+          { name: "落日金", hex: "#D9944E" },
+          { name: "铁足褐", hex: "#332623" }
+        ]
+      },
+      {
+        id: "ningzhi", season: "秋", term: "白露 · 初候鸿雁来", name: "凝脂", pinyin: "NING ZHI", hex: "#F5EFE4",
+        alias: "羊脂玉白 · 德化象牙白", wuxing: "西方金德 · 素秋凝露", seal: "肤如凝脂",
+        artifact: "明代德化窑何朝宗款白釉渡海观音像",
+        book: "《诗经·卫风·硕人》：“手如柔荑，肤如凝脂”",
+        poem: "“巧笑倩兮，美目盼兮，肤如凝脂。”",
+        story: "白露降临，秋气清肃。明代福建德化窑白瓷因含铁量极低、钾含量高，烧成后釉面如凝固的羊脂美玉，在灯光下泛出温暖如象牙的乳白光泽。",
+        harmony: [
+          { name: "凝脂白", hex: "#F5EFE4" },
+          { name: "秋香黄", hex: "#C9A654" },
+          { name: "檀香褐", hex: "#7D5A44" },
+          { name: "墨玉黑", hex: "#22211F" }
+        ]
+      },
+      {
+        id: "danhuo", season: "秋", term: "秋分 · 二候蛰虫坯户", name: "丹雘", pinyin: "DAN HUO", hex: "#B5382A",
+        alias: "真朱 · 辰砂丹", wuxing: "秋林霜叶 · 敦煌与书画印泥正朱", seal: "八宝印泥",
+        artifact: "乾隆御用八宝印泥与《中秋帖》藏印",
+        book: "《山海经·南山经》：“青丘之山，多丹雘”",
+        poem: "“停车坐爱枫林晚，霜叶红于二月花。” ——杜牧",
+        story: "“丹雘”即上古最纯净的天然矿物朱砂。中国书画卷轴上历经千年不褪色的鲜红藏书印，皆以辰砂研磨配以陈年蓖麻油与艾绒制成，一印落下，满幅生辉。",
+        harmony: [
+          { name: "丹雘朱", hex: "#B5382A" },
+          { name: "古宣纸黄", hex: "#DFD3B8" },
+          { name: "松烟浓墨", hex: "#1A1917" },
+          { name: "花青蓝", hex: "#33526E" }
+        ]
+      },
+      {
+        id: "yanzhi", season: "秋", term: "寒露 · 三候菊有黄华", name: "胭脂", pinyin: "YAN ZHI", hex: "#9D2933",
+        alias: "燕支 · 红蓝花染", wuxing: "匈奴焉支山红花 · 宫廷粉黛与瓷彩", seal: "焉支山色",
+        artifact: "清雍正胭脂红釉小碗（故宫博物院藏）",
+        book: "汉代习凿齿《与燕王书》",
+        poem: "“失我焉支山，令我妇女无颜色。” ——汉乐府民歌",
+        story: "汉武帝时张骞自西域引进红蓝花，可制红妆胭脂；至清康熙、雍正年间，宫廷造办处引入西洋金红彩（在釉中掺入万分之一的纯金胶体），烧造出娇嫩华贵的“胭脂水釉”。",
+        harmony: [
+          { name: "胭脂水", hex: "#9D2933" },
+          { name: "粉白", hex: "#F4E8EA" },
+          { name: "秋菊金", hex: "#D6A13E" },
+          { name: "翠羽蓝", hex: "#1F6272" }
+        ]
+      },
+      {
+        id: "qiuxiang", season: "秋", term: "霜降 · 初候豺乃祭兽", name: "秋香", pinyin: "QIU XIANG", hex: "#C7A252",
+        alias: "槐花黄绿 · 金粟色", wuxing: "金秋桂子 · 明清织金锦缎", seal: "金粟晚香",
+        artifact: "明代秋香色暗花缎绣博古纹夹衣",
+        book: "明代刘若愚《酌中志》宫廷服色考",
+        poem: "“桂子月中落，天香云外飘。” ——宋之问",
+        story: "以槐米与蓝靛微调染就的暖黄微绿之色。《红楼梦》第四十回贾母笑谈“那个软烟罗只有四样颜色：一样雨过天青，一样秋香色，一样松绿的，一样就是银红的”。",
+        harmony: [
+          { name: "秋香色", hex: "#C7A252" },
+          { name: "松花绿", hex: "#4D6E58" },
+          { name: "银红", hex: "#D86A6A" },
+          { name: "玄褐", hex: "#2E2621" }
+        ]
+      },
+      {
+        id: "canglang", season: "冬", term: "立冬 · 二候地始冻", name: "苍筤", pinyin: "CANG LANG", hex: "#4E6A5D",
+        alias: "竹苍青 · 岁寒松竹", wuxing: "冬藏君子之节 · 苍翠沉静", seal: "岁寒三友",
+        artifact: "清乾隆茶叶末釉绶带耳葫芦瓶",
+        book: "《易经·说卦》：“震为雷，为苍筤竹”",
+        poem: "“咬定青山不放松，立根原在破岩中。” ——郑燮",
+        story: "立冬万物敛藏，唯有苍竹在寒霜中由鲜翠转为深沉稳重的苍青色。在文人书房的笔筒与茶叶末釉瓷器上，这一抹沉静暗绿象征着不为风雪所动的风骨。",
+        harmony: [
+          { name: "苍筤青", hex: "#4E6A5D" },
+          { name: "古铜褐", hex: "#6B533B" },
+          { name: "冬雪白", hex: "#EFEFEF" },
+          { name: "腊梅黄", hex: "#E0B94B" }
+        ]
+      },
+      {
+        id: "meiran", season: "冬", term: "小雪 · 初候虹藏不见", name: "梅染", pinyin: "MEI RAN", hex: "#9E5A52",
+        alias: "红梅木染 · 檀褐红", wuxing: "冬木内敛 · 草木染红褐", seal: "暗香疏影",
+        artifact: "清代紫檀嵌玉梅花纹文具盒",
+        book: "《格物粗谈》草木煎染谱",
+        poem: "“疏影横斜水清浅，暗香浮动月黄昏。” ——林逋",
+        story: "取老梅树枝干与根皮反复煎煮，以椿木灰汁媒染所得的温润红褐色。它不争春花之艳，却在寒冬小雪时节散发着内敛醇厚的木质暖意。",
+        harmony: [
+          { name: "梅染红褐", hex: "#9E5A52" },
+          { name: "素雪白", hex: "#F5F2EE" },
+          { name: "古松绿", hex: "#385244" },
+          { name: "紫檀黑", hex: "#241917" }
+        ]
+      },
+      {
+        id: "霁蓝", season: "冬", term: "大雪 · 二候虎始交", name: "霁蓝", pinyin: "JI LAN", hex: "#1B3B6F",
+        alias: "祭蓝釉 · 积蓝", wuxing: "天坛祈年殿琉璃瓦 · 冬空深邃之蓝", seal: "天坛祭蓝",
+        artifact: "元代景德镇窑蓝釉白龙纹梅瓶 & 天坛祈年殿琉璃瓦",
+        book: "《大明会典》郊祀礼器考",
+        poem: "“雪霁长空万里蓝，祈年殿上接星汉。”",
+        story: "以天然苏麻离青钴料入釉高温烧成，色泽深沉如大雪初晴后的万里苍穹，不流不裂。明清两代专用于天坛祭天大典礼器与祈年殿三重琉璃圆顶。",
+        harmony: [
+          { name: "霁蓝釉", hex: "#1B3B6F" },
+          { name: "甜白龙纹", hex: "#F2F4F7" },
+          { name: "鎏金宝顶", hex: "#D4AF37" },
+          { name: "丹陛石青", hex: "#435970" }
+        ]
+      },
+      {
+        id: "xuantian", season: "冬", term: "冬至 · 初候蚯蚓结", name: "玄天", pinyin: "XUAN TIAN", hex: "#1F2026",
+        alias: "玄色 · 黑中扬赤", wuxing: "北方水德 · 秦汉帝王至高冕服正色", seal: "天地玄黄",
+        artifact: "清乾隆乌金釉描金云龙纹梅瓶",
+        book: "《周易·坤卦》：“天玄而地黄” &《礼记》",
+        poem: "“天地玄黄，宇宙洪荒。日月盈昃，辰宿列张。” ——《千字文》",
+        story: "在中国古典哲学中，“玄”绝非死板的纯黑，而是将丝绸浸入蓝靛与茜草数十次后，在深邃夜黑中隐隐透出的一线幽微赤紫，象征冬至一阳来复、万物孕育的宇宙母体。",
+        harmony: [
+          { name: "玄天黑紫", hex: "#1F2026" },
+          { name: "朱磦赤", hex: "#B8342A" },
+          { name: "赤金", hex: "#D4AF37" },
+          { name: "明月白", hex: "#E5E7EB" }
+        ]
+      },
+      {
+        id: "zijin", season: "冬", term: "小寒 · 二候鹊始巢", name: "紫金", pinyin: "ZI JIN", hex: "#5C3728",
+        alias: "紫金釉 · 柿红酱釉", wuxing: "宋代定窑紫定 · 温润暖褐", seal: "紫定金华",
+        artifact: "北宋定窑紫定酱釉葵口碗（故宫博物院藏）",
+        book: "苏东坡《试院煎茶》：“定州花瓷琢红玉”",
+        poem: "“潞公煎茶学西蜀，定州花瓷琢红玉。” ——苏轼",
+        story: "以含铁量高达5%以上的紫金土配釉，在氧化焰中烧出闪耀金属暖光的深棕紫红色。在寒冷的冬日茶席上，紫金釉盏盛放白茶汤，最受宋代文人推崇。",
+        harmony: [
+          { name: "紫金釉", hex: "#5C3728" },
+          { name: "建盏兔毫金", hex: "#C89B54" },
+          { name: "点茶沫白", hex: "#F3EFE6" },
+          { name: "铁胎灰黑", hex: "#282320" }
+        ]
+      },
+      {
+        id: "岁朝红", season: "冬", term: "大寒 · 三候水泽腹坚", name: "岁朝朱砂", pinyin: "SUI CHAO ZHU", hex: "#AD2624",
+        alias: "宫廷福字万年红 · 珊瑚红", wuxing: "冬尽春来 · 乾隆明窗开笔礼", seal: "岁朝春祺",
+        artifact: "清乾隆珊瑚红地描金福寿纹万年红双联瓶",
+        book: "《清宫岁朝图》与养心殿明窗开笔典制",
+        poem: "“爆竹声中一岁除，春风送暖入屠苏。” ——王安石",
+        story: "大寒是一年最后一个节气。紫禁城养心殿内，皇帝以朱砂墨在“万年红”洒金宣纸上写下新岁第一枚福字，配以案头水仙与红梅，宣告四时轮回、春满乾坤。",
+        harmony: [
+          { name: "岁朝朱砂", hex: "#AD2624" },
+          { name: "洒金冷金", hex: "#D6AE4B" },
+          { name: "水仙白", hex: "#F7F5EE" },
+          { name: "松针翠", hex: "#355E4B" }
+        ]
+      }
+    ];
+
+    let activeSeason = "all";
+    let activeVessel = "porcelain"; // porcelain | fan | palace
+    let activeColor = ZHONGGUO_COLORS[2]; // Default: 天水碧
+
+    function showToast(msg) {
+      const container = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "rounded-xl border border-amber-200/30 bg-[#1A1816]/95 backdrop-blur-md px-4 py-2 text-xs text-amber-100 shadow-xl";
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.25s ease";
+        setTimeout(() => el.remove(), 250);
+      }, 2100);
+    }
+
+    function renderArtifactSVG(c) {
+      const h = c.harmony;
+      const c0 = c.hex;
+      const c1 = h[1]?.hex || c.hex;
+      const c2 = h[2]?.hex || "#EFECE6";
+      const c3 = h[3]?.hex || "#2A2A2A";
+
+      if (activeVessel === "porcelain") {
+        // Imperial Yuhuchun Porcelain Vase with subtle glaze reflection and crackle lines
+        return `
+          <svg viewBox="0 0 280 280" class="w-56 h-56 drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)]">
+            <defs>
+              <radialGradient id="glazeGrad" cx="38%" cy="32%" r="68%">
+                <stop offset="0%" stop-color="${c2}" stop-opacity="0.85"/>
+                <stop offset="28%" stop-color="${c0}" stop-opacity="1"/>
+                <stop offset="78%" stop-color="${c1}" stop-opacity="1"/>
+                <stop offset="100%" stop-color="${c3}" stop-opacity="0.95"/>
+              </radialGradient>
+            </defs>
+            <!-- Pedestal Shadow -->
+            <ellipse cx="140" cy="252" rx="56" ry="9" fill="rgba(0,0,0,0.6)"/>
+            <!-- Porcelain Vase Body -->
+            <path d="M108 32 Q140 38 172 32 Q154 68 156 102 Q160 142 198 182 Q212 205 186 234 L172 246 L108 246 L94 234 Q68 205 82 182 Q120 142 124 102 Q126 68 108 32 Z"
+                  fill="url(#glazeGrad)" stroke="${c2}" stroke-opacity="0.35" stroke-width="1.2"/>
+            <!-- Rim Highlight -->
+            <ellipse cx="140" cy="32" rx="32" ry="5" fill="${c2}" fill-opacity="0.65" stroke="${c0}" stroke-width="1"/>
+            <!-- Glaze Specular Highlight -->
+            <path d="M128 55 Q122 115 98 180 Q92 202 105 224" fill="none" stroke="#FFFFFF" stroke-opacity="0.38" stroke-width="5" stroke-linecap="round"/>
+            <!-- Delicate Crackle Lines -->
+            <path d="M118 140 L145 155 L175 138 M145 155 L138 198 L172 212 M102 190 L138 198" fill="none" stroke="${c3}" stroke-opacity="0.28" stroke-width="0.9"/>
+            <!-- Foot Ring (香灰胎骨) -->
+            <rect x="108" y="244" width="64" height="6" rx="2" fill="#C8BFA8" opacity="0.85"/>
+          </svg>
+        `;
+      } else if (activeVessel === "fan") {
+        // Eastern Xuan Paper Silk Round Fan (团扇山水晕染)
+        return `
+          <svg viewBox="0 0 280 280" class="w-56 h-56 drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)]">
+            <defs>
+              <linearGradient id="fanSky" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="${c0}"/>
+                <stop offset="65%" stop-color="${c1}"/>
+                <stop offset="100%" stop-color="${c2}"/>
+              </linearGradient>
+              <clipPath id="fanClip">
+                <circle cx="140" cy="122" r="92"/>
+              </clipPath>
+            </defs>
+            <!-- Fan Silk Circle -->
+            <g clip-path="url(#fanClip)">
+              <rect x="40" y="20" width="200" height="200" fill="url(#fanSky)"/>
+              <!-- Distant Sun/Moon -->
+              <circle cx="172" cy="82" r="18" fill="${c2}" opacity="0.85"/>
+              <!-- Layered Misty Mountains -->
+              <path d="M40 165 Q95 120 155 152 T240 135 L240 220 L40 220 Z" fill="${c1}" opacity="0.75"/>
+              <path d="M40 185 Q110 148 175 178 T240 165 L240 220 L40 220 Z" fill="${c3}" opacity="0.88"/>
+            </g>
+            <!-- Fan Bamboo Frame & Handle -->
+            <circle cx="140" cy="122" r="92" fill="none" stroke="${c3}" stroke-width="4"/>
+            <line x1="140" y1="30" x2="140" y2="262" stroke="#8C6D46" stroke-width="5" stroke-linecap="round"/>
+            <!-- Red Tassel -->
+            <circle cx="140" cy="258" r="4" fill="#B8352B"/>
+          </svg>
+        `;
+      } else {
+        // Forbidden City Glazed Roof Eaves & Red Wall (紫禁琉璃飞檐与红墙)
+        return `
+          <svg viewBox="0 0 280 280" class="w-56 h-56 drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)]">
+            <!-- Sky Backdrop -->
+            <rect x="24" y="24" width="232" height="224" rx="18" fill="${c0}"/>
+            <!-- Moon/Cloud -->
+            <circle cx="204" cy="74" r="22" fill="${c2}" opacity="0.8"/>
+            <!-- Sweeping Palace Roof Eaves -->
+            <path d="M24 135 Q125 140 238 92 L246 112 Q135 162 24 158 Z" fill="${c1}"/>
+            <!-- Bracket Sets (斗拱) -->
+            <rect x="24" y="156" width="185" height="14" fill="${c3}"/>
+            <!-- Palace Wall -->
+            <rect x="24" y="170" width="175" height="78" fill="${c0}" filter="brightness(0.82)"/>
+            <!-- Lattice Window -->
+            <circle cx="105" cy="210" r="22" fill="${c2}" opacity="0.25" stroke="${c2}" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    }
+
+    function renderStage() {
+      const c = activeColor;
+      document.documentElement.style.setProperty("--main-color", c.hex);
+      document.documentElement.style.setProperty("--sub-color-1", c.harmony[1]?.hex || c.hex);
+
+      document.getElementById("zgTermBadge").textContent = c.term;
+      document.getElementById("zgWuxingBadge").textContent = c.wuxing;
+      document.getElementById("zgCopyMainBtn").textContent = `${c.hex} 复制主色`;
+      document.getElementById("zgArtifactName").textContent = `传世器物：${c.artifact}`;
+      document.getElementById("zgHexLabel").textContent = c.hex;
+
+      document.getElementById("zgPinyin").textContent = c.pinyin;
+      document.getElementById("zgTitle").textContent = c.name;
+      document.getElementById("zgAlias").textContent = `别名：${c.alias}`;
+      document.getElementById("zgSourceBook").textContent = `典出：${c.book}`;
+      document.getElementById("zgVerticalName").textContent = c.name;
+      document.getElementById("zgSealText").textContent = c.seal;
+      document.getElementById("zgPoem").textContent = c.poem;
+      document.getElementById("zgStory").textContent = c.story;
+
+      document.getElementById("artifactCanvasStage").innerHTML = renderArtifactSVG(c);
+
+      // Render 4-Color Imperial Harmony
+      document.getElementById("zgHarmonyGrid").innerHTML = c.harmony.map(item => `
+        <button data-copy="${item.hex}" class="rounded-xl border border-stone-700/80 bg-stone-900/75 hover:border-amber-200/50 p-2.5 text-left transition flex items-center gap-3">
+          <span class="h-9 w-9 rounded-lg shrink-0 border border-white/15 shadow" style="background:${item.hex}"></span>
+          <div class="min-w-0">
+            <div class="font-song text-xs font-semibold text-stone-100 truncate">${item.name}</div>
+            <div class="font-mono-code text-[11px] text-stone-400">${item.hex}</div>
+          </div>
+        </button>
+      `).join("");
+
+      // Render Right Matrix
+      const list = activeSeason === "all"
+        ? ZHONGGUO_COLORS
+        : ZHONGGUO_COLORS.filter(item => item.season === activeSeason);
+
+      document.getElementById("zgMatrixCount").textContent = `${list.length} SPECIMENS`;
+      document.getElementById("zgGrid").innerHTML = list.map(item => {
+        const isCurrent = item.id === c.id;
+        return `
+          <button data-id="${item.id}" class="rounded-2xl border p-3 text-left transition flex items-stretch gap-3 ${
+            isCurrent
+              ? "border-amber-200/80 bg-stone-800/90 shadow-lg"
+              : "border-stone-800/90 bg-[#171614]/80 hover:border-stone-600"
+          }">
+            <span class="w-3.5 rounded-full shrink-0 border border-white/15" style="background:${item.hex}"></span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between text-[10px] text-stone-400">
+                <span>${item.term.split("·")[0].trim()}</span>
+                <span class="font-mono-code">${item.hex}</span>
+              </div>
+              <div class="font-song text-base font-bold text-stone-100 mt-0.5 truncate">${item.name}</div>
+              <div class="text-[11px] text-stone-400 truncate mt-0.5">${item.alias}</div>
+            </div>
+          </button>
+        `;
+      }).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderStage();
+
+      document.getElementById("zgGrid").addEventListener("click", e => {
+        const btn = e.target.closest("[data-id]");
+        if (!btn) return;
+        const found = ZHONGGUO_COLORS.find(x => x.id === btn.getAttribute("data-id"));
+        if (found) {
+          activeColor = found;
+          renderStage();
+        }
+      });
+
+      document.getElementById("seasonNav").addEventListener("click", e => {
+        const btn = e.target.closest("[data-season]");
+        if (!btn) return;
+        activeSeason = btn.getAttribute("data-season");
+        document.querySelectorAll(".season-btn").forEach(b => {
+          b.className = "season-btn rounded-full px-3.5 py-1 text-xs text-stone-400 hover:text-white border border-stone-800 transition";
+        });
+        btn.className = "season-btn rounded-full px-3.5 py-1 text-xs font-medium bg-amber-100 text-stone-950 transition";
+        const list = activeSeason === "all" ? ZHONGGUO_COLORS : ZHONGGUO_COLORS.filter(x => x.season === activeSeason);
+        if (list.length && !list.some(x => x.id === activeColor.id)) {
+          activeColor = list[0];
+        }
+        renderStage();
+      });
+
+      document.querySelectorAll(".vessel-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeVessel = btn.getAttribute("data-vessel");
+          document.querySelectorAll(".vessel-btn").forEach(b => {
+            b.className = "vessel-btn rounded-full px-3 py-1 text-stone-400 hover:text-white transition";
+          });
+          btn.className = "vessel-btn rounded-full px-3 py-1 bg-stone-700 text-white font-medium transition";
+          renderStage();
+        });
+      });
+
+      document.getElementById("zgCopyMainBtn").addEventListener("click", () => {
+        navigator.clipboard?.writeText(activeColor.hex).catch(() => {});
+        showToast(`已复制「${activeColor.name}」色值 ${activeColor.hex}`);
+      });
+
+      document.getElementById("zgHarmonyGrid").addEventListener("click", e => {
+        const btn = e.target.closest("[data-copy]");
+        if (!btn) return;
+        const hex = btn.getAttribute("data-copy");
+        navigator.clipboard?.writeText(hex).catch(() => {});
+        showToast(`已复制故宫配伍色值 ${hex}`);
+      });
+
+      document.getElementById("zgCopyHarmonyCssBtn").addEventListener("click", () => {
+        const stops = activeColor.harmony.map(h => h.hex).join(", ");
+        const css = `background: linear-gradient(135deg, ${stops});`;
+        navigator.clipboard?.writeText(css).catch(() => {});
+        showToast(`已复制「${activeColor.name}」四色东方渐变 CSS`);
+      });
+
+      window.addEventListener("keydown", e => {
+        const list = activeSeason === "all" ? ZHONGGUO_COLORS : ZHONGGUO_COLORS.filter(x => x.season === activeSeason);
+        const idx = list.findIndex(x => x.id === activeColor.id);
+        if (e.key === "ArrowRight") {
+          activeColor = list[(idx + 1) % list.length];
+          renderStage();
+        } else if (e.key === "ArrowLeft") {
+          activeColor = list[(idx - 1 + list.length) % list.length];
+          renderStage();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

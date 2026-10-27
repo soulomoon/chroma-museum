@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02 专馆 · NIPPON COLORS 日本传统色大辞典 — 色界 CHROMA MUSEUM</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wash-bg: #1D569E;
+      --ink-main: #FFFFFF;
+      --ink-muted: rgba(255, 255, 255, 0.72);
+      --ink-Subtle: rgba(255, 255, 255, 0.16);
+      --card-surface: rgba(0, 0, 0, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--wash-bg);
+      color: var(--ink-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      transition: background-color 1.15s cubic-bezier(0.22, 1, 0.36, 1), color 0.6s ease;
+      overflow-x: hidden;
+    }
+
+    .font-mincho {
+      font-family: 'Noto Serif JP', 'Noto Serif SC', "Songti SC", Georgia, serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Authentic Japanese Echizen Washi Paper Grain Overlay */
+    .washi-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.24;
+      mix-blend-mode: overlay;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='washi'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23washi)' opacity='0.65'/%3E%3C/svg%3E"),
+        repeating-linear-gradient(24deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 9px);
+      background-size: 180px 180px, 100% 100%;
+    }
+
+    /* Vertical Japanese Kanji Typography */
+    .tategaki {
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+    }
+
+    /* CMYK Ring Gauge Transition */
+    .cmyk-circle {
+      transition: stroke-dashoffset 0.95s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.6s ease;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* RGB Bar Transition */
+    .rgb-bar-fill {
+      transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Swatch Card Hover */
+    .nippon-swatch-item {
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.28s ease, border-color 0.28s ease;
+    }
+    .nippon-swatch-item:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-white/25">
+  <!-- Washi Paper Texture -->
+  <div class="washi-overlay"></div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================= -->
+  <!-- GLOBAL MUSEUM PAVILION SWITCHER                           -->
+  <!-- ========================================================= -->
+  <div class="relative z-40 border-b border-white/15 bg-black/45 backdrop-blur-xl text-[11px] text-white">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a href="chroma_museum.html" class="rounded-lg border border-white/20 bg-white/10 hover:bg-white/20 px-2.5 py-1 text-white font-medium flex items-center gap-1.5 transition">
+          <span>🏛️</span><span>总览导航大厅</span>
+        </a>
+        <span class="text-white/30 px-1">|</span>
+        <a href="pavilion_curation.html" class="rounded-lg text-white/75 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">01 综合策展馆</a>
+        <a href="pavilion_nippon.html" class="rounded-lg bg-white text-black px-2.5 py-1 font-semibold transition">02 NIPPON COLORS 日本传统色</a>
+        <a href="pavilion_zhongguo.html" class="rounded-lg text-white/75 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">03 中国传统色 · 故宫节气</a>
+        <a href="pavilion_sanzo.html" class="rounded-lg text-white/75 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">04 和田三造《配色事典》</a>
+        <a href="pavilion_werner.html" class="rounded-lg text-white/75 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">05 1814 沃纳博物学色谱</a>
+        <a href="pavilion_corbusier.html" class="rounded-lg text-white/75 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">06 柯布西耶建筑多色系</a>
+      </div>
+      <span class="text-[10px] font-mono-code text-white/60 hidden lg:inline shrink-0">PAVILION 02 / NIPPON COLORS · 全屏和纸浸染模式</span>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SUB-HEADER: HUE FAMILY FILTER & MUNSELL / AUTO-CYCLE      -->
+  <!-- ========================================================= -->
+  <header class="relative z-30 border-b border-current/10">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="font-mincho text-lg font-bold tracking-[0.2em]">日本の伝統色</span>
+        <span class="text-[11px] font-mono-code tracking-[0.28em] opacity-75">NIPPON COLORS · 24 CLASSIC WASHI SPECIMENS</span>
+      </div>
+
+      <!-- Hue Family Filters -->
+      <nav id="hueFilterNav" class="flex flex-wrap items-center gap-1.5">
+        <button data-group="all" class="hue-btn rounded-full px-3 py-1 text-xs font-medium bg-black/25 backdrop-blur-md border border-current/30 transition">全部 (24)</button>
+        <button data-group="red" class="hue-btn rounded-full px-3 py-1 text-xs opacity-70 hover:opacity-100 border border-transparent transition">紅·桜系</button>
+        <button data-group="yellow" class="hue-btn rounded-full px-3 py-1 text-xs opacity-70 hover:opacity-100 border border-transparent transition">黄·山吹系</button>
+        <button data-group="green" class="hue-btn rounded-full px-3 py-1 text-xs opacity-70 hover:opacity-100 border border-transparent transition">緑·若竹系</button>
+        <button data-group="blue" class="hue-btn rounded-full px-3 py-1 text-xs opacity-70 hover:opacity-100 border border-transparent transition">青·瑠璃系</button>
+        <button data-group="purple" class="hue-btn rounded-full px-3 py-1 text-xs opacity-70 hover:opacity-100 border border-transparent transition">紫·鼠系</button>
+      </nav>
+
+      <!-- Right Controls: Randomize & Copy HEX -->
+      <div class="flex items-center gap-2">
+        <button id="randomColorBtn" class="rounded-full border border-current/25 bg-black/15 hover:bg-black/25 px-3.5 py-1 text-xs font-medium transition">
+          ↻ 随机浸染一色
+        </button>
+        <button id="copyCurrentHexBtn" class="rounded-full border border-current/30 bg-black/25 hover:bg-black/35 px-3.5 py-1 text-xs font-mono-code font-medium transition">
+          #7397AB 复制
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- MAIN NIPPON COLORS STAGE                                  -->
+  <!-- Left: 24-Color Traditional Matrix                         -->
+  <!-- Right: CMYK Rings + RGB Bars + Giant Vertical Kanji Plaque-->
+  <!-- ========================================================= -->
+  <main class="relative z-20 flex-1 mx-auto w-full max-w-[1360px] px-4 sm:px-8 py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- LEFT 6 COLS: TRADITIONAL JAPANESE COLOR MATRIX -->
+    <section class="lg:col-span-6 space-y-3">
+      <div class="flex items-center justify-between text-xs opacity-75 pb-1 border-b border-current/15">
+        <span class="font-mono-code tracking-widest uppercase">SELECT A TRADITIONAL HUE · 点击色标浸染全屏</span>
+        <span id="matrixCountText" class="font-mono-code">24 COLORS</span>
+      </div>
+
+      <div id="nipponGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- RIGHT 6 COLS: SIGNATURE NIPPON COLORS VERTICAL STAGE & CMYK/RGB METRICS -->
+    <section class="lg:col-span-6 rounded-3xl border border-current/20 bg-black/15 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-stretch">
+
+        <!-- Sub-Col 1 (5 cols): CMYK Animated Rings + RGB Vertical Bars -->
+        <div class="sm:col-span-5 flex flex-col justify-between space-y-6 border-b sm:border-b-0 sm:border-r border-current/15 pb-6 sm:pb-0 sm:pr-5">
+          <!-- Catalog & Munsell -->
+          <div>
+            <div class="flex items-center justify-between">
+              <span id="ncNumber" class="font-mono-code text-xs tracking-[0.25em] opacity-75">NO. 002</span>
+              <span id="ncMunsell" class="font-mono-code text-[11px] px-2 py-0.5 rounded border border-current/20 opacity-80">5RP 9/1.5</span>
+            </div>
+          </div>
+
+          <!-- 4 Animated CMYK Ring Gauges -->
+          <div class="space-y-3">
+            <div class="text-[10px] font-mono-code tracking-[0.24em] opacity-65 uppercase">CMYK PROCESS RATIO</div>
+            <div class="grid grid-cols-2 gap-3">
+              <!-- C -->
+              <div class="flex items-center gap-2.5">
+                <div class="relative h-12 w-12 shrink-0">
+                  <svg class="h-12 w-12" viewBox="0 0 44 44">
+                    <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="3.2"></circle>
+                    <circle id="ringC" class="cmyk-circle" cx="22" cy="22" r="18" fill="none" stroke="#00AEEF" stroke-width="3.5" stroke-dasharray="113.1" stroke-dashoffset="113.1" stroke-linecap="round"></circle>
+                  </svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono-code text-[11px] font-semibold">C</span>
+                </div>
+                <div>
+                  <div id="valC" class="font-mono-code text-base font-semibold leading-none">0%</div>
+                  <div class="text-[10px] opacity-60 mt-0.5">Cyan</div>
+                </div>
+              </div>
+
+              <!-- M -->
+              <div class="flex items-center gap-2.5">
+                <div class="relative h-12 w-12 shrink-0">
+                  <svg class="h-12 w-12" viewBox="0 0 44 44">
+                    <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="3.2"></circle>
+                    <circle id="ringM" class="cmyk-circle" cx="22" cy="22" r="18" fill="none" stroke="#EC008C" stroke-width="3.5" stroke-dasharray="113.1" stroke-dashoffset="113.1" stroke-linecap="round"></circle>
+                  </svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono-code text-[11px] font-semibold">M</span>
+                </div>
+                <div>
+                  <div id="valM" class="font-mono-code text-base font-semibold leading-none">0%</div>
+                  <div class="text-[10px] opacity-60 mt-0.5">Magenta</div>
+                </div>
+              </div>
+
+              <!-- Y -->
+              <div class="flex items-center gap-2.5">
+                <div class="relative h-12 w-12 shrink-0">
+                  <svg class="h-12 w-12" viewBox="0 0 44 44">
+                    <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="3.2"></circle>
+                    <circle id="ringY" class="cmyk-circle" cx="22" cy="22" r="18" fill="none" stroke="#FFF200" stroke-width="3.5" stroke-dasharray="113.1" stroke-dashoffset="113.1" stroke-linecap="round"></circle>
+                  </svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono-code text-[11px] font-semibold">Y</span>
+                </div>
+                <div>
+                  <div id="valY" class="font-mono-code text-base font-semibold leading-none">0%</div>
+                  <div class="text-[10px] opacity-60 mt-0.5">Yellow</div>
+                </div>
+              </div>
+
+              <!-- K -->
+              <div class="flex items-center gap-2.5">
+                <div class="relative h-12 w-12 shrink-0">
+                  <svg class="h-12 w-12" viewBox="0 0 44 44">
+                    <circle cx="22" cy="22" r="18" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="3.2"></circle>
+                    <circle id="ringK" class="cmyk-circle" cx="22" cy="22" r="18" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="113.1" stroke-dashoffset="113.1" stroke-linecap="round"></circle>
+                  </svg>
+                  <span class="absolute inset-0 flex items-center justify-center font-mono-code text-[11px] font-semibold">K</span>
+                </div>
+                <div>
+                  <div id="valK" class="font-mono-code text-base font-semibold leading-none">0%</div>
+                  <div class="text-[10px] opacity-60 mt-0.5">Key Black</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RGB Spectrum Bars -->
+          <div class="space-y-2.5 pt-2 border-t border-current/15">
+            <div class="text-[10px] font-mono-code tracking-[0.24em] opacity-65 uppercase">RGB DIGITAL CHANNELS</div>
+            <div>
+              <div class="flex justify-between text-[11px] font-mono-code mb-1"><span>R (Red)</span><span id="valR">254</span></div>
+              <div class="h-1.5 w-full rounded-full bg-current/15 overflow-hidden">
+                <div id="barR" class="rgb-bar-fill h-full bg-rose-400 rounded-full" style="width: 80%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] font-mono-code mb-1"><span>G (Green)</span><span id="valG">223</span></div>
+              <div class="h-1.5 w-full rounded-full bg-current/15 overflow-hidden">
+                <div id="barG" class="rgb-bar-fill h-full bg-emerald-400 rounded-full" style="width: 80%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] font-mono-code mb-1"><span>B (Blue)</span><span id="valB">225</span></div>
+              <div class="h-1.5 w-full rounded-full bg-current/15 overflow-hidden">
+                <div id="barB" class="rgb-bar-fill h-full bg-sky-400 rounded-full" style="width: 80%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HEX Big Readout -->
+          <div class="pt-2 border-t border-current/15 flex items-center justify-between">
+            <span class="text-[10px] font-mono-code uppercase opacity-65">HEX CODE</span>
+            <button id="hexBadgeBtn" class="font-mono-code text-sm font-bold tracking-wider underline decoration-current/40 hover:opacity-80">#FEDFE1</button>
+          </div>
+        </div>
+
+        <!-- Sub-Col 2 (7 cols): Giant Vertical Kanji Plaque & Heian/Edo Story -->
+        <div class="sm:col-span-7 flex flex-col justify-between space-y-6">
+          <!-- Top: Giant Vertical Kanji + Romaji + Kana -->
+          <div class="flex items-start justify-between gap-4">
+            <div class="space-y-2">
+              <span id="ncSeasonBadge" class="inline-block rounded-full border border-current/25 px-2.5 py-0.5 text-[11px] font-medium">春 · 平安袭色与草木染</span>
+              <h2 id="ncRomaji" class="font-mono-code text-2xl sm:text-3xl font-bold tracking-[0.18em]">SAKURA</h2>
+              <p id="ncKana" class="font-mincho text-sm tracking-[0.25em] opacity-80">さくら · 樱色</p>
+              <p id="ncDyeSource" class="text-xs opacity-75 pt-1 font-mono-code">染材：山樱树皮煎汁 · 明矾媒染</p>
+            </div>
+
+            <!-- Iconic Vertical Kanji Display -->
+            <div class="tategaki font-mincho text-5xl sm:text-6xl font-bold tracking-[0.18em] leading-none select-none py-2 px-3 rounded-2xl border border-current/20 bg-black/10">
+              <span id="ncKanjiVertical">桜色</span>
+            </div>
+          </div>
+
+          <!-- Middle: Cultural & Literary Lore -->
+          <div class="space-y-3 border-t border-current/15 pt-4">
+            <blockquote id="ncPoem" class="font-mincho text-sm italic leading-relaxed opacity-90 border-l-2 border-current/40 pl-3">
+              “久方の光のどけき春の日に、しづ心なく花のちるらむ。” ——《古今和歌集》纪友则
+            </blockquote>
+            <p id="ncLore" class="text-xs sm:text-[13px] leading-relaxed opacity-85">
+              日本春天的精神原色。真正的传统“樱色”并非取自花瓣，而是在早春山樱开花前剥取树皮煎煮，以灰汁媒染所得的极淡微红。在平安时代《延喜式》中，它是允许平民与公卿共享的少数春色之一。
+            </p>
+          </div>
+
+          <!-- Bottom: Traditional Kasane Pairing (和色三色配伍推荐) -->
+          <div class="space-y-2.5 border-t border-current/15 pt-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono-code tracking-wider uppercase opacity-75">KASANE HARMONY · 传统和色三色配伍</span>
+              <button id="copyKasaneCssBtn" class="text-[11px] underline opacity-80 hover:opacity-100">复制配伍 CSS</button>
+            </div>
+            <div id="ncKasaneStrip" class="grid grid-cols-3 gap-2">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-20 border-t border-current/10 py-3 px-4 sm:px-8 text-center text-[11px] opacity-65">
+    支持键盘 ↑ / ↓ / ← / → 键切换全屏和色浸染 · 点击任意色标或配伍色块即可复制 HEX
+  </footer>
+
+  <script>
+    const NIPPON_COLORS = [
+      {
+        no: "001", kanji: "撫子", kana: "なでしこ", romaji: "NADESHIKO", hex: "#DC9FB4",
+        group: "red", season: "秋七草 · 平安女房装束", munsell: "5RP 7/6",
+        dye: "红花薄染 · 灰汁媒染",
+        poem: "“朝露に咲きすさびたる撫子の、花にも君は似たるものかな。” ——《源氏物语·常夏》",
+        lore: "源自秋七草之一的瞿麦花（河原抚子）。花瓣边缘如剪绒般纤细，色彩温柔清雅，后世遂以“大和抚子”代指温婉坚韧的东方女性气质。",
+        pairings: [{ name: "白練", hex: "#FCFAF2" }, { name: "撫子", hex: "#DC9FB4" }, { name: "青竹", hex: "#00896C" }]
+      },
+      {
+        no: "002", kanji: "桜色", kana: "さくらいろ", romaji: "SAKURA", hex: "#FEDFE1",
+        group: "red", season: "春 · 平安袭色与草木染", munsell: "5RP 9/1.5",
+        dye: "山樱树皮煎汁 · 明矾媒染",
+        poem: "“久方の光のどけき春の日に、しづ心なく花のちるらむ。” ——《古今和歌集》纪友则",
+        lore: "日本春天的精神原色。真正的传统“樱色”并非取自花瓣，而是在早春山樱开花前剥取树皮煎煮所得的极淡微红，透出树干内部蕴藏的春意。",
+        pairings: [{ name: "桜色", hex: "#FEDFE1" }, { name: "蘇芳", hex: "#8E354A" }, { name: "柳染", hex: "#91AD70" }]
+      },
+      {
+        no: "003", kanji: "一斤染", kana: "いっこんぞめ", romaji: "IKKONZOME", hex: "#F4A7B9",
+        group: "red", season: "春 ·《延喜式》听色", munsell: "4RP 7.5/6.5",
+        dye: "一斤红花染一疋白绢",
+        poem: "“紅の花にしみづの影見れば、うつろふ色ぞあはれなりける。” ——平安染司考",
+        lore: "平安时代《延喜式》严格规定深红（韩红）为禁色，唯有用“一斤”干红花浸染一疋（两反）白绢所得的浅桃粉，被称为“一斤染”，允许臣民自由穿着。",
+        pairings: [{ name: "一斤染", hex: "#F4A7B9" }, { name: "胡粉", hex: "#FFFFFB" }, { name: "千歳緑", hex: "#36563C" }]
+      },
+      {
+        no: "004", kanji: "珊瑚朱", kana: "さんごしゅ", romaji: "SANGOSYU", hex: "#F17C67",
+        group: "red", season: "夏 · 丝路舶来宝色", munsell: "9R 6.5/10.5",
+        dye: "朱砂混胡粉 · 地中海红珊瑚意象",
+        poem: "“わたつみの底の珊瑚の枝ごとに、光りてにほふ夏の朝凪。” ——近世正仓院考",
+        lore: "自丝绸之路传入奈良正仓院的地中海红珊瑚色。介于绯红与杏黄之间，既有矿石的温润光泽，又具盛夏海风的明快张力。",
+        pairings: [{ name: "珊瑚朱", hex: "#F17C67" }, { name: "浅葱", hex: "#33A6B8" }, { name: "練色", hex: "#EDE4CD" }]
+      },
+      {
+        no: "005", kanji: "紅緋", kana: "べにひ", romaji: "BENIHI", hex: "#F75C2F",
+        group: "red", season: "夏 · 神社鸟居与浮世绘", munsell: "8.5R 5.5/14",
+        dye: "红花染底 + 黄栌叠染",
+        poem: "“稲荷山杉のむら立ちひまをあらみ、朱の玉垣あらはれにけり。” ——京都伏见咏草",
+        lore: "兼具红花之艳与绯色之烈的鲜明朱橙。在日本文化中象征破除灾厄的太阳生命力，常见于京都神社连绵千本鸟居与公卿礼服。",
+        pairings: [{ name: "紅緋", hex: "#F75C2F" }, { name: "墨色", hex: "#1C1C1C" }, { name: "鳥の子", hex: "#DAC9A6" }]
+      },
+      {
+        no: "006", kanji: "茜色", kana: "あかねいろ", romaji: "AKANE", hex: "#B7282E",
+        group: "red", season: "秋 ·《万叶集》夕照原色", munsell: "5R 3.8/11",
+        dye: "日本茜草根 · 灰汁媒染",
+        poem: "“あかねさす紫野行き標野行き、野守は見ずや君が袖振る。” ——《万叶集》额田王",
+        lore: "日本最古老的植物染红色，需挖掘三年以上茜草根反复煎染。《万叶集》常以“茜草指（あかねさす）”作为太阳与黄昏漫天晚霞的枕词。",
+        pairings: [{ name: "茜色", hex: "#B7282E" }, { name: "山吹", hex: "#FFB11B" }, { name: "藍鉄", hex: "#091826" }]
+      },
+      {
+        no: "007", kanji: "蘇芳", kana: "すおう", romaji: "SUOH", hex: "#8E354A",
+        group: "red", season: "秋 · 正仓院唐物贵色", munsell: "3RP 3.3/7",
+        dye: "热带苏木芯材 · 明矾媒染",
+        poem: "“唐衣すそに取りつき泣く子らを、置きてぞ来ぬや母なしにして。” ——平安朝服志",
+        lore: "由东南亚经遣唐使传入日本的苏木心材染成。色泽深沉内敛、微带紫调，是奈良正仓院象牙拨镂尺与平安公卿束带的代表色。",
+        pairings: [{ name: "蘇芳", hex: "#8E354A" }, { name: "白梅", hex: "#E5E2DC" }, { name: "黄金", hex: "#C89B40" }]
+      },
+      {
+        no: "008", kanji: "梔子", kana: "くちなし", romaji: "KUCHINASHI", hex: "#F6C555",
+        group: "yellow", season: "秋 · 不言之素心黄", munsell: "1.5Y 8/10",
+        dye: "栀子果实无需媒染直染",
+        poem: "“山吹の花色衣ぬしやたれ、問へど答へずくちなしにして。” ——《古今和歌集》素性法师",
+        lore: "因栀子果成熟后裂口不张，日语谐音“口无（不言）”。在围棋盘的四足都被雕成栀子果形状，寓意观棋不语的君子之风。",
+        pairings: [{ name: "梔子", hex: "#F6C555" }, { name: "紺青", hex: "#113285" }, { name: "胡粉", hex: "#FFFFFB" }]
+      },
+      {
+        no: "009", kanji: "山吹", kana: "やまぶき", romaji: "YAMABUKI", hex: "#FFB11B",
+        group: "yellow", season: "晩春 · 镰仓金碧风雅", munsell: "10YR 7.5/13",
+        dye: "红花微染 + 栀子黄叠染",
+        poem: "“七重八重花は咲けども山吹の、実の一つだに無きぞ悲しき。” ——《后拾遗和歌集》",
+        lore: "晚春盛开的棣棠花（山吹）之色，灿烂如赤金。在大铠威毛与尾形光琳的琳派金碧屏风中，山吹色象征着流水边的华美与孤高。",
+        pairings: [{ name: "山吹", hex: "#FFB11B" }, { name: "千歳緑", hex: "#36563C" }, { name: "紫根", hex: "#4A225D" }]
+      },
+      {
+        no: "010", kanji: "鬱金", kana: "うこん", romaji: "UKON", hex: "#EFBB24",
+        group: "yellow", season: "秋 · 浮世绘与包袱名物", munsell: "2.5Y 7.8/12",
+        dye: "姜科郁金根茎直接浸染",
+        poem: "“鬱金染めの風呂敷に、江戸の粋と名宝をそっと包み込む。” ——江户名物考",
+        lore: "取自琉球与印度传入的姜黄（郁金）根茎。因其天然具有防虫抗菌之效，江户时代人们总是用郁金染的黄布包裹珍贵的茶器、浮世绘与书画。",
+        pairings: [{ name: "鬱金", hex: "#EFBB24" }, { name: "江戸紫", hex: "#6F3381" }, { name: "消炭", hex: "#434343" }]
+      },
+      {
+        no: "011", kanji: "利休白茶", kana: "りきゅうしろちゃ", romaji: "RIKYUSHIROCHA", hex: "#B3ADA0",
+        group: "yellow", season: "冬 · 侘寂茶室之灰", munsell: "2.5Y 7/1",
+        dye: "绿茶煎汁 + 铁浆微媒染",
+        poem: "“花をのみ待つらむ人に山里の、雪間の草の春を見せばや。” ——千利休茶道美学",
+        lore: "茶圣千利休钟爱的枯淡微绿灰茶色。剥离一切炫目装饰，如同京都大德寺待庵茶室的土墙，在极简与幽暗中照见万物的本真。",
+        pairings: [{ name: "利休白茶", hex: "#B3ADA0" }, { name: "黒橡", hex: "#252321" }, { name: "苔色", hex: "#636E38" }]
+      },
+      {
+        no: "012", kanji: "抹茶", kana: "まっちゃ", romaji: "MATCHA", hex: "#86A65E",
+        group: "green", season: "初夏 · 宇治茶园新翠", munsell: "5GY 6.4/5.5",
+        dye: "刈安黄 + 蓼蓝浅叠染",
+        poem: "“茶の湯とはただ湯をわかし茶を点てて、飲むばかりなることと知るべし。” ——《利休百首》",
+        lore: "石臼缓缓研磨宇治碾茶所得的温润粉绿。在黑色乐茶碗的包裹下，一抹抹茶绿如山间幽谷的春苔，令心神瞬间澄明。",
+        pairings: [{ name: "抹茶", hex: "#86A65E" }, { name: "黒楽", hex: "#1C1A17" }, { name: "白練", hex: "#F7F4EC" }]
+      },
+      {
+        no: "013", kanji: "若竹", kana: "わかたけ", romaji: "WAKATAKE", hex: "#5DAC81",
+        group: "green", season: "夏 · 岚山雨后新篁", munsell: "6G 6.2/6.5",
+        dye: "蓝染底 + 黄檗叠染",
+        poem: "“今年生ひの若竹の節のま近きに、千代もこもれる色ぞ見えける。” ——平安贺歌",
+        lore: "初夏刚褪去竹箨的新生青竹之色，比老竹更显明快清澈，带有少年般挺拔向上、洁净无尘的生命朝气。",
+        pairings: [{ name: "若竹", hex: "#5DAC81" }, { name: "白磁", hex: "#F0F5F2" }, { name: "墨染", hex: "#2B2B2B" }]
+      },
+      {
+        no: "014", kanji: "青竹", kana: "あおたけ", romaji: "AOTAKE", hex: "#00896C",
+        group: "green", season: "盛夏 · 翠微清凉之气", munsell: "2.5BG 4.8/8",
+        dye: "深蓼蓝 + 刈安黄交染",
+        poem: "“竹の葉に風吹きわたる夕暮は、夏もわするる心地こそすれ。” ——京都嵯峨野吟",
+        lore: "日本古语中“青”涵盖蓝与绿。青竹色是盛夏竹林深处介于翡翠与青蓝之间的冷冽深绿，自带竹林风声与清凉通感。",
+        pairings: [{ name: "青竹", hex: "#00896C" }, { name: "撫子", hex: "#DC9FB4" }, { name: "生成り", hex: "#F6F0E4" }]
+      },
+      {
+        no: "015", kanji: "千歳緑", kana: "ちとせみどり", romaji: "CHITOSEMIDORI", hex: "#36563C",
+        group: "green", season: "冬 · 千年常盘古松", munsell: "5G 3.4/3.5",
+        dye: "深蓝底 + 黄檗与铁媒染",
+        poem: "“千年ふる松の緑の深ければ、かげに立ち寄る人ぞ老いせぬ。” ——《古今和歌集》",
+        lore: "意为“千年不变的苍松之绿”。哪怕在严冬白雪覆盖之下依然沉稳苍翠，常用于能剧松羽目舞台背景与祝祷长寿的礼服。",
+        pairings: [{ name: "千歳緑", hex: "#36563C" }, { name: "朱鷺", hex: "#EEA9A9" }, { name: "金泥", hex: "#C7A252" }]
+      },
+      {
+        no: "016", kanji: "浅葱", kana: "あさぎ", romaji: "ASAGI", hex: "#33A6B8",
+        group: "blue", season: "夏 · 新选组羽织之色", munsell: "5B 6.2/6.5",
+        dye: "蓼蓝发酵建染（浅浸）",
+        poem: "“浅葱色の羽織に散るは、壬生の誠か鴨川の白波か。” ——幕末京都风物志",
+        lore: "因色泽如初生细葱的浅青叶尖而得名。幕末时期新选组剑士身着“浅葱色山形羽织”，代表武士坦荡赴死、不染尘埃的决绝。",
+        pairings: [{ name: "浅葱", hex: "#33A6B8" }, { name: "白晒", hex: "#FFFFFF" }, { name: "珊瑚朱", hex: "#F17C67" }]
+      },
+      {
+        no: "017", kanji: "露草", kana: "つゆくさ", romaji: "TSUYUKUSA", hex: "#2EA9DF",
+        group: "blue", season: "夏 · 友禅染朝露底稿", munsell: "2.5PB 6.2/10",
+        dye: "鸭跖草（露草）花瓣青花纸",
+        poem: "“月草に衣は摺らむ朝露に、濡れての後はうつろひぬとも。” ——《万叶集》",
+        lore: "清晨盛开、正午即凋的鸭跖草花色。因其汁液遇水即逝、不留痕迹，京都友禅染画师至今仍用露草青花汁在丝绸上绘制底稿。",
+        pairings: [{ name: "露草", hex: "#2EA9DF" }, { name: "白百合", hex: "#F7F8F4" }, { name: "撫子", hex: "#DC9FB4" }]
+      },
+      {
+        no: "018", kanji: "群青", kana: "ぐんじょう", romaji: "GUNJYO", hex: "#51A8DD",
+        group: "blue", season: "四季 · 日本画岩绘具", munsell: "4PB 6.2/8.5",
+        dye: "天然蓝铜矿研磨分番（白群）",
+        poem: "“岩絵具の粒子が光を乱反射し、襖絵の空に永遠の群青を宿す。” ——狩野派画论",
+        lore: "日本画中最核心的天然矿物颜料（蓝铜矿 Azurite）。颗粒越粗则色越深，研磨至极细的12番以上则化为清透温润的“白群”。",
+        pairings: [{ name: "群青", hex: "#51A8DD" }, { name: "金箔", hex: "#D4AF37" }, { name: "绿青", hex: "#408A71" }]
+      },
+      {
+        no: "019", kanji: "瑠璃", kana: "るり", romaji: "RURI", hex: "#005CAF",
+        group: "blue", season: "秋 · 正仓院瑠璃杯", munsell: "6PB 3.5/11.5",
+        dye: "阿富汗青金石 · 钴蓝釉",
+        poem: "“瑠璃の坏に注がれしペルシャの風、千年の夢を碧き底に湛ふ。” ——正仓院御物赞",
+        lore: "佛教七宝之一。奈良正仓院珍藏的萨珊波斯深蓝玻璃碗“瑠璃杯”，将跨越欧亚大陆的深邃宝石蓝定格为日本至高无上的神圣之青。",
+        pairings: [{ name: "瑠璃", hex: "#005CAF" }, { name: "白銀", hex: "#E3E5E8" }, { name: "山吹", hex: "#FFB11B" }]
+      },
+      {
+        no: "020", kanji: "紺青", kana: "こんじょう", romaji: "KONJYO", hex: "#113285",
+        group: "blue", season: "冬 · 北斋神奈川巨浪", munsell: "7PB 2.2/9.5",
+        dye: "天然岩绀青 + 普鲁士蓝 (ベロ藍)",
+        poem: "“富士を見上げる大波の爪先に、ベロ藍と紺青の深淵が砕け散る。” ——北斋版画考",
+        lore: "葛饰北斋在《富岳三十六景·神奈川冲浪里》中将传统蓝染“绀青”与舶来的普鲁士蓝叠印，创造出震惊欧洲印象派的海洋深渊之蓝。",
+        pairings: [{ name: "紺青", hex: "#113285" }, { name: "波白", hex: "#F4F2EC" }, { name: "鳥の子", hex: "#DAC9A6" }]
+      },
+      {
+        no: "021", kanji: "藤紫", kana: "ふじむらさき", romaji: "FUJIMURASAKI", hex: "#8B81C3",
+        group: "purple", season: "晩春 · 藤原氏摄关荣华", munsell: "9PB 5.8/6.5",
+        dye: "紫根浅染 + 蓼蓝微调",
+        poem: "“むらさきの雲とぞ見ゆる藤の花、いかなる宿のしるしなるらむ。” ——《源氏物语·藤里叶》",
+        lore: "晚春垂落的紫藤花棚之色。在平安王朝，藤花既是权倾朝野的藤原氏家纹，也是《源氏物语》中藤壶中宫与紫之上高贵宿命的象征。",
+        pairings: [{ name: "藤紫", hex: "#8B81C3" }, { name: "若芽", hex: "#C5D882" }, { name: "白練", hex: "#F9F7F2" }]
+      },
+      {
+        no: "022", kanji: "江戸紫", kana: "えどむらさき", romaji: "EDOMURASAKI", hex: "#6F3381",
+        group: "purple", season: "秋 · 江户助六歌舞伎", munsell: "4P 3/8",
+        dye: "武藏野紫草根 · 椿木灰媒染",
+        poem: "“江戸紫の鉢巻に、隅田川の粋と侠気が凛と匂い立つ。” ——江户歌舞伎十八番",
+        lore: "对比偏红的“京紫”，江户紫采用武藏野紫草根染制，略带冷冽青调。歌舞伎名剧《助六》主角额头所系正是江户紫钵卷，象征江户人的侠气与利落。",
+        pairings: [{ name: "江戸紫", hex: "#6F3381" }, { name: "鬱金", hex: "#EFBB24" }, { name: "銀鼠", hex: "#91989F" }]
+      },
+      {
+        no: "023", kanji: "利休鼠", kana: "りきゅうねずみ", romaji: "RIKYUNEZUMI", hex: "#707C74",
+        group: "purple", season: "冬 · 江户四十八茶百鼠", munsell: "5G 4.8/1",
+        dye: "蓝微染 + 栗皮铁媒染",
+        poem: "“奢りを禁ぜられし江戸の町に、百の鼠色が静かなる粋を競ふ。” ——江户服饰考",
+        lore: "江户幕府颁布《奢侈禁止令》限制平民穿红戴紫，町人遂在灰色与褐色中调配出“四十八茶百鼠”。带有一丝冷绿茶意的利休鼠，便是其中的最高境界。",
+        pairings: [{ name: "利休鼠", hex: "#707C74" }, { name: "撫子", hex: "#DC9FB4" }, { name: "消炭", hex: "#383838" }]
+      },
+      {
+        no: "024", kanji: "藍鉄", kana: "あいてつ", romaji: "AITETSU", hex: "#091826",
+        group: "purple", season: "深冬 · 武士甲胄之玄黑", munsell: "5PB 1.2/2.5",
+        dye: "极浓蓼蓝浸染数十次（褐返）",
+        poem: "“黒よりも深く、鉄よりも蒼き夜明け前の静寂。” ——日本刀装具考",
+        lore: "将丝绸在蓝瓮中反复浸染数十次，直至深蓝泛出烧铁般的青黑金属冷光。因为日语发音同“胜色（Katsu-iro）”，深受镰仓与战国武士推崇。",
+        pairings: [{ name: "藍鉄", hex: "#091826" }, { name: "茜色", hex: "#B7282E" }, { name: "黄金", hex: "#D4AF37" }]
+      }
+    ];
+
+    let currentGroup = "all";
+    let activeColor = NIPPON_COLORS[1]; // Default: SAKURA or switchable
+
+    function hexToRgb(hex) {
+      const clean = hex.replace("#", "");
+      const num = parseInt(clean, 16);
+      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+    }
+
+    function rgbToCmyk(r, g, b) {
+      const rn = r / 255, gn = g / 255, bn = b / 255;
+      const k = 1 - Math.max(rn, gn, bn);
+      if (k === 1) return { c: 0, m: 0, y: 0, k: 100 };
+      const c = Math.round(((1 - rn - k) / (1 - k)) * 100);
+      const m = Math.round(((1 - gn - k) / (1 - k)) * 100);
+      const y = Math.round(((1 - bn - k) / (1 - k)) * 100);
+      return { c, m, y, k: Math.round(k * 100) };
+    }
+
+    function getLuminance(r, g, b) {
+      return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "rounded-xl border border-white/20 bg-black/85 backdrop-blur-md px-4 py-2 text-xs text-white shadow-xl";
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.25s ease";
+        setTimeout(() => el.remove(), 250);
+      }, 2100);
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById("nipponGrid");
+      const list = currentGroup === "all"
+        ? NIPPON_COLORS
+        : NIPPON_COLORS.filter(c => c.group === currentGroup);
+
+      document.getElementById("matrixCountText").textContent = `${list.length} COLORS`;
+
+      grid.innerHTML = list.map(item => {
+        const isActive = item.no === activeColor.no;
+        return `
+          <button
+            data-no="${item.no}"
+            class="nippon-swatch-item text-left rounded-2xl p-3 border ${
+              isActive
+                ? "border-current bg-black/25 shadow-lg scale-[1.02]"
+                : "border-current/15 bg-black/10 hover:border-current/40"
+            } flex items-stretch gap-3"
+          >
+            <span class="w-3 rounded-full shrink-0 shadow-inner border border-black/10" style="background-color: ${item.hex}"></span>
+            <div class="min-w-0 flex-1 flex flex-col justify-between">
+              <div class="flex items-center justify-between text-[10px] font-mono-code opacity-65">
+                <span>${item.no}</span>
+                <span>${item.hex}</span>
+              </div>
+              <div class="font-mincho text-base font-bold tracking-wider truncate mt-1">${item.kanji}</div>
+              <div class="text-[10px] font-mono-code tracking-widest opacity-75 truncate">${item.romaji}</div>
+            </div>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function selectColor(colorObj) {
+      activeColor = colorObj;
+      const { r, g, b } = hexToRgb(colorObj.hex);
+      const { c, m, y, k } = rgbToCmyk(r, g, b);
+      const lum = getLuminance(r, g, b);
+
+      // Update CSS variables for full-screen color immersion & contrast
+      document.documentElement.style.setProperty("--wash-bg", colorObj.hex);
+      document.documentElement.style.setProperty("--ink-main", lum > 0.62 ? "#161618" : "#F8F7F4");
+
+      // Update Header copy button
+      document.getElementById("copyCurrentHexBtn").textContent = `${colorObj.hex} 复制`;
+      document.getElementById("hexBadgeBtn").textContent = colorObj.hex;
+
+      // Update CMYK Rings (circumference = 2 * pi * 18 = 113.1)
+      const circ = 113.1;
+      document.getElementById("ringC").style.strokeDashoffset = (circ - (circ * c) / 100).toFixed(1);
+      document.getElementById("ringM").style.strokeDashoffset = (circ - (circ * m) / 100).toFixed(1);
+      document.getElementById("ringY").style.strokeDashoffset = (circ - (circ * y) / 100).toFixed(1);
+      document.getElementById("ringK").style.strokeDashoffset = (circ - (circ * k) / 100).toFixed(1);
+
+      document.getElementById("valC").textContent = `${c}%`;
+      document.getElementById("valM").textContent = `${m}%`;
+      document.getElementById("valY").textContent = `${y}%`;
+      document.getElementById("valK").textContent = `${k}%`;
+
+      // Update RGB Bars
+      document.getElementById("valR").textContent = r;
+      document.getElementById("valG").textContent = g;
+      document.getElementById("valB").textContent = b;
+      document.getElementById("barR").style.width = `${((r / 255) * 100).toFixed(1)}%`;
+      document.getElementById("barG").style.width = `${((g / 255) * 100).toFixed(1)}%`;
+      document.getElementById("barB").style.width = `${((b / 255) * 100).toFixed(1)}%`;
+
+      // Update Typography & Story
+      document.getElementById("ncNumber").textContent = `NO. ${colorObj.no}`;
+      document.getElementById("ncMunsell").textContent = colorObj.munsell;
+      document.getElementById("ncSeasonBadge").textContent = colorObj.season;
+      document.getElementById("ncRomaji").textContent = colorObj.romaji;
+      document.getElementById("ncKana").textContent = `${colorObj.kana} · ${colorObj.kanji}`;
+      document.getElementById("ncDyeSource").textContent = `染材：${colorObj.dye}`;
+      document.getElementById("ncKanjiVertical").textContent = colorObj.kanji;
+      document.getElementById("ncPoem").textContent = colorObj.poem;
+      document.getElementById("ncLore").textContent = colorObj.lore;
+
+      // Update Kasane Pairing Strip
+      const strip = document.getElementById("ncKasaneStrip");
+      strip.innerHTML = colorObj.pairings.map(p => `
+        <button data-copy-hex="${p.hex}" class="group rounded-xl p-2.5 border border-current/20 bg-black/15 hover:bg-black/25 text-left transition flex items-center gap-2.5">
+          <span class="h-8 w-8 rounded-lg shrink-0 border border-white/20 shadow" style="background:${p.hex}"></span>
+          <div class="min-w-0">
+            <div class="font-mincho text-xs font-semibold truncate">${p.name}</div>
+            <div class="font-mono-code text-[10px] opacity-75">${p.hex}</div>
+          </div>
+        </button>
+      `).join("");
+
+      renderGrid();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Start with GUNJYO (#018) or SAKURA (#002) for a striking initial wash
+      selectColor(NIPPON_COLORS[17]);
+
+      document.getElementById("nipponGrid").addEventListener("click", e => {
+        const btn = e.target.closest("[data-no]");
+        if (!btn) return;
+        const found = NIPPON_COLORS.find(c => c.no === btn.getAttribute("data-no"));
+        if (found) selectColor(found);
+      });
+
+      document.getElementById("hueFilterNav").addEventListener("click", e => {
+        const btn = e.target.closest("[data-group]");
+        if (!btn) return;
+        currentGroup = btn.getAttribute("data-group");
+        document.querySelectorAll(".hue-btn").forEach(b => {
+          b.className = "hue-btn rounded-full px-3 py-1 text-xs opacity-70 hover:opacity-100 border border-transparent transition";
+        });
+        btn.className = "hue-btn rounded-full px-3 py-1 text-xs font-medium bg-black/25 backdrop-blur-md border border-current/30 transition";
+        renderGrid();
+      });
+
+      document.getElementById("randomColorBtn").addEventListener("click", () => {
+        const pool = NIPPON_COLORS.filter(c => c.no !== activeColor.no);
+        const pick = pool[Math.floor(Math.random() * pool.length)];
+        selectColor(pick);
+      });
+
+      const copyActiveHex = () => {
+        navigator.clipboard?.writeText(activeColor.hex).catch(() => {});
+        showToast(`已复制 ${activeColor.kanji} (${activeColor.romaji}) · ${activeColor.hex}`);
+      };
+      document.getElementById("copyCurrentHexBtn").addEventListener("click", copyActiveHex);
+      document.getElementById("hexBadgeBtn").addEventListener("click", copyActiveHex);
+
+      document.getElementById("ncKasaneStrip").addEventListener("click", e => {
+        const btn = e.target.closest("[data-copy-hex]");
+        if (!btn) return;
+        const hex = btn.getAttribute("data-copy-hex");
+        navigator.clipboard?.writeText(hex).catch(() => {});
+        showToast(`已复制配伍色值 ${hex}`);
+      });
+
+      document.getElementById("copyKasaneCssBtn").addEventListener("click", () => {
+        const stops = activeColor.pairings.map(p => p.hex).join(", ");
+        const css = `background: linear-gradient(135deg, ${stops});`;
+        navigator.clipboard?.writeText(css).catch(() => {});
+        showToast(`已复制「${activeColor.kanji}」和色配伍 CSS`);
+      });
+
+      // Keyboard navigation
+      window.addEventListener("keydown", e => {
+        const list = currentGroup === "all" ? NIPPON_COLORS : NIPPON_COLORS.filter(c => c.group === currentGroup);
+        const idx = list.findIndex(c => c.no === activeColor.no);
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          const next = list[(idx + 1) % list.length];
+          if (next) selectColor(next);
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          const prev = list[(idx - 1 + list.length) % list.length];
+          if (prev) selectColor(prev);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

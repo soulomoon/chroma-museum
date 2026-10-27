@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>04 专馆 · 和田三造《配色事典》SANZO WADA 1933 — 色界 CHROMA MUSEUM</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #F4EFE6;
+      color: #1F1D1A;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-serif-showa {
+      font-family: 'Noto Serif JP', 'Noto Serif SC', Georgia, serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Vintage 1933 Showa Book-Cloth Paper Grain */
+    .showa-paper {
+      background-color: #EFE8DC;
+      background-image:
+        radial-gradient(circle at 50% 25%, rgba(255,255,255,0.45), transparent 70%),
+        repeating-linear-gradient(0deg, rgba(0,0,0,0.018) 0px, rgba(0,0,0,0.018) 1px, transparent 1px, transparent 3px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 4px);
+    }
+
+    .plate-card {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+    }
+    .plate-card:hover {
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between showa-paper selection:bg-stone-900 selection:text-amber-50">
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- ========================================================= -->
+  <!-- GLOBAL MUSEUM PAVILION SWITCHER                           -->
+  <!-- ========================================================= -->
+  <div class="relative z-40 border-b border-stone-300 bg-[#181715] text-[11px] text-white">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-2 flex items-center justify-between gap-2 overflow-x-auto">
+      <div class="flex items-center gap-1.5 shrink-0">
+        <a href="chroma_museum.html" class="rounded-lg border border-white/20 bg-white/10 hover:bg-white/20 px-2.5 py-1 text-white font-medium flex items-center gap-1.5 transition">
+          <span>🏛️</span><span>总览导航大厅</span>
+        </a>
+        <span class="text-stone-600 px-1">|</span>
+        <a href="pavilion_curation.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">01 综合策展馆</a>
+        <a href="pavilion_nippon.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">02 NIPPON COLORS 日本传统色</a>
+        <a href="pavilion_zhongguo.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">03 中国传统色 · 故宫节气</a>
+        <a href="pavilion_sanzo.html" class="rounded-lg bg-[#EFE8DC] text-stone-950 px-2.5 py-1 font-semibold transition">04 和田三造《配色事典》</a>
+        <a href="pavilion_werner.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">05 1814 沃纳博物学色谱</a>
+        <a href="pavilion_corbusier.html" class="rounded-lg text-stone-400 hover:text-white hover:bg-white/10 px-2.5 py-1 transition">06 柯布西耶建筑多色系</a>
+      </div>
+      <span class="text-[10px] font-mono-code text-stone-400 hidden lg:inline shrink-0">PAVILION 04 / SANZO WADA · 1933 昭和《配色事典》</span>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- SUB-HEADER: COMBINATION COUNT FILTER & LAYOUT MODE        -->
+  <!-- ========================================================= -->
+  <header class="border-b border-stone-300/90 bg-[#F7F3EB]/90 backdrop-blur-md">
+    <div class="mx-auto max-w-[1360px] px-4 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div class="text-[10px] font-mono-code uppercase tracking-[0.25em] text-stone-500">HAISHOKU SOUKAN · 1933–1934 TOKYO</div>
+        <h1 class="font-serif-showa text-xl font-bold tracking-wider text-stone-900">和田三造《配色事典》· A Dictionary of Color Combinations</h1>
+      </div>
+
+      <!-- Filter by 2-Color, 3-Color, 4-Color -->
+      <nav id="countFilterNav" class="flex items-center gap-1.5">
+        <button data-count="all" class="count-btn rounded-full px-3.5 py-1 text-xs font-semibold bg-stone-900 text-white transition">全部色板 (16)</button>
+        <button data-count="2" class="count-btn rounded-full px-3.5 py-1 text-xs text-stone-600 hover:text-stone-900 border border-stone-300 transition">二色配 (2-Color)</button>
+        <button data-count="3" class="count-btn rounded-full px-3.5 py-1 text-xs text-stone-600 hover:text-stone-900 border border-stone-300 transition">三色配 (3-Color)</button>
+        <button data-count="4" class="count-btn rounded-full px-3.5 py-1 text-xs text-stone-600 hover:text-stone-900 border border-stone-300 transition">四色配 (4-Color)</button>
+      </nav>
+
+      <!-- Signature Geometric Weave Mode Switcher -->
+      <div class="flex items-center gap-1 bg-stone-200/90 p-1 rounded-full border border-stone-300 text-xs">
+        <button data-weave="strips" class="weave-btn rounded-full px-3 py-1 bg-stone-900 text-white font-medium transition">1933 原版竖条</button>
+        <button data-weave="plaid" class="weave-btn rounded-full px-3 py-1 text-stone-700 hover:text-black transition">昭和织物格纹</button>
+        <button data-weave="bauhaus" class="weave-btn rounded-full px-3 py-1 text-stone-700 hover:text-black transition">版画几何构成</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- MAIN SANZO WADA STAGE                                     -->
+  <!-- Left 5 Cols: Active Plate Specimen & Geometric Weave      -->
+  <!-- Right 7 Cols: 16 Authentic Plates Grid & Pigment Filter   -->
+  <!-- ========================================================= -->
+  <main class="flex-1 mx-auto w-full max-w-[1360px] px-4 sm:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- LEFT 5 COLS: ACTIVE SANZO WADA PLATE SPECIMEN CARD -->
+    <section class="lg:col-span-5 rounded-3xl border-2 border-stone-800/85 bg-[#FAF7F0] p-6 sm:p-7 shadow-[0_20px_50px_rgba(30,25,20,0.12)] space-y-5 sticky top-6">
+      <div class="flex items-center justify-between border-b border-stone-300 pb-3">
+        <div>
+          <span id="swPlateNo" class="font-mono-code text-xs font-bold tracking-[0.2em] text-stone-500">PLATE NO. 072</span>
+          <h2 id="swTitle" class="font-serif-showa text-xl font-bold text-stone-900 mt-0.5">三色配 · 昭和摩登秋日色块</h2>
+        </div>
+        <button id="swCopyCssBtn" class="rounded-lg bg-stone-900 text-white hover:bg-stone-700 px-3 py-1.5 text-xs font-medium transition">
+          复制组合 CSS
+        </button>
+      </div>
+
+      <!-- Geometric Specimen Canvas (Strips / Tartan Plaid / Bauhaus Poster) -->
+      <div id="swVisualStage" class="w-full aspect-[4/3] rounded-2xl overflow-hidden border border-stone-300 shadow-inner bg-white">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Swatch Breakdown Table (Original English & Japanese Names from Sanzo Wada) -->
+      <div class="space-y-2">
+        <div class="text-[11px] font-mono-code uppercase tracking-wider text-stone-500 flex justify-between">
+          <span>ORIGINAL PIGMENT NOMENCLATURE (点击单色复制或筛选同色系)</span>
+          <button id="clearPigmentFilterBtn" class="hidden text-amber-800 underline">清除单色反查 ✕</button>
+        </div>
+        <div id="swPigmentList" class="space-y-2">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Curatorial Note on Sanzo Wada -->
+      <div class="rounded-xl bg-stone-200/65 border border-stone-300/80 p-3.5 text-xs text-stone-700 leading-relaxed">
+        <strong class="font-serif-showa text-stone-900">策展注记：</strong>
+        <span id="swCuratorNote">和田三造（1883–1967，奥斯卡最佳服装设计奖《地狱门》得主）于1933年结合日本平安传统色与西方包豪斯色彩学，编制了348组打破常规的大胆撞色，至今仍是平面、织物与电影美学的圣经。</span>
+      </div>
+    </section>
+
+    <!-- RIGHT 7 COLS: 16 AUTHENTIC PLATES ARCHIVE GRID -->
+    <section class="lg:col-span-7 space-y-3">
+      <div class="flex items-center justify-between text-xs text-stone-600 border-b border-stone-300 pb-2">
+        <span id="swGridTitle" class="font-serif-showa font-semibold">《配色事典》原版精选图版（点击任意图版切入左侧标本台）</span>
+        <span id="swGridCount" class="font-mono-code">16 PLATES</span>
+      </div>
+
+      <div id="swPlatesGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-stone-300 py-3 px-4 sm:px-8 text-center text-[11px] text-stone-500">
+    支持键盘 ← / → 切换《配色事典》图版 · 可切换「1933 原版竖条 / 昭和织物格纹 / 版画几何构成」三种视觉检视模式
+  </footer>
+
+  <script>
+    const SANZO_PLATES = [
+      {
+        plate: "014", count: 2, title: "二色配 · 珊瑚赤与青磁",
+        note: "高纯度的珊瑚朱红与冷静温润的青磁色形成冷暖互补，常见于昭和初期木版画与京都友禅腰带。",
+        colors: [
+          { en: "Etruscan Red", jp: "珊瑚色", hex: "#C95244" },
+          { en: "Glaucous Green", jp: "青磁色", hex: "#A3C6B8" }
+        ]
+      },
+      {
+        plate: "029", count: 2, title: "二色配 · 桔梗蓝与菜种油黄",
+        note: "深邃的里昂桔梗蓝压住阵脚，跃动的菜种油黄赋予画面强烈的现代主义海报张力。",
+        colors: [
+          { en: "Deep Lyons Blue", jp: "桔梗色", hex: "#2A3478" },
+          { en: "Sulphine Yellow", jp: "菜種油色", hex: "#D6AE28" }
+        ]
+      },
+      {
+        plate: "048", count: 2, title: "二色配 · 利休茶与薄樱粉",
+        note: "低饱和度的灰绿茶色衬托娇嫩的薄樱粉，完美诠释了和田三造“浊色托清色”的配伍法则。",
+        colors: [
+          { en: "Citrine Drab", jp: "利休茶", hex: "#767253" },
+          { en: "Pale Raw Umber Pink", jp: "薄桜", hex: "#F0C9CE" }
+        ]
+      },
+      {
+        plate: "063", count: 2, title: "二色配 · 孔雀青与肉桂褐",
+        note: "温暖的大地肉桂色与深海孔雀青并置，兼具包豪斯工业感与东方陶器质感。",
+        colors: [
+          { en: "Cinnamon Buff", jp: "肉桂色", hex: "#D99E6A" },
+          { en: "Antwerp Blue", jp: "孔雀青", hex: "#145A7A" }
+        ]
+      },
+      {
+        plate: "072", count: 3, title: "三色配 · 露草、肉桂与橄榄黄",
+        note: "《配色事典》中最负盛名的三色组合之一：高明度肉桂暖调夹在冷冽露草蓝与沉稳橄榄绿之间。",
+        colors: [
+          { en: "Salvia Blue", jp: "露草色", hex: "#3868A6" },
+          { en: "Cinnamon Buff", jp: "肉桂浅黄", hex: "#E5B37A" },
+          { en: "Olive Yellow", jp: "鶸茶色", hex: "#8B8C42" }
+        ]
+      },
+      {
+        plate: "095", count: 3, title: "三色配 · 弁柄红、浅葱与鸟子色",
+        note: "源于日本传统建筑颜料“弁柄（氧化铁红）”与浅葱水蓝的碰撞，以温暖的鸟子纸色居中调和。",
+        colors: [
+          { en: "Vandyke Red", jp: "弁柄色", hex: "#8F3329" },
+          { en: "Nile Blue", jp: "浅葱水色", hex: "#68B5B8" },
+          { en: "Warm Buff", jp: "鳥の子色", hex: "#E8D5B5" }
+        ]
+      },
+      {
+        plate: "108", count: 3, title: "三色配 · 紫罗兰、海松绿与杏黄",
+        note: "打破常规的紫、绿、橙三次色碰撞，却因精准的明度阶梯呈现出大正浪漫式的复古华丽。",
+        colors: [
+          { en: "Dull Blue Violet", jp: "藤紫", hex: "#6C5B9E" },
+          { en: "Apricot Buff", jp: "杏色", hex: "#E5935A" },
+          { en: "Deep Sea Foam Green", jp: "海松色", hex: "#4D6E59" }
+        ]
+      },
+      {
+        plate: "134", count: 3, title: "三色配 · 胭脂、钴蓝与银鼠",
+        note: "冷峻的银鼠灰将高饱和度的胭脂红与钴蓝隔开，营造出极具秩序感的现代书装封面气质。",
+        colors: [
+          { en: "Carmine Red", jp: "臙脂色", hex: "#AD2436" },
+          { en: "Neutral Gray", jp: "銀鼠", hex: "#A5AAA8" },
+          { en: "Cobalt Blue", jp: "瑠璃紺", hex: "#1B4682" }
+        ]
+      },
+      {
+        plate: "156", count: 3, title: "三色配 · 山吹金、松叶绿与海老茶",
+        note: "灵感源自京都秋季古寺庭院：金黄银杏、苍翠古松与红褐廊柱的自然三重奏。",
+        colors: [
+          { en: "Yellow Ocher", jp: "山吹色", hex: "#E5A829" },
+          { en: "Cossack Green", jp: "松葉色", hex: "#3B6B4C" },
+          { en: "Garnet Brown", jp: "海老茶", hex: "#6E2C26" }
+        ]
+      },
+      {
+        plate: "182", count: 3, title: "三色配 · 撫子粉、孔雀绿与黑茶",
+        note: "电影《地狱门》服装美学的先声：在极暗的黑茶底色上，让桃粉与翠绿爆发戏剧张力。",
+        colors: [
+          { en: "eosine Pink", jp: "撫子桃", hex: "#E37B8E" },
+          { en: "Peacock Green", jp: "青竹緑", hex: "#1E8574" },
+          { en: "Bister Brown", jp: "黒茶", hex: "#2B211E" }
+        ]
+      },
+      {
+        plate: "204", count: 4, title: "四色配 · 昭和摩登都市四重奏",
+        note: "四色配卷首经典：融合砖红、粉蓝、芥末黄与深炭褐，可直接用于现代 UI 与品牌视觉系统。",
+        colors: [
+          { en: "Pompeian Red", jp: "赤錆色", hex: "#A83B31" },
+          { en: "Cerulean Pale", jp: "水浅葱", hex: "#82B5C9" },
+          { en: "Mustard Yellow", jp: "芥子色", hex: "#D9B44A" },
+          { en: "Sepia Black", jp: "憲法黒茶", hex: "#282320" }
+        ]
+      },
+      {
+        plate: "221", count: 4, title: "四色配 · 浮世绘春宵游园",
+        note: "从江户锦绘提炼出的四色：樱粉、若草绿、紫绀与胡粉白，轻盈明快而富有呼吸感。",
+        colors: [
+          { en: "La France Pink", jp: "桜桃色", hex: "#EEA2AD" },
+          { en: "Lettuce Green", jp: "若草色", hex: "#84B067" },
+          { en: "Hyacinth Violet", jp: "紫紺", hex: "#432B68" },
+          { en: "Ivory Yellow", jp: "胡粉練色", hex: "#F3EFE2" }
+        ]
+      },
+      {
+        plate: "249", count: 4, title: "四色配 · 琳派金碧山水构成",
+        note: "致敬尾形光琳屏风画：金黄、群青、松绿与焦茶四色交织，极具博物馆典藏气息。",
+        colors: [
+          { en: "Cadmium Yellow", jp: "黄金色", hex: "#DE9E26" },
+          { en: "Ultramarine Ash", jp: "本群青", hex: "#244D8A" },
+          { en: "Bottle Green", jp: "千歳緑", hex: "#2F5C47" },
+          { en: "Raw Umber", jp: "焦茶", hex: "#4D3729" }
+        ]
+      },
+      {
+        plate: "275", count: 4, title: "四色配 · 镰仓海岸暮色",
+        note: "以大面积冷调海灰蓝与沙褐为主调，点缀一抹落日珊瑚红，平衡克制。",
+        colors: [
+          { en: "Slate Blue", jp: "藍鼠", hex: "#4F657A" },
+          { en: "Coral Red", jp: "珊瑚朱", hex: "#E06353" },
+          { en: "Sand Drab", jp: "砂色", hex: "#CBBBA0" },
+          { en: "Deep Neutral", jp: "消炭色", hex: "#2D3033" }
+        ]
+      },
+      {
+        plate: "301", count: 4, title: "四色配 · 京都茶席四时果子",
+        note: "宛如和果子盒中的四季风物：抹茶绿、小豆紫、栀子黄与白练色。",
+        colors: [
+          { en: "Absinthe Green", jp: "抹茶緑", hex: "#82A35C" },
+          { en: "Dull Indian Purple", jp: "小豆色", hex: "#7A3E48" },
+          { en: "Naples Yellow", jp: "梔子黄", hex: "#EBC86E" },
+          { en: "Cream White", jp: "白練", hex: "#F7F4EC" }
+        ]
+      },
+      {
+        plate: "348", count: 4, title: "四色配 · 终卷大成：古典与先锋",
+        note: "《配色事典》收官图版：朱红、孔雀蓝、淡金与深紫的四维平衡。",
+        colors: [
+          { en: "Scarlet Red", jp: "猩々緋", hex: "#C92A2A" },
+          { en: "Peacock Blue", jp: "孔雀藍", hex: "#0F627A" },
+          { en: "Chamois Gold", jp: "淡香色", hex: "#DEC081" },
+          { en: "Raisin Black", jp: "紫黒", hex: "#241926" }
+        ]
+      }
+    ];
+
+    let activeCountFilter = "all";
+    let activeWeaveMode = "strips"; // strips | plaid | bauhaus
+    let activePlate = SANZO_PLATES[4]; // Plate 072 default
+    let activePigmentKeyword = null;
+
+    function showToast(msg) {
+      const container = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "rounded-xl border border-stone-700 bg-stone-900 px-4 py-2 text-xs text-amber-50 shadow-xl";
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.25s ease";
+        setTimeout(() => el.remove(), 250);
+      }, 2100);
+    }
+
+    function renderVisualStage(p) {
+      const cols = p.colors;
+      const c0 = cols[0].hex;
+      const c1 = cols[1]?.hex || c0;
+      const c2 = cols[2]?.hex || c0;
+      const c3 = cols[3]?.hex || c1;
+
+      if (activeWeaveMode === "strips") {
+        // Authentic 1933 Sanzo Wada Book Binding Vertical Swatch Strips with Plate Stamp
+        return `
+          <div class="w-full h-full flex flex-col justify-between p-5 bg-[#F4EFE6]">
+            <div class="flex-1 flex gap-2.5 rounded-xl overflow-hidden shadow-md border border-stone-300 bg-white p-2">
+              ${cols.map(c => `
+                <div class="flex-1 h-full rounded-lg flex flex-col justify-end p-2.5 transition-all hover:flex-[1.25] cursor-pointer"
+                     style="background:${c.hex}"
+                     data-copy="${c.hex}">
+                  <span class="inline-block self-start rounded bg-black/45 backdrop-blur-sm px-1.5 py-0.5 font-mono-code text-[10px] text-white">${c.hex}</span>
+                </div>
+              `).join("")}
+            </div>
+            <div class="pt-3 flex items-center justify-between text-[11px] font-mono-code text-stone-500">
+              <span>SANZO WADA · PLATE #${p.plate}</span>
+              <span>${cols.length} COMBINATION</span>
+            </div>
+          </div>
+        `;
+      } else if (activeWeaveMode === "plaid") {
+        // Showa Kimono Tartan Plaid Weave
+        return `
+          <div class="w-full h-full relative" style="
+            background-color: ${c0};
+            background-image:
+              repeating-linear-gradient(90deg, ${c1} 0px, ${c1} 28px, transparent 28px, transparent 68px),
+              repeating-linear-gradient(0deg, ${c2} 0px, ${c2} 28px, transparent 28px, transparent 68px),
+              repeating-linear-gradient(90deg, ${c3}88 0px, ${c3}88 8px, transparent 8px, transparent 34px),
+              repeating-linear-gradient(0deg, ${c3}88 0px, ${c3}88 8px, transparent 8px, transparent 34px);
+            background-blend-mode: multiply;
+          ">
+            <div class="absolute bottom-3 right-3 rounded-lg bg-stone-950/80 backdrop-blur-md px-3 py-1 text-[11px] font-mono-code text-white">
+              昭和织物格纹 · PLATE #${p.plate}
+            </div>
+          </div>
+        `;
+      } else {
+        // Bauhaus / Showa Woodblock Geometric Composition
+        return `
+          <div class="w-full h-full grid grid-cols-12 grid-rows-6 p-4 gap-2 bg-[#EFE8DC]">
+            <div class="col-span-7 row-span-6 rounded-xl relative overflow-hidden flex items-center justify-center shadow" style="background:${c0}">
+              <div class="w-28 h-28 rounded-full shadow-lg" style="background:${c1}"></div>
+            </div>
+            <div class="col-span-5 row-span-3 rounded-xl shadow" style="background:${c2}"></div>
+            <div class="col-span-5 row-span-3 rounded-xl shadow flex items-end justify-end p-2.5" style="background:${c3}">
+              <span class="font-mono-code text-[10px] px-2 py-0.5 rounded bg-black/50 text-white">#${p.plate}</span>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderAll() {
+      const p = activePlate;
+      document.getElementById("swPlateNo").textContent = `PLATE NO. ${p.plate}`;
+      document.getElementById("swTitle").textContent = p.title;
+      document.getElementById("swCuratorNote").textContent = p.note;
+      document.getElementById("swVisualStage").innerHTML = renderVisualStage(p);
+
+      // Render Pigment Breakdown List
+      document.getElementById("swPigmentList").innerHTML = p.colors.map(c => `
+        <div class="flex items-center justify-between rounded-xl border border-stone-300 bg-white p-2.5 shadow-sm">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="h-8 w-8 rounded-lg shrink-0 border border-black/10 shadow-inner" style="background:${c.hex}"></span>
+            <div class="min-w-0">
+              <div class="font-serif-showa text-xs font-bold text-stone-900 truncate">${c.jp} · ${c.en}</div>
+              <div class="font-mono-code text-[11px] text-stone-500">${c.hex}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button data-copy="${c.hex}" class="rounded-lg border border-stone-300 hover:bg-stone-100 px-2.5 py-1 text-[11px] font-mono-code text-stone-700 transition">
+              复制
+            </button>
+          </div>
+        </div>
+      `).join("");
+
+      // Filter Grid
+      let list = activeCountFilter === "all"
+        ? SANZO_PLATES
+        : SANZO_PLATES.filter(item => String(item.count) === String(activeCountFilter));
+
+      document.getElementById("swGridCount").textContent = `${list.length} PLATES`;
+      document.getElementById("swPlatesGrid").innerHTML = list.map(item => {
+        const isCurrent = item.plate === p.plate;
+        return `
+          <button data-plate="${item.plate}" class="plate-card rounded-2xl border-2 p-4 text-left bg-[#FAF7F0] flex flex-col justify-between gap-3 ${
+            isCurrent ? "border-stone-900 shadow-lg ring-2 ring-stone-900/15" : "border-stone-300/90 hover:border-stone-500"
+          }">
+            <div class="flex items-center justify-between w-full">
+              <span class="font-mono-code text-xs font-bold text-stone-500">PLATE #${item.plate}</span>
+              <span class="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-mono-code text-stone-700">${item.count}-COLOR</span>
+            </div>
+            <!-- Vertical Swatch Bar Preview -->
+            <div class="h-20 w-full rounded-xl overflow-hidden flex gap-1.5 bg-white p-1.5 border border-stone-200">
+              ${item.colors.map(c => `<div class="flex-1 h-full rounded-md" style="background:${c.hex}"></div>`).join("")}
+            </div>
+            <div>
+              <div class="font-serif-showa text-sm font-bold text-stone-900">${item.title}</div>
+              <div class="text-[11px] text-stone-500 truncate mt-0.5">${item.colors.map(c => c.jp).join(" × ")}</div>
+            </div>
+          </button>
+        `;
+      }).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderAll();
+
+      document.getElementById("swPlatesGrid").addEventListener("click", e => {
+        const btn = e.target.closest("[data-plate]");
+        if (!btn) return;
+        const found = SANZO_PLATES.find(x => x.plate === btn.getAttribute("data-plate"));
+        if (found) {
+          activePlate = found;
+          renderAll();
+        }
+      });
+
+      document.getElementById("countFilterNav").addEventListener("click", e => {
+        const btn = e.target.closest("[data-count]");
+        if (!btn) return;
+        activeCountFilter = btn.getAttribute("data-count");
+        document.querySelectorAll(".count-btn").forEach(b => {
+          b.className = "count-btn rounded-full px-3.5 py-1 text-xs text-stone-600 hover:text-stone-900 border border-stone-300 transition";
+        });
+        btn.className = "count-btn rounded-full px-3.5 py-1 text-xs font-semibold bg-stone-900 text-white transition";
+        renderAll();
+      });
+
+      document.querySelectorAll(".weave-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeWeaveMode = btn.getAttribute("data-weave");
+          document.querySelectorAll(".weave-btn").forEach(b => {
+            b.className = "weave-btn rounded-full px-3 py-1 text-stone-700 hover:text-black transition";
+          });
+          btn.className = "weave-btn rounded-full px-3 py-1 bg-stone-900 text-white font-medium transition";
+          renderAll();
+        });
+      });
+
+      document.body.addEventListener("click", e => {
+        const copyBtn = e.target.closest("[data-copy]");
+        if (copyBtn) {
+          const hex = copyBtn.getAttribute("data-copy");
+          navigator.clipboard?.writeText(hex).catch(() => {});
+          showToast(`已复制和田三造色标 ${hex}`);
+        }
+      });
+
+      document.getElementById("swCopyCssBtn").addEventListener("click", () => {
+        const stops = activePlate.colors.map(c => c.hex).join(", ");
+        const css = `background: linear-gradient(90deg, ${stops});`;
+        navigator.clipboard?.writeText(css).catch(() => {});
+        showToast(`已复制 Plate #${activePlate.plate} 渐变 CSS`);
+      });
+
+      window.addEventListener("keydown", e => {
+        const list = activeCountFilter === "all" ? SANZO_PLATES : SANZO_PLATES.filter(x => String(x.count) === String(activeCountFilter));
+        const idx = list.findIndex(x => x.plate === activePlate.plate);
+        if (e.key === "ArrowRight") {
+          activePlate = list[(idx + 1) % list.length];
+          renderAll();
+        } else if (e.key === "ArrowLeft") {
+          activePlate = list[(idx - 1 + list.length) % list.length];
+          renderAll();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
